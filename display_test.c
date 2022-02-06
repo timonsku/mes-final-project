@@ -11,38 +11,12 @@
 #include <stdlib.h>
 #include "pico/binary_info.h"
 #include "hardware/spi.h"
+#include "lib/lvgl/lvgl.h"
+#include "SHARP_MIP.h"
 
-#define PIN_MISO 4
-#define PIN_CS   10
-#define PIN_SCK  18
-#define PIN_MOSI 19
-
-#define SPI_PORT spi0
-
-// #define SHARPMEM_BIT_WRITECMD (0x01) // 0x80 in LSB format
-// #define SHARPMEM_BIT_VCOM (0x02)     // 0x40 in LSB format
-// #define SHARPMEM_BIT_CLEAR (0x04)    // 0x20 in LSB format
-
-#define SHARPMEM_BIT_WRITECMD (0x80) // 0x80 in LSB format
-#define SHARPMEM_BIT_VCOM (0x40)     // 0x40 in LSB format
-#define SHARPMEM_BIT_CLEAR (0x20)    // 0x20 in LSB format
-
-#ifndef _swap_int16_t
-#define _swap_int16_t(a, b)                                                    \
-  {                                                                            \
-    int16_t t = a;                                                             \
-    a = b;                                                                     \
-    b = t;                                                                     \
-  }
-#endif
-#ifndef _swap_uint16_t
-#define _swap_uint16_t(a, b)                                                   \
-  {                                                                            \
-    uint16_t t = a;                                                            \
-    a = b;                                                                     \
-    b = t;                                                                     \
-  }
-#endif
+#define SHARPMEM_BIT_WRITECMD (0x80) // 0x01 | 0x80 in LSB format
+#define SHARPMEM_BIT_VCOM (0x40)     // 0x02 | 0x40 in LSB format
+#define SHARPMEM_BIT_CLEAR (0x20)    // 0x04 | 0x20 in LSB format
 
 #define TOGGLE_VCOM                                                            \
   do {                                                                         \
@@ -78,15 +52,24 @@ uint8_t _sharpmem_vcom;
 #define WIDTH 400
 #define HEIGHT 240
 
+#define DISP_HOR_RES 400
+#define DISP_VER_RES 240
+
+
+
+static lv_disp_draw_buf_t draw_buf;
+static lv_color_t buf1[DISP_HOR_RES * DISP_VER_RES];                        /*Declare a buffer for 1/10 screen size*/
+static lv_disp_drv_t disp_drv;
+
 static inline void cs_select() {
     asm volatile("nop \n nop \n nop");
-    gpio_put(PIN_CS, 1);  // Active high
+    gpio_put(DISP_CS, 1);  // Active high
     asm volatile("nop \n nop \n nop");
 }
 
 static inline void cs_deselect() {
     asm volatile("nop \n nop \n nop");
-    gpio_put(PIN_CS, 0);
+    gpio_put(DISP_CS, 0);
     asm volatile("nop \n nop \n nop");
 }
 
@@ -109,7 +92,6 @@ void sharp_display_drawPixel(int16_t x, int16_t y, uint16_t color) {
   if ((x < 0) || (x >= WIDTH) || (y < 0) || (y >= HEIGHT))
     return;
 
-
   if (color) {
     sharpmem_buffer[(y * WIDTH + x) / 8] |= set[x & 7];
   } else {
@@ -128,7 +110,7 @@ void sharp_display_clearDisplay() {
   }
   _sharpmem_vcom = !_sharpmem_vcom;
   cmd[1] = 0x00;
-	spi_write_blocking(SPI_PORT, cmd, 2);
+	spi_write_blocking(DISP_SPI_PORT, cmd, 2);
   cs_deselect();
 }
 
@@ -144,7 +126,7 @@ void sharp_display_refresh(void) {
   }
   _sharpmem_vcom = !_sharpmem_vcom;
 
-	spi_write_blocking(SPI_PORT, cmd, 1);
+	spi_write_blocking(DISP_SPI_PORT, cmd, 1);
   // spidev->transfer(_sharpmem_vcom | SHARPMEM_BIT_WRITECMD);
 
   uint8_t bytes_per_line = WIDTH / 8;
@@ -161,13 +143,13 @@ void sharp_display_refresh(void) {
     // Send end of line
     line[bytes_per_line + 1] = 0x00;
     // send it!
-		spi_write_blocking(SPI_PORT, line, bytes_per_line + 2);
+		spi_write_blocking(DISP_SPI_PORT, line, bytes_per_line + 2);
     // spidev->transfer(line, bytes_per_line + 2);
   }
 
   // Send another trailing 8 bits for the last line
 	cmd[0] = 0x00;
-	spi_write_blocking(SPI_PORT, cmd, 1);
+	spi_write_blocking(DISP_SPI_PORT, cmd, 1);
   // spidev->transfer(0x00);
   cs_deselect();
 }
@@ -182,6 +164,59 @@ void sharp_display_clearDisplayBuffer() {
 }
 
 
+bool lvgl_ticker(repeating_timer_t *rt){
+  lv_tick_inc(1);
+  return true;
+}
+
+static void btn_event_cb(lv_event_t * e)
+{
+    lv_event_code_t code = lv_event_get_code(e);
+    lv_obj_t * btn = lv_event_get_target(e);
+    if(code == LV_EVENT_CLICKED) {
+        static uint8_t cnt = 0;
+        cnt++;
+        printf("btn clicked\n");
+        /*Get the first child of the button which is the label and change its text*/
+        lv_obj_t * label = lv_obj_get_child(btn, 0);
+        lv_label_set_text_fmt(label, "Button: %d", cnt);
+    }
+}
+
+/**
+ * Create a button with a label and react on click event.
+ */
+void lv_example_get_started_1(void)
+{
+    lv_obj_t * btn = lv_btn_create(lv_scr_act());     /*Add a button the current screen*/
+    lv_obj_set_pos(btn, 10, 10);                            /*Set its position*/
+    lv_obj_set_size(btn, 120, 50);                          /*Set its size*/
+    lv_obj_add_event_cb(btn, btn_event_cb, LV_EVENT_ALL, NULL);           /*Assign a callback to the button*/
+
+    lv_obj_t * label = lv_label_create(btn);          /*Add a label to the button*/
+    lv_label_set_text(label, "Button");                     /*Set the labels text*/
+    lv_obj_center(label);
+}
+
+void lv_example_obj_1(void)
+{
+    lv_obj_t * obj1;
+    obj1 = lv_obj_create(lv_scr_act());
+    lv_obj_set_size(obj1, 100, 50);
+    lv_obj_align(obj1, LV_ALIGN_CENTER, -60, -30);
+
+    static lv_style_t style_shadow;
+    lv_style_init(&style_shadow);
+    lv_style_set_shadow_width(&style_shadow, 10);
+    lv_style_set_shadow_spread(&style_shadow, 5);
+    lv_style_set_shadow_color(&style_shadow, lv_palette_main(LV_PALETTE_BLUE));
+
+    lv_obj_t * obj2;
+    obj2 = lv_obj_create(lv_scr_act());
+    lv_obj_add_style(obj2, &style_shadow, 0);
+    lv_obj_align(obj2, LV_ALIGN_CENTER, 60, 30);
+}
+
 int main() {
     stdio_init_all();
 		sleep_ms(3000);
@@ -189,42 +224,61 @@ int main() {
     printf("Initializing SPI...\n");
 
     // This example will use SPI0 at 0.5MHz.
-    spi_init(SPI_PORT, 1000 * 1000);
-    gpio_set_function(PIN_MISO, GPIO_FUNC_SPI);
-    gpio_set_function(PIN_SCK, GPIO_FUNC_SPI);
-    gpio_set_function(PIN_MOSI, GPIO_FUNC_SPI);
+    spi_init(DISP_SPI_PORT, 1000 * 1000);
+    gpio_set_function(DISP_SCK, GPIO_FUNC_SPI);
+    gpio_set_function(DISP_MOSI, GPIO_FUNC_SPI);
     // Make the SPI pins available to picotool
-    bi_decl(bi_3pins_with_func(PIN_MISO, PIN_MOSI, PIN_SCK, GPIO_FUNC_SPI));
+    bi_decl(bi_2pins_with_func(DISP_MOSI, DISP_SCK, GPIO_FUNC_SPI));
 
     // Chip select is active-high, so we'll initialise it to a driven-low state
-    gpio_init(PIN_CS);
-    gpio_set_dir(PIN_CS, GPIO_OUT);
-    gpio_put(PIN_CS, 0);
+    gpio_init(DISP_CS);
+    gpio_set_dir(DISP_CS, GPIO_OUT);
+    gpio_put(DISP_CS, 0);
     // Make the CS pin available to picotool
-    bi_decl(bi_1pin_with_name(PIN_CS, "SPI CS"));
-		printf("init display\n");
-    sharp_display_begin();
+    bi_decl(bi_1pin_with_name(DISP_CS, "SPI CS"));
+    // printf("init display\n");
+    // sharp_display_begin();
 		// sleep_ms(1000);
-		printf("clear display\n");
+		// printf("clear display\n");
 		
-		sharp_display_clearDisplay();
+		// sharp_display_clearDisplay();
     sleep_ms(2000);
-    while (1) {
-			printf("drawing line\n");
-      // for (size_t i = 0; i < WIDTH; i++)
-      // {
-        for (size_t j = 0; j < HEIGHT; j++){
-          sharp_display_drawPixel(10, j, 0);
-        }
-      // }
+
+    lv_init();
+    struct repeating_timer timer;
+    add_repeating_timer_ms(1, lvgl_ticker, NULL, &timer);
+    lv_disp_draw_buf_init(&draw_buf, buf1, NULL, DISP_HOR_RES * DISP_VER_RES);  /*Initialize the display buffer.*/
+    lv_disp_drv_init(&disp_drv);          /*Basic initialization*/
+    disp_drv.flush_cb = sharp_mip_flush;    /*Set your driver function*/
+    disp_drv.rounder_cb = sharp_mip_rounder;
+    disp_drv.set_px_cb = sharp_mip_set_px;
+    disp_drv.draw_buf = &draw_buf;        /*Assign the buffer to the display*/
+    disp_drv.hor_res = DISP_HOR_RES;   /*Set the horizontal resolution of the display*/
+    disp_drv.ver_res = DISP_VER_RES;   /*Set the vertical resolution of the display*/
+    lv_disp_drv_register(&disp_drv);      /*Finally register the driver*/
+    printf("lv_disp_drv setup\n");
+    lv_example_get_started_1();
+    while(1){
+      lv_timer_handler();
+      sleep_ms(5);
+    }
+		
+    // while (1) {
+		// 	printf("drawing line\n");
+    //   // for (size_t i = 0; i < WIDTH; i++)
+    //   // {
+    //     for (size_t j = 0; j < HEIGHT; j++){
+    //       sharp_display_drawPixel(10, j, 0);
+    //     }
+    //   // }
       
 			
-			sharp_display_refresh();
+		// 	sharp_display_refresh();
 				
-        // printf("Temp. = %f\n", (temp / 340.0) + 36.53);
+    //     // printf("Temp. = %f\n", (temp / 340.0) + 36.53);
 
-        sleep_ms(100);
-    }
+    //     sleep_ms(100);
+    // }
 
     return 0;
 }
