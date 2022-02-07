@@ -140,7 +140,7 @@ void sharp_mip_set_px(lv_disp_drv_t * disp_drv, uint8_t * buf, lv_coord_t buf_w,
   (void) disp_drv;
   (void) buf_w;
   (void) opa;
-
+  
   if (lv_color_to1(color) != 0) {
     buf[BUFIDX(x, y)] |=  PIXIDX(x);  /*Set draw_buf pixel bit to 1 for other colors than BLACK*/
   } else {

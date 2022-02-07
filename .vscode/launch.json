@@ -1,0 +1,20 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "jlink",
+            "cwd": "${workspaceRoot}",
+            "executable": "./build/display_test.elf",
+            "name": "Debug (J-Link)",
+            "device": "RP2040_M0_1",
+            "interface": "swd",
+            "serverArgs": [
+                "-gui"
+            ],
+            "ipAddress": null,
+            "serialNumber": null,
+        }
+    ]
+}
