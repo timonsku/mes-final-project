@@ -33,6 +33,7 @@ bool lvgl_ticker(repeating_timer_t *rt){
   return true;
 }
 
+
 static void btn_event_cb(lv_event_t * e)
 {
     lv_event_code_t code = lv_event_get_code(e);
@@ -81,7 +82,7 @@ void lv_example_obj_1(void)
     lv_obj_align(obj2, LV_ALIGN_CENTER, 60, 30);
 }
 
-lv_obj_t* lv_example_style_9(uint8_t lineWidth)
+lv_obj_t* createCheckmark(uint8_t lineWidth)
 {
     static lv_style_t style;
     lv_style_init(&style);
@@ -97,33 +98,57 @@ lv_obj_t* lv_example_style_9(uint8_t lineWidth)
     static lv_point_t p[] = {{10, 30}, {30, 50}, {100, 0}};
     lv_line_set_points(obj, p, 3);
 
-    lv_obj_center(obj);
     return obj;
 }
 
+lv_obj_t* lv_example_label_1(void)
+{
+    static lv_style_t label_style;
+    lv_style_init(&label_style);
+    lv_style_set_text_color(&label_style, lv_color_black());
+    lv_style_set_text_font(&label_style, &lv_font_montserrat_48);
+
+    lv_obj_t * label1 = lv_label_create(lv_scr_act());
+    lv_obj_add_style(label1, &label_style, 0);
+    lv_label_set_long_mode(label1, LV_LABEL_LONG_CLIP);     /*Break the long lines*/
+    lv_label_set_recolor(label1, true);                      /*Enable re-coloring by commands in the text*/
+    lv_label_set_text(label1, "0.00V");
+    lv_obj_set_width(label1, 150);  /*Set smaller width to make the lines wrap*/
+    lv_obj_set_style_text_align(label1, LV_TEXT_ALIGN_CENTER, 0);
+    lv_obj_align(label1, LV_ALIGN_CENTER, 0, 0);
+    return label1;
+}
+
+
+
 int main() {
     stdio_init_all();
-		sleep_ms(3000);
+    set_sys_clock_khz(200000, true);
+		// sleep_ms(3000);
     printf("Hello, Sharp Memory Display test!\n");
     printf("Initializing SPI...\n");
 
-    spi_init(DISP_SPI_PORT, 12000 * 1000);
+    spi_init(DISP_SPI_PORT, 2000 * 1000);
     gpio_set_function(DISP_SCK, GPIO_FUNC_SPI);
     gpio_set_function(DISP_MOSI, GPIO_FUNC_SPI);
     // Make the SPI pins available to picotool
-    bi_decl(bi_2pins_with_func(DISP_MOSI, DISP_SCK, GPIO_FUNC_SPI));
+    // bi_decl(bi_2pins_with_func(DISP_MOSI, DISP_SCK, GPIO_FUNC_SPI));
 
     // Chip select is active-high, so we'll initialise it to a driven-low state
     gpio_init(DISP_CS);
     gpio_set_dir(DISP_CS, GPIO_OUT);
     gpio_put(DISP_CS, 0);
     // Make the CS pin available to picotool
-    bi_decl(bi_1pin_with_name(DISP_CS, "SPI CS"));
-
+    // bi_decl(bi_1pin_with_name(DISP_CS, "SPI CS"));
+    uart_init(uart0, 115200);
+ 
+    // Set the GPIO pin mux to the UART - 0 is TX, 1 is RX
+    gpio_set_function(0, GPIO_FUNC_UART);
+    gpio_set_function(1, GPIO_FUNC_UART);
 
     lv_init();
-    struct repeating_timer timer;
-    add_repeating_timer_ms(1, lvgl_ticker, NULL, &timer);
+    struct repeating_timer lvgl_ticker_timer;
+    add_repeating_timer_ms(1, lvgl_ticker, NULL, &lvgl_ticker_timer);
     lv_disp_draw_buf_init(&draw_buf, buf1, NULL, DISP_HOR_RES * DISP_VER_RES);  /*Initialize the display buffer.*/
     lv_disp_drv_init(&disp_drv);          /*Basic initialization*/
     disp_drv.flush_cb = sharp_mip_flush;    /*Set your driver function*/
@@ -136,45 +161,42 @@ int main() {
     lv_disp_drv_register(&disp_drv);      /*Finally register the driver*/
     printf("lv_disp_drv setup\n");
 
-    lv_obj_t* obj = lv_example_style_9(10);
+    // lv_obj_t* obj = createCheckmark(10);
+    lv_obj_t* label = lv_example_label_1();
+    
     while(1){
-      
-      for (size_t i = 4; i < 30; i++){
-        lv_obj_set_pos(obj, sin(time_us_32()/130) * 50, sin(time_us_32()/100) * 80);
-        lv_timer_handler();
-        sleep_ms(1);
+
+      uint16_t adcResult;
+      if(uart_is_readable(uart0)){
+        uint8_t c = uart_getc(uart0);
+        if(c == 127){
+          printf("start byte\n");
+          // we received a start character
+          uint8_t byte1 = uart_getc(uart0);
+          uint8_t byte2 = uart_getc(uart0);
+          adcResult = byte1 | byte2 << 8;
+          printf("ADC result: %d\n", adcResult);
+        }
+        if(uart_getc(uart0) == 255){
+          //message is valid and can be shown to GUI
+          
+          char str[12];
+          sprintf(str, "%5.2fV",(3.33/1024)*adcResult);
+          lv_label_set_text(label, str);
+        }else{
+          printf("invalid message\n");
+          //message is invalid, skip and wait for next message
+        }
+        // printf("%c", c);
+        
       }
-
-      
-
-      
+      // for (size_t i = 4; i < 30; i++){
+      //   lv_obj_set_pos(obj, sin(time_us_32()/130) * 50, sin(time_us_32()/100) * 80);
+        lv_timer_handler();
+        // sleep_ms(1);
+      // }
       
     }
-
-
-		// // printf("init display\n");
-    // sharp_display_begin();
-		// // sleep_ms(1000);
-		// // printf("clear display\n");
-		
-		// sharp_display_clearDisplay();
-    // sleep_ms(100);
-    // while (1) {
-		// 	printf("drawing line\n");
-    //   // for (size_t i = 0; i < WIDTH; i++)
-    //   // {
-    //     for (size_t j = 0; j < HEIGHT; j++){
-    //       sharp_display_drawPixel(10, j, 0);
-    //     }
-    //   // }
-      
-			
-		// 	sharp_display_refresh();
-				
-    // //     // printf("Temp. = %f\n", (temp / 340.0) + 36.53);
-
-    //     sleep_ms(100);
-    // }
 
     return 0;
 }

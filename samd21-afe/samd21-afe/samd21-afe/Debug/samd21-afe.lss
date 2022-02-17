@@ -1,0 +1,2702 @@
+
+samd21-afe.elf:     file format elf32-littlearm
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000ff0  00000000  00000000  00010000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .relocate     00000008  20000000  00000ff0  00020000  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          000001b8  20000008  00000ff8  00020008  2**2
+                  ALLOC
+  3 .stack        00002000  200001c0  000011b0  00020008  2**0
+                  ALLOC
+  4 .ARM.attributes 00000028  00000000  00000000  00020008  2**0
+                  CONTENTS, READONLY
+  5 .comment      00000059  00000000  00000000  00020030  2**0
+                  CONTENTS, READONLY
+  6 .debug_info   0001cd44  00000000  00000000  00020089  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 000029cd  00000000  00000000  0003cdcd  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_loc    00003bfb  00000000  00000000  0003f79a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_aranges 00000478  00000000  00000000  00043395  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_ranges 000004c0  00000000  00000000  0004380d  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_macro  00004be4  00000000  00000000  00043ccd  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_line   00009a18  00000000  00000000  000488b1  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 13 .debug_str    0008c8ed  00000000  00000000  000522c9  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 14 .debug_frame  00000a74  00000000  00000000  000debb8  2**2
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <exception_table>:
+   0:	c0 21 00 20 09 0e 00 00 05 0e 00 00 05 0e 00 00     .!. ............
+	...
+  2c:	05 0e 00 00 00 00 00 00 00 00 00 00 05 0e 00 00     ................
+  3c:	05 0e 00 00 05 0e 00 00 05 0e 00 00 05 0e 00 00     ................
+  4c:	05 0e 00 00 9d 09 00 00 05 0e 00 00 05 0e 00 00     ................
+  5c:	5d 02 00 00 05 0e 00 00 3d 09 00 00 4d 09 00 00     ].......=...M...
+  6c:	5d 09 00 00 6d 09 00 00 7d 09 00 00 8d 09 00 00     ]...m...}.......
+  7c:	05 0e 00 00 05 0e 00 00 05 0e 00 00 05 0e 00 00     ................
+  8c:	05 0e 00 00 05 0e 00 00 00 00 00 00 00 00 00 00     ................
+  9c:	15 01 00 00 05 0e 00 00 05 0e 00 00 05 0e 00 00     ................
+  ac:	05 0e 00 00 00 00 00 00                             ........
+
+000000b4 <__do_global_dtors_aux>:
+  b4:	b510      	push	{r4, lr}
+  b6:	4c06      	ldr	r4, [pc, #24]	; (d0 <__do_global_dtors_aux+0x1c>)
+  b8:	7823      	ldrb	r3, [r4, #0]
+  ba:	2b00      	cmp	r3, #0
+  bc:	d107      	bne.n	ce <__do_global_dtors_aux+0x1a>
+  be:	4b05      	ldr	r3, [pc, #20]	; (d4 <__do_global_dtors_aux+0x20>)
+  c0:	2b00      	cmp	r3, #0
+  c2:	d002      	beq.n	ca <__do_global_dtors_aux+0x16>
+  c4:	4804      	ldr	r0, [pc, #16]	; (d8 <__do_global_dtors_aux+0x24>)
+  c6:	e000      	b.n	ca <__do_global_dtors_aux+0x16>
+  c8:	bf00      	nop
+  ca:	2301      	movs	r3, #1
+  cc:	7023      	strb	r3, [r4, #0]
+  ce:	bd10      	pop	{r4, pc}
+  d0:	20000008 	.word	0x20000008
+  d4:	00000000 	.word	0x00000000
+  d8:	00000ff0 	.word	0x00000ff0
+
+000000dc <frame_dummy>:
+  dc:	4b08      	ldr	r3, [pc, #32]	; (100 <frame_dummy+0x24>)
+  de:	b510      	push	{r4, lr}
+  e0:	2b00      	cmp	r3, #0
+  e2:	d003      	beq.n	ec <frame_dummy+0x10>
+  e4:	4907      	ldr	r1, [pc, #28]	; (104 <frame_dummy+0x28>)
+  e6:	4808      	ldr	r0, [pc, #32]	; (108 <frame_dummy+0x2c>)
+  e8:	e000      	b.n	ec <frame_dummy+0x10>
+  ea:	bf00      	nop
+  ec:	4807      	ldr	r0, [pc, #28]	; (10c <frame_dummy+0x30>)
+  ee:	6803      	ldr	r3, [r0, #0]
+  f0:	2b00      	cmp	r3, #0
+  f2:	d100      	bne.n	f6 <frame_dummy+0x1a>
+  f4:	bd10      	pop	{r4, pc}
+  f6:	4b06      	ldr	r3, [pc, #24]	; (110 <frame_dummy+0x34>)
+  f8:	2b00      	cmp	r3, #0
+  fa:	d0fb      	beq.n	f4 <frame_dummy+0x18>
+  fc:	4798      	blx	r3
+  fe:	e7f9      	b.n	f4 <frame_dummy+0x18>
+ 100:	00000000 	.word	0x00000000
+ 104:	2000000c 	.word	0x2000000c
+ 108:	00000ff0 	.word	0x00000ff0
+ 10c:	00000ff0 	.word	0x00000ff0
+ 110:	00000000 	.word	0x00000000
+
+00000114 <ADC_Handler>:
+	}
+}
+
+/** Interrupt handler for the ADC module. */
+void ADC_Handler(void)
+{
+ 114:	b570      	push	{r4, r5, r6, lr}
+	struct adc_module *module = _adc_instances[instance];
+ 116:	4b2f      	ldr	r3, [pc, #188]	; (1d4 <ADC_Handler+0xc0>)
+ 118:	681d      	ldr	r5, [r3, #0]
+	uint32_t flags = module->hw->INTFLAG.reg & module->hw->INTENSET.reg;
+ 11a:	682b      	ldr	r3, [r5, #0]
+ 11c:	7e1a      	ldrb	r2, [r3, #24]
+ 11e:	7ddc      	ldrb	r4, [r3, #23]
+ 120:	4014      	ands	r4, r2
+	if (flags & ADC_INTFLAG_RESRDY) {
+ 122:	07e2      	lsls	r2, r4, #31
+ 124:	d416      	bmi.n	154 <ADC_Handler+0x40>
+	if (flags & ADC_INTFLAG_WINMON) {
+ 126:	0763      	lsls	r3, r4, #29
+ 128:	d508      	bpl.n	13c <ADC_Handler+0x28>
+		module->hw->INTFLAG.reg = ADC_INTFLAG_WINMON;
+ 12a:	2304      	movs	r3, #4
+ 12c:	682a      	ldr	r2, [r5, #0]
+ 12e:	7613      	strb	r3, [r2, #24]
+		if ((module->enabled_callback_mask & (1 << ADC_CALLBACK_WINDOW)) &&
+ 130:	7eeb      	ldrb	r3, [r5, #27]
+ 132:	079b      	lsls	r3, r3, #30
+ 134:	d502      	bpl.n	13c <ADC_Handler+0x28>
+ 136:	7eab      	ldrb	r3, [r5, #26]
+ 138:	079b      	lsls	r3, r3, #30
+ 13a:	d442      	bmi.n	1c2 <ADC_Handler+0xae>
+	if (flags & ADC_INTFLAG_OVERRUN) {
+ 13c:	07a3      	lsls	r3, r4, #30
+ 13e:	d508      	bpl.n	152 <ADC_Handler+0x3e>
+		module->hw->INTFLAG.reg = ADC_INTFLAG_OVERRUN;
+ 140:	2302      	movs	r3, #2
+ 142:	682a      	ldr	r2, [r5, #0]
+ 144:	7613      	strb	r3, [r2, #24]
+		if ((module->enabled_callback_mask & (1 << ADC_CALLBACK_ERROR)) &&
+ 146:	7eeb      	ldrb	r3, [r5, #27]
+ 148:	075b      	lsls	r3, r3, #29
+ 14a:	d502      	bpl.n	152 <ADC_Handler+0x3e>
+ 14c:	7eab      	ldrb	r3, [r5, #26]
+ 14e:	075b      	lsls	r3, r3, #29
+ 150:	d43b      	bmi.n	1ca <ADC_Handler+0xb6>
+	_adc_interrupt_handler(0);
+}
+ 152:	bd70      	pop	{r4, r5, r6, pc}
+		module->hw->INTFLAG.reg = ADC_INTFLAG_RESRDY;
+ 154:	2201      	movs	r2, #1
+ 156:	761a      	strb	r2, [r3, #24]
+	struct adc_module *const module_inst)
+{
+	/* Sanity check arguments */
+	Assert(module_inst);
+
+	Adc *const adc_module = module_inst->hw;
+ 158:	682a      	ldr	r2, [r5, #0]
+
+	if (adc_module->STATUS.reg & ADC_STATUS_SYNCBUSY) {
+ 15a:	7e53      	ldrb	r3, [r2, #25]
+		while (adc_is_syncing(module)) {
+ 15c:	b25b      	sxtb	r3, r3
+ 15e:	2b00      	cmp	r3, #0
+ 160:	dbfb      	blt.n	15a <ADC_Handler+0x46>
+		*(module->job_buffer++) = module->hw->RESULT.reg;
+ 162:	6969      	ldr	r1, [r5, #20]
+ 164:	1c8b      	adds	r3, r1, #2
+ 166:	616b      	str	r3, [r5, #20]
+ 168:	8b53      	ldrh	r3, [r2, #26]
+ 16a:	b29b      	uxth	r3, r3
+ 16c:	800b      	strh	r3, [r1, #0]
+		if (--module->remaining_conversions > 0) {
+ 16e:	8b2b      	ldrh	r3, [r5, #24]
+ 170:	3b01      	subs	r3, #1
+ 172:	b29b      	uxth	r3, r3
+ 174:	832b      	strh	r3, [r5, #24]
+ 176:	2b00      	cmp	r3, #0
+ 178:	d011      	beq.n	19e <ADC_Handler+0x8a>
+			if (module->software_trigger == true) {
+ 17a:	7f6b      	ldrb	r3, [r5, #29]
+ 17c:	2b00      	cmp	r3, #0
+ 17e:	d0d2      	beq.n	126 <ADC_Handler+0x12>
+		struct adc_module *const module_inst)
+{
+	Assert(module_inst);
+	Assert(module_inst->hw);
+
+	Adc *const adc_module = module_inst->hw;
+ 180:	682a      	ldr	r2, [r5, #0]
+ 182:	7e53      	ldrb	r3, [r2, #25]
+
+	while (adc_is_syncing(module_inst)) {
+ 184:	b25b      	sxtb	r3, r3
+ 186:	2b00      	cmp	r3, #0
+ 188:	dbfb      	blt.n	182 <ADC_Handler+0x6e>
+		/* Wait for synchronization */
+	}
+
+	adc_module->SWTRIG.reg |= ADC_SWTRIG_START;
+ 18a:	7b13      	ldrb	r3, [r2, #12]
+ 18c:	2102      	movs	r1, #2
+ 18e:	430b      	orrs	r3, r1
+ 190:	7313      	strb	r3, [r2, #12]
+	Adc *const adc_module = module_inst->hw;
+ 192:	682a      	ldr	r2, [r5, #0]
+	if (adc_module->STATUS.reg & ADC_STATUS_SYNCBUSY) {
+ 194:	7e53      	ldrb	r3, [r2, #25]
+
+	while (adc_is_syncing(module_inst)) {
+ 196:	b25b      	sxtb	r3, r3
+ 198:	2b00      	cmp	r3, #0
+ 19a:	dbfb      	blt.n	194 <ADC_Handler+0x80>
+ 19c:	e7c3      	b.n	126 <ADC_Handler+0x12>
+	Assert(module_inst);
+	Assert(module_inst->hw);
+
+	Adc *const adc_module = module_inst->hw;
+	/* Enable interrupt */
+	adc_module->INTENCLR.reg = interrupt;
+ 19e:	2301      	movs	r3, #1
+ 1a0:	682a      	ldr	r2, [r5, #0]
+ 1a2:	7593      	strb	r3, [r2, #22]
+			if (module->job_status == STATUS_BUSY) {
+ 1a4:	7f2b      	ldrb	r3, [r5, #28]
+ 1a6:	2b05      	cmp	r3, #5
+ 1a8:	d1bd      	bne.n	126 <ADC_Handler+0x12>
+				module->job_status = STATUS_OK;
+ 1aa:	2300      	movs	r3, #0
+ 1ac:	772b      	strb	r3, [r5, #28]
+				if ((module->enabled_callback_mask &
+ 1ae:	7eeb      	ldrb	r3, [r5, #27]
+ 1b0:	07db      	lsls	r3, r3, #31
+ 1b2:	d5b8      	bpl.n	126 <ADC_Handler+0x12>
+						(1 << ADC_CALLBACK_READ_BUFFER)) &&
+ 1b4:	7eab      	ldrb	r3, [r5, #26]
+ 1b6:	07db      	lsls	r3, r3, #31
+ 1b8:	d5b5      	bpl.n	126 <ADC_Handler+0x12>
+					(module->callback[ADC_CALLBACK_READ_BUFFER])(module);
+ 1ba:	0028      	movs	r0, r5
+ 1bc:	68ab      	ldr	r3, [r5, #8]
+ 1be:	4798      	blx	r3
+ 1c0:	e7b1      	b.n	126 <ADC_Handler+0x12>
+			(module->callback[ADC_CALLBACK_WINDOW])(module);
+ 1c2:	0028      	movs	r0, r5
+ 1c4:	68eb      	ldr	r3, [r5, #12]
+ 1c6:	4798      	blx	r3
+ 1c8:	e7b8      	b.n	13c <ADC_Handler+0x28>
+			(module->callback[ADC_CALLBACK_ERROR])(module);
+ 1ca:	692b      	ldr	r3, [r5, #16]
+ 1cc:	0028      	movs	r0, r5
+ 1ce:	4798      	blx	r3
+}
+ 1d0:	e7bf      	b.n	152 <ADC_Handler+0x3e>
+ 1d2:	46c0      	nop			; (mov r8, r8)
+ 1d4:	20000078 	.word	0x20000078
+
+000001d8 <_extint_enable>:
+{
+	Eic *const eics[EIC_INST_NUM] = EIC_INSTS;
+
+	/* Enable all EIC hardware modules. */
+	for (uint32_t i = 0; i < EIC_INST_NUM; i++) {
+		eics[i]->CTRL.reg |= EIC_CTRL_ENABLE;
+ 1d8:	4a04      	ldr	r2, [pc, #16]	; (1ec <_extint_enable+0x14>)
+ 1da:	7813      	ldrb	r3, [r2, #0]
+ 1dc:	2102      	movs	r1, #2
+ 1de:	430b      	orrs	r3, r1
+ 1e0:	7013      	strb	r3, [r2, #0]
+		if (eics[i]->STATUS.reg & EIC_STATUS_SYNCBUSY) {
+ 1e2:	7853      	ldrb	r3, [r2, #1]
+ 1e4:	b25b      	sxtb	r3, r3
+ 1e6:	2b00      	cmp	r3, #0
+ 1e8:	dbfb      	blt.n	1e2 <_extint_enable+0xa>
+	}
+
+	while (extint_is_syncing()) {
+		/* Wait for all hardware modules to complete synchronization */
+	}
+}
+ 1ea:	4770      	bx	lr
+ 1ec:	40001800 	.word	0x40001800
+
+000001f0 <_system_extint_init>:
+{
+ 1f0:	b500      	push	{lr}
+ 1f2:	b083      	sub	sp, #12
+		const enum system_clock_apb_bus bus,
+		const uint32_t mask)
+{
+	switch (bus) {
+		case SYSTEM_CLOCK_APB_APBA:
+			PM->APBAMASK.reg |= mask;
+ 1f4:	4a12      	ldr	r2, [pc, #72]	; (240 <_system_extint_init+0x50>)
+ 1f6:	6993      	ldr	r3, [r2, #24]
+ 1f8:	2140      	movs	r1, #64	; 0x40
+ 1fa:	430b      	orrs	r3, r1
+ 1fc:	6193      	str	r3, [r2, #24]
+{
+	/* Sanity check arguments */
+	Assert(config);
+
+	/* Default configuration values */
+	config->source_generator = GCLK_GENERATOR_0;
+ 1fe:	a901      	add	r1, sp, #4
+ 200:	2300      	movs	r3, #0
+ 202:	700b      	strb	r3, [r1, #0]
+	system_gclk_chan_set_config(EIC_GCLK_ID, &gclk_chan_conf);
+ 204:	2005      	movs	r0, #5
+ 206:	4b0f      	ldr	r3, [pc, #60]	; (244 <_system_extint_init+0x54>)
+ 208:	4798      	blx	r3
+	system_gclk_chan_enable(EIC_GCLK_ID);
+ 20a:	2005      	movs	r0, #5
+ 20c:	4b0e      	ldr	r3, [pc, #56]	; (248 <_system_extint_init+0x58>)
+ 20e:	4798      	blx	r3
+		eics[i]->CTRL.reg |= EIC_CTRL_SWRST;
+ 210:	4a0e      	ldr	r2, [pc, #56]	; (24c <_system_extint_init+0x5c>)
+ 212:	7813      	ldrb	r3, [r2, #0]
+ 214:	2101      	movs	r1, #1
+ 216:	430b      	orrs	r3, r1
+ 218:	7013      	strb	r3, [r2, #0]
+		if (eics[i]->STATUS.reg & EIC_STATUS_SYNCBUSY) {
+ 21a:	7853      	ldrb	r3, [r2, #1]
+ 21c:	b25b      	sxtb	r3, r3
+ 21e:	2b00      	cmp	r3, #0
+ 220:	dbfb      	blt.n	21a <_system_extint_init+0x2a>
+ 222:	4b0b      	ldr	r3, [pc, #44]	; (250 <_system_extint_init+0x60>)
+ 224:	0019      	movs	r1, r3
+ 226:	3140      	adds	r1, #64	; 0x40
+		_extint_dev.callbacks[j] = NULL;
+ 228:	2200      	movs	r2, #0
+ 22a:	c304      	stmia	r3!, {r2}
+	for (uint8_t j = 0; j < EIC_NUMBER_OF_INTERRUPTS; j++) {
+ 22c:	4299      	cmp	r1, r3
+ 22e:	d1fc      	bne.n	22a <_system_extint_init+0x3a>
+ * \param[in] vector Interrupt vector to enable
+ */
+static inline void system_interrupt_enable(
+		const enum system_interrupt_vector vector)
+{
+	NVIC->ISER[0] = (uint32_t)(1 << ((uint32_t)vector & 0x0000001f));
+ 230:	2210      	movs	r2, #16
+ 232:	4b08      	ldr	r3, [pc, #32]	; (254 <_system_extint_init+0x64>)
+ 234:	601a      	str	r2, [r3, #0]
+	_extint_enable();
+ 236:	4b08      	ldr	r3, [pc, #32]	; (258 <_system_extint_init+0x68>)
+ 238:	4798      	blx	r3
+}
+ 23a:	b003      	add	sp, #12
+ 23c:	bd00      	pop	{pc}
+ 23e:	46c0      	nop			; (mov r8, r8)
+ 240:	40000400 	.word	0x40000400
+ 244:	00000db9 	.word	0x00000db9
+ 248:	00000d2d 	.word	0x00000d2d
+ 24c:	40001800 	.word	0x40001800
+ 250:	2000007c 	.word	0x2000007c
+ 254:	e000e100 	.word	0xe000e100
+ 258:	000001d9 	.word	0x000001d9
+
+0000025c <USB_Handler>:
+
+/**
+ * \brief Interrupt handler for the USB module.
+ */
+void USB_Handler(void)
+{
+ 25c:	b5f0      	push	{r4, r5, r6, r7, lr}
+ 25e:	46de      	mov	lr, fp
+ 260:	4657      	mov	r7, sl
+ 262:	464e      	mov	r6, r9
+ 264:	4645      	mov	r5, r8
+ 266:	b5e0      	push	{r5, r6, r7, lr}
+ 268:	b083      	sub	sp, #12
+	if (_usb_instances->hw->DEVICE.CTRLA.bit.MODE) {
+ 26a:	4bc4      	ldr	r3, [pc, #784]	; (57c <USB_Handler+0x320>)
+ 26c:	681f      	ldr	r7, [r3, #0]
+ 26e:	683d      	ldr	r5, [r7, #0]
+ 270:	782b      	ldrb	r3, [r5, #0]
+ 272:	09db      	lsrs	r3, r3, #7
+ 274:	d114      	bne.n	2a0 <USB_Handler+0x44>
+	ep_inst = _usb_instances->hw->DEVICE.EPINTSMRY.reg;
+ 276:	8c2e      	ldrh	r6, [r5, #32]
+ 278:	b2b6      	uxth	r6, r6
+	if (0 == ep_inst) {
+ 27a:	2e00      	cmp	r6, #0
+ 27c:	d000      	beq.n	280 <USB_Handler+0x24>
+ 27e:	e22d      	b.n	6dc <USB_Handler+0x480>
+		flags = _usb_instances->hw->DEVICE.INTFLAG.reg;
+ 280:	8bae      	ldrh	r6, [r5, #28]
+ 282:	b2b6      	uxth	r6, r6
+				_usb_instances->device_enabled_callback_mask &
+ 284:	23ab      	movs	r3, #171	; 0xab
+ 286:	005b      	lsls	r3, r3, #1
+		flags_run = flags &
+ 288:	5afb      	ldrh	r3, [r7, r3]
+ 28a:	22aa      	movs	r2, #170	; 0xaa
+ 28c:	0052      	lsls	r2, r2, #1
+ 28e:	5abd      	ldrh	r5, [r7, r2]
+ 290:	401d      	ands	r5, r3
+ 292:	4035      	ands	r5, r6
+		for (i = 0; i < USB_DEVICE_CALLBACK_N; i ++) {
+ 294:	2400      	movs	r4, #0
+			if (flags & _usb_device_irq_bits[i]) {
+ 296:	4fba      	ldr	r7, [pc, #744]	; (580 <USB_Handler+0x324>)
+				_usb_instances->hw->DEVICE.INTFLAG.reg =
+ 298:	4bb8      	ldr	r3, [pc, #736]	; (57c <USB_Handler+0x320>)
+ 29a:	4699      	mov	r9, r3
+				(_usb_instances->device_callback[i])(_usb_instances, &device_callback_lpm_wakeup_enable);
+ 29c:	4698      	mov	r8, r3
+ 29e:	e208      	b.n	6b2 <USB_Handler+0x456>
+	pipe_int = ctz(_usb_instances->hw->HOST.PINTSMRY.reg);
+ 2a0:	8c2b      	ldrh	r3, [r5, #32]
+ 2a2:	b29b      	uxth	r3, r3
+ 2a4:	2b00      	cmp	r3, #0
+ 2a6:	d100      	bne.n	2aa <USB_Handler+0x4e>
+ 2a8:	e13d      	b.n	526 <USB_Handler+0x2ca>
+ 2aa:	8c28      	ldrh	r0, [r5, #32]
+ 2ac:	b280      	uxth	r0, r0
+ 2ae:	4bb5      	ldr	r3, [pc, #724]	; (584 <USB_Handler+0x328>)
+ 2b0:	4798      	blx	r3
+ 2b2:	0004      	movs	r4, r0
+	if (pipe_int < 32) {
+ 2b4:	281f      	cmp	r0, #31
+ 2b6:	d900      	bls.n	2ba <USB_Handler+0x5e>
+ 2b8:	e135      	b.n	526 <USB_Handler+0x2ca>
+		flags = _usb_instances->hw->HOST.HostPipe[pipe_int].PINTFLAG.reg;
+ 2ba:	0003      	movs	r3, r0
+ 2bc:	3308      	adds	r3, #8
+ 2be:	015b      	lsls	r3, r3, #5
+ 2c0:	18ed      	adds	r5, r5, r3
+ 2c2:	79ed      	ldrb	r5, [r5, #7]
+ 2c4:	b2ed      	uxtb	r5, r5
+		if (flags & USB_HOST_PINTFLAG_TRCPT_Msk) {
+ 2c6:	07ab      	lsls	r3, r5, #30
+ 2c8:	d041      	beq.n	34e <USB_Handler+0xf2>
+			host_pipe_job_busy_status &= ~(1 << pipe_int);
+ 2ca:	4aaf      	ldr	r2, [pc, #700]	; (588 <USB_Handler+0x32c>)
+ 2cc:	2301      	movs	r3, #1
+ 2ce:	4083      	lsls	r3, r0
+ 2d0:	6811      	ldr	r1, [r2, #0]
+ 2d2:	4399      	bics	r1, r3
+ 2d4:	6011      	str	r1, [r2, #0]
+			_usb_instances->hw->HOST.HostPipe[pipe_int].PINTFLAG.reg =
+ 2d6:	0003      	movs	r3, r0
+ 2d8:	3308      	adds	r3, #8
+ 2da:	015b      	lsls	r3, r3, #5
+ 2dc:	683a      	ldr	r2, [r7, #0]
+ 2de:	4694      	mov	ip, r2
+ 2e0:	4463      	add	r3, ip
+ 2e2:	2203      	movs	r2, #3
+ 2e4:	71da      	strb	r2, [r3, #7]
+			if(_usb_instances->host_pipe_enabled_callback_mask[pipe_int] &
+ 2e6:	183b      	adds	r3, r7, r0
+ 2e8:	33ae      	adds	r3, #174	; 0xae
+ 2ea:	781b      	ldrb	r3, [r3, #0]
+ 2ec:	07db      	lsls	r3, r3, #31
+ 2ee:	d52e      	bpl.n	34e <USB_Handler+0xf2>
+				pipe_callback_para.pipe_num = pipe_int;
+ 2f0:	4ba6      	ldr	r3, [pc, #664]	; (58c <USB_Handler+0x330>)
+ 2f2:	7018      	strb	r0, [r3, #0]
+				if (_usb_instances->hw->HOST.HostPipe[pipe_int].PCFG.bit.PTOKEN ==
+ 2f4:	683a      	ldr	r2, [r7, #0]
+ 2f6:	0003      	movs	r3, r0
+ 2f8:	3308      	adds	r3, #8
+ 2fa:	015b      	lsls	r3, r3, #5
+ 2fc:	5c9b      	ldrb	r3, [r3, r2]
+ 2fe:	079b      	lsls	r3, r3, #30
+ 300:	0f9b      	lsrs	r3, r3, #30
+ 302:	2b01      	cmp	r3, #1
+ 304:	d100      	bne.n	308 <USB_Handler+0xac>
+ 306:	e094      	b.n	432 <USB_Handler+0x1d6>
+					pipe_callback_para.transfered_size = usb_descriptor_table.usb_pipe_table[pipe_int].HostDescBank[0].PCKSIZE.bit.MULTI_PACKET_SIZE;
+ 308:	0142      	lsls	r2, r0, #5
+ 30a:	4ba1      	ldr	r3, [pc, #644]	; (590 <USB_Handler+0x334>)
+ 30c:	189b      	adds	r3, r3, r2
+ 30e:	685a      	ldr	r2, [r3, #4]
+ 310:	0112      	lsls	r2, r2, #4
+ 312:	0c92      	lsrs	r2, r2, #18
+ 314:	b290      	uxth	r0, r2
+ 316:	499d      	ldr	r1, [pc, #628]	; (58c <USB_Handler+0x330>)
+ 318:	804a      	strh	r2, [r1, #2]
+					pipe_callback_para.required_size = usb_descriptor_table.usb_pipe_table[pipe_int].HostDescBank[0].PCKSIZE.bit.BYTE_COUNT;
+ 31a:	685a      	ldr	r2, [r3, #4]
+ 31c:	0492      	lsls	r2, r2, #18
+ 31e:	0c92      	lsrs	r2, r2, #18
+ 320:	808a      	strh	r2, [r1, #4]
+					usb_descriptor_table.usb_pipe_table[pipe_int].HostDescBank[0].PCKSIZE.bit.MULTI_PACKET_SIZE = 0;
+ 322:	685a      	ldr	r2, [r3, #4]
+ 324:	499b      	ldr	r1, [pc, #620]	; (594 <USB_Handler+0x338>)
+ 326:	400a      	ands	r2, r1
+ 328:	605a      	str	r2, [r3, #4]
+					if (0 == pipe_callback_para.transfered_size) {
+ 32a:	2800      	cmp	r0, #0
+ 32c:	d107      	bne.n	33e <USB_Handler+0xe2>
+						pipe_callback_para.transfered_size = usb_descriptor_table.usb_pipe_table[pipe_int].HostDescBank[0].PCKSIZE.bit.BYTE_COUNT;
+ 32e:	0162      	lsls	r2, r4, #5
+ 330:	4b97      	ldr	r3, [pc, #604]	; (590 <USB_Handler+0x334>)
+ 332:	189b      	adds	r3, r3, r2
+ 334:	685b      	ldr	r3, [r3, #4]
+ 336:	049b      	lsls	r3, r3, #18
+ 338:	0c9b      	lsrs	r3, r3, #18
+ 33a:	4a94      	ldr	r2, [pc, #592]	; (58c <USB_Handler+0x330>)
+ 33c:	8053      	strh	r3, [r2, #2]
+				(_usb_instances->host_pipe_callback[pipe_int]
+ 33e:	4b8f      	ldr	r3, [pc, #572]	; (57c <USB_Handler+0x320>)
+ 340:	6818      	ldr	r0, [r3, #0]
+						[USB_HOST_PIPE_CALLBACK_TRANSFER_COMPLETE])(_usb_instances, &pipe_callback_para);
+ 342:	1ca3      	adds	r3, r4, #2
+ 344:	011b      	lsls	r3, r3, #4
+ 346:	18c3      	adds	r3, r0, r3
+ 348:	685b      	ldr	r3, [r3, #4]
+ 34a:	4990      	ldr	r1, [pc, #576]	; (58c <USB_Handler+0x330>)
+ 34c:	4798      	blx	r3
+		if (flags & USB_HOST_PINTFLAG_TRFAIL) {
+ 34e:	076b      	lsls	r3, r5, #29
+ 350:	d51f      	bpl.n	392 <USB_Handler+0x136>
+			if (_usb_instances->hw->HOST.HostPipe[pipe_int].PCFG.bit.PTYPE == USB_HOST_PIPE_TYPE_ISO &&
+ 352:	4b8a      	ldr	r3, [pc, #552]	; (57c <USB_Handler+0x320>)
+ 354:	6818      	ldr	r0, [r3, #0]
+ 356:	6802      	ldr	r2, [r0, #0]
+ 358:	0023      	movs	r3, r4
+ 35a:	3308      	adds	r3, #8
+ 35c:	015b      	lsls	r3, r3, #5
+ 35e:	5c9b      	ldrb	r3, [r3, r2]
+ 360:	069b      	lsls	r3, r3, #26
+ 362:	0f5b      	lsrs	r3, r3, #29
+ 364:	2b02      	cmp	r3, #2
+ 366:	d075      	beq.n	454 <USB_Handler+0x1f8>
+			else if (_usb_instances->hw->HOST.HostPipe[pipe_int].PCFG.bit.PTYPE == USB_HOST_PIPE_TYPE_BULK &&
+ 368:	0023      	movs	r3, r4
+ 36a:	3308      	adds	r3, #8
+ 36c:	015b      	lsls	r3, r3, #5
+ 36e:	5c9b      	ldrb	r3, [r3, r2]
+ 370:	069b      	lsls	r3, r3, #26
+ 372:	0f5b      	lsrs	r3, r3, #29
+ 374:	2b03      	cmp	r3, #3
+ 376:	d100      	bne.n	37a <USB_Handler+0x11e>
+ 378:	e09e      	b.n	4b8 <USB_Handler+0x25c>
+				usb_descriptor_table.usb_pipe_table[pipe_int].HostDescBank[0].STATUS_BK.reg = 0;
+ 37a:	0162      	lsls	r2, r4, #5
+ 37c:	4b84      	ldr	r3, [pc, #528]	; (590 <USB_Handler+0x334>)
+ 37e:	189b      	adds	r3, r3, r2
+ 380:	2200      	movs	r2, #0
+ 382:	729a      	strb	r2, [r3, #10]
+				_usb_instances->hw->HOST.HostPipe[pipe_int].PINTFLAG.reg =
+ 384:	6803      	ldr	r3, [r0, #0]
+ 386:	0022      	movs	r2, r4
+ 388:	3208      	adds	r2, #8
+ 38a:	0152      	lsls	r2, r2, #5
+ 38c:	189b      	adds	r3, r3, r2
+ 38e:	2204      	movs	r2, #4
+ 390:	71da      	strb	r2, [r3, #7]
+		if (flags & USB_HOST_PINTFLAG_PERR) {
+ 392:	072b      	lsls	r3, r5, #28
+ 394:	d515      	bpl.n	3c2 <USB_Handler+0x166>
+			host_pipe_job_busy_status &= ~(1 << pipe_int);
+ 396:	4a7c      	ldr	r2, [pc, #496]	; (588 <USB_Handler+0x32c>)
+ 398:	2301      	movs	r3, #1
+ 39a:	40a3      	lsls	r3, r4
+ 39c:	6811      	ldr	r1, [r2, #0]
+ 39e:	4399      	bics	r1, r3
+ 3a0:	6011      	str	r1, [r2, #0]
+			_usb_instances->hw->HOST.HostPipe[pipe_int].PINTFLAG.reg =
+ 3a2:	4b76      	ldr	r3, [pc, #472]	; (57c <USB_Handler+0x320>)
+ 3a4:	6818      	ldr	r0, [r3, #0]
+ 3a6:	0023      	movs	r3, r4
+ 3a8:	3308      	adds	r3, #8
+ 3aa:	015b      	lsls	r3, r3, #5
+ 3ac:	6802      	ldr	r2, [r0, #0]
+ 3ae:	4694      	mov	ip, r2
+ 3b0:	4463      	add	r3, ip
+ 3b2:	2208      	movs	r2, #8
+ 3b4:	71da      	strb	r2, [r3, #7]
+			if(_usb_instances->host_pipe_enabled_callback_mask[pipe_int] &
+ 3b6:	1903      	adds	r3, r0, r4
+ 3b8:	33ae      	adds	r3, #174	; 0xae
+ 3ba:	781b      	ldrb	r3, [r3, #0]
+ 3bc:	079b      	lsls	r3, r3, #30
+ 3be:	d500      	bpl.n	3c2 <USB_Handler+0x166>
+ 3c0:	e094      	b.n	4ec <USB_Handler+0x290>
+		if (flags & USB_HOST_PINTFLAG_TXSTP) {
+ 3c2:	06eb      	lsls	r3, r5, #27
+ 3c4:	d515      	bpl.n	3f2 <USB_Handler+0x196>
+			host_pipe_job_busy_status &= ~(1 << pipe_int);
+ 3c6:	4a70      	ldr	r2, [pc, #448]	; (588 <USB_Handler+0x32c>)
+ 3c8:	2301      	movs	r3, #1
+ 3ca:	40a3      	lsls	r3, r4
+ 3cc:	6811      	ldr	r1, [r2, #0]
+ 3ce:	4399      	bics	r1, r3
+ 3d0:	6011      	str	r1, [r2, #0]
+			_usb_instances->hw->HOST.HostPipe[pipe_int].PINTFLAG.reg =
+ 3d2:	4b6a      	ldr	r3, [pc, #424]	; (57c <USB_Handler+0x320>)
+ 3d4:	6818      	ldr	r0, [r3, #0]
+ 3d6:	0023      	movs	r3, r4
+ 3d8:	3308      	adds	r3, #8
+ 3da:	015b      	lsls	r3, r3, #5
+ 3dc:	6802      	ldr	r2, [r0, #0]
+ 3de:	4694      	mov	ip, r2
+ 3e0:	4463      	add	r3, ip
+ 3e2:	2210      	movs	r2, #16
+ 3e4:	71da      	strb	r2, [r3, #7]
+			if(_usb_instances->host_pipe_enabled_callback_mask[pipe_int] &
+ 3e6:	1903      	adds	r3, r0, r4
+ 3e8:	33ae      	adds	r3, #174	; 0xae
+ 3ea:	781b      	ldrb	r3, [r3, #0]
+ 3ec:	075b      	lsls	r3, r3, #29
+ 3ee:	d500      	bpl.n	3f2 <USB_Handler+0x196>
+ 3f0:	e08a      	b.n	508 <USB_Handler+0x2ac>
+		if (flags & USB_HOST_PINTFLAG_STALL) {
+ 3f2:	06ab      	lsls	r3, r5, #26
+ 3f4:	d400      	bmi.n	3f8 <USB_Handler+0x19c>
+ 3f6:	e12f      	b.n	658 <USB_Handler+0x3fc>
+			host_pipe_job_busy_status &= ~(1 << pipe_int);
+ 3f8:	4a63      	ldr	r2, [pc, #396]	; (588 <USB_Handler+0x32c>)
+ 3fa:	2301      	movs	r3, #1
+ 3fc:	40a3      	lsls	r3, r4
+ 3fe:	6811      	ldr	r1, [r2, #0]
+ 400:	4399      	bics	r1, r3
+ 402:	6011      	str	r1, [r2, #0]
+			_usb_instances->hw->HOST.HostPipe[pipe_int].PINTFLAG.reg =
+ 404:	4b5d      	ldr	r3, [pc, #372]	; (57c <USB_Handler+0x320>)
+ 406:	6818      	ldr	r0, [r3, #0]
+ 408:	0023      	movs	r3, r4
+ 40a:	3308      	adds	r3, #8
+ 40c:	015b      	lsls	r3, r3, #5
+ 40e:	6802      	ldr	r2, [r0, #0]
+ 410:	4694      	mov	ip, r2
+ 412:	4463      	add	r3, ip
+ 414:	2220      	movs	r2, #32
+ 416:	71da      	strb	r2, [r3, #7]
+			if(_usb_instances->host_pipe_enabled_callback_mask[pipe_int] &
+ 418:	1903      	adds	r3, r0, r4
+ 41a:	33ae      	adds	r3, #174	; 0xae
+ 41c:	781b      	ldrb	r3, [r3, #0]
+ 41e:	071b      	lsls	r3, r3, #28
+ 420:	d400      	bmi.n	424 <USB_Handler+0x1c8>
+ 422:	e119      	b.n	658 <USB_Handler+0x3fc>
+				pipe_callback_para.pipe_num = pipe_int;
+ 424:	4959      	ldr	r1, [pc, #356]	; (58c <USB_Handler+0x330>)
+ 426:	700c      	strb	r4, [r1, #0]
+						[USB_HOST_PIPE_CALLBACK_STALL])(_usb_instances, &pipe_callback_para);
+ 428:	0124      	lsls	r4, r4, #4
+ 42a:	1904      	adds	r4, r0, r4
+ 42c:	6b23      	ldr	r3, [r4, #48]	; 0x30
+ 42e:	4798      	blx	r3
+ 430:	e112      	b.n	658 <USB_Handler+0x3fc>
+					pipe_callback_para.transfered_size = usb_descriptor_table.usb_pipe_table[pipe_int].HostDescBank[0].PCKSIZE.bit.BYTE_COUNT;
+ 432:	0142      	lsls	r2, r0, #5
+ 434:	4b56      	ldr	r3, [pc, #344]	; (590 <USB_Handler+0x334>)
+ 436:	189b      	adds	r3, r3, r2
+ 438:	685a      	ldr	r2, [r3, #4]
+ 43a:	0492      	lsls	r2, r2, #18
+ 43c:	0c92      	lsrs	r2, r2, #18
+ 43e:	4953      	ldr	r1, [pc, #332]	; (58c <USB_Handler+0x330>)
+ 440:	804a      	strh	r2, [r1, #2]
+					pipe_callback_para.required_size = usb_descriptor_table.usb_pipe_table[pipe_int].HostDescBank[0].PCKSIZE.bit.MULTI_PACKET_SIZE;
+ 442:	685a      	ldr	r2, [r3, #4]
+ 444:	0112      	lsls	r2, r2, #4
+ 446:	0c92      	lsrs	r2, r2, #18
+ 448:	808a      	strh	r2, [r1, #4]
+					usb_descriptor_table.usb_pipe_table[pipe_int].HostDescBank[0].PCKSIZE.bit.BYTE_COUNT = 0;
+ 44a:	685a      	ldr	r2, [r3, #4]
+ 44c:	0b92      	lsrs	r2, r2, #14
+ 44e:	0392      	lsls	r2, r2, #14
+ 450:	605a      	str	r2, [r3, #4]
+ 452:	e774      	b.n	33e <USB_Handler+0xe2>
+					_usb_instances->hw->HOST.HostPipe[pipe_int].PCFG.bit.PTOKEN == USB_HOST_PIPE_TOKEN_IN &&
+ 454:	0023      	movs	r3, r4
+ 456:	3308      	adds	r3, #8
+ 458:	015b      	lsls	r3, r3, #5
+ 45a:	5c9b      	ldrb	r3, [r3, r2]
+ 45c:	079b      	lsls	r3, r3, #30
+ 45e:	0f9b      	lsrs	r3, r3, #30
+			if (_usb_instances->hw->HOST.HostPipe[pipe_int].PCFG.bit.PTYPE == USB_HOST_PIPE_TYPE_ISO &&
+ 460:	2b01      	cmp	r3, #1
+ 462:	d181      	bne.n	368 <USB_Handler+0x10c>
+					usb_descriptor_table.usb_pipe_table[pipe_int].HostDescBank[0].STATUS_BK.bit.CRCERR) {
+ 464:	0161      	lsls	r1, r4, #5
+ 466:	4b4a      	ldr	r3, [pc, #296]	; (590 <USB_Handler+0x334>)
+ 468:	185b      	adds	r3, r3, r1
+ 46a:	3308      	adds	r3, #8
+ 46c:	789b      	ldrb	r3, [r3, #2]
+					_usb_instances->hw->HOST.HostPipe[pipe_int].PCFG.bit.PTOKEN == USB_HOST_PIPE_TOKEN_IN &&
+ 46e:	07db      	lsls	r3, r3, #31
+ 470:	d400      	bmi.n	474 <USB_Handler+0x218>
+ 472:	e779      	b.n	368 <USB_Handler+0x10c>
+				host_pipe_job_busy_status &= ~(1 << pipe_int);
+ 474:	4a44      	ldr	r2, [pc, #272]	; (588 <USB_Handler+0x32c>)
+ 476:	2301      	movs	r3, #1
+ 478:	40a3      	lsls	r3, r4
+ 47a:	6811      	ldr	r1, [r2, #0]
+ 47c:	4399      	bics	r1, r3
+ 47e:	6011      	str	r1, [r2, #0]
+				usb_descriptor_table.usb_pipe_table[pipe_int].HostDescBank[0].STATUS_BK.reg = 0;
+ 480:	0162      	lsls	r2, r4, #5
+ 482:	4b43      	ldr	r3, [pc, #268]	; (590 <USB_Handler+0x334>)
+ 484:	189b      	adds	r3, r3, r2
+ 486:	2200      	movs	r2, #0
+ 488:	729a      	strb	r2, [r3, #10]
+				_usb_instances->hw->HOST.HostPipe[pipe_int].PINTFLAG.reg =
+ 48a:	0023      	movs	r3, r4
+ 48c:	3308      	adds	r3, #8
+ 48e:	015b      	lsls	r3, r3, #5
+ 490:	6802      	ldr	r2, [r0, #0]
+ 492:	4694      	mov	ip, r2
+ 494:	4463      	add	r3, ip
+ 496:	2204      	movs	r2, #4
+ 498:	71da      	strb	r2, [r3, #7]
+				if(_usb_instances->host_pipe_enabled_callback_mask[pipe_int] &
+ 49a:	1903      	adds	r3, r0, r4
+ 49c:	33ae      	adds	r3, #174	; 0xae
+ 49e:	781b      	ldrb	r3, [r3, #0]
+ 4a0:	079b      	lsls	r3, r3, #30
+ 4a2:	d400      	bmi.n	4a6 <USB_Handler+0x24a>
+ 4a4:	e775      	b.n	392 <USB_Handler+0x136>
+					pipe_callback_para.pipe_num = pipe_int;
+ 4a6:	4939      	ldr	r1, [pc, #228]	; (58c <USB_Handler+0x330>)
+ 4a8:	700c      	strb	r4, [r1, #0]
+					pipe_callback_para.pipe_error_status = USB_STATUS_PIPE_CRC16ER;
+ 4aa:	2310      	movs	r3, #16
+ 4ac:	704b      	strb	r3, [r1, #1]
+							[USB_HOST_PIPE_CALLBACK_ERROR])(_usb_instances, &pipe_callback_para);
+ 4ae:	0123      	lsls	r3, r4, #4
+ 4b0:	18c3      	adds	r3, r0, r3
+ 4b2:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+ 4b4:	4798      	blx	r3
+ 4b6:	e76c      	b.n	392 <USB_Handler+0x136>
+					_usb_instances->hw->HOST.HostPipe[pipe_int].PCFG.bit.PTOKEN == USB_HOST_PIPE_TOKEN_IN) {
+ 4b8:	0023      	movs	r3, r4
+ 4ba:	3308      	adds	r3, #8
+ 4bc:	015b      	lsls	r3, r3, #5
+ 4be:	5c9b      	ldrb	r3, [r3, r2]
+ 4c0:	079b      	lsls	r3, r3, #30
+ 4c2:	0f9b      	lsrs	r3, r3, #30
+			else if (_usb_instances->hw->HOST.HostPipe[pipe_int].PCFG.bit.PTYPE == USB_HOST_PIPE_TYPE_BULK &&
+ 4c4:	2b01      	cmp	r3, #1
+ 4c6:	d000      	beq.n	4ca <USB_Handler+0x26e>
+ 4c8:	e757      	b.n	37a <USB_Handler+0x11e>
+				usb_descriptor_table.usb_pipe_table[pipe_int].HostDescBank[0].STATUS_BK.reg = 0;
+ 4ca:	0162      	lsls	r2, r4, #5
+ 4cc:	4b30      	ldr	r3, [pc, #192]	; (590 <USB_Handler+0x334>)
+ 4ce:	189b      	adds	r3, r3, r2
+ 4d0:	2200      	movs	r2, #0
+ 4d2:	729a      	strb	r2, [r3, #10]
+				_usb_instances->hw->HOST.HostPipe[pipe_int].PINTFLAG.reg =
+ 4d4:	0023      	movs	r3, r4
+ 4d6:	3308      	adds	r3, #8
+ 4d8:	015b      	lsls	r3, r3, #5
+ 4da:	6802      	ldr	r2, [r0, #0]
+ 4dc:	18d2      	adds	r2, r2, r3
+ 4de:	2104      	movs	r1, #4
+ 4e0:	71d1      	strb	r1, [r2, #7]
+				_usb_instances->hw->HOST.HostPipe[pipe_int].PSTATUSSET.reg = USB_HOST_PSTATUS_PFREEZE;
+ 4e2:	6802      	ldr	r2, [r0, #0]
+ 4e4:	18d3      	adds	r3, r2, r3
+ 4e6:	2210      	movs	r2, #16
+ 4e8:	715a      	strb	r2, [r3, #5]
+ 4ea:	e752      	b.n	392 <USB_Handler+0x136>
+				pipe_callback_para.pipe_num = pipe_int;
+ 4ec:	4927      	ldr	r1, [pc, #156]	; (58c <USB_Handler+0x330>)
+ 4ee:	700c      	strb	r4, [r1, #0]
+						usb_descriptor_table.usb_pipe_table[pipe_int].HostDescBank[0].STATUS_PIPE.reg & 0x1F;
+ 4f0:	0162      	lsls	r2, r4, #5
+ 4f2:	4b27      	ldr	r3, [pc, #156]	; (590 <USB_Handler+0x334>)
+ 4f4:	189b      	adds	r3, r3, r2
+ 4f6:	89db      	ldrh	r3, [r3, #14]
+ 4f8:	221f      	movs	r2, #31
+ 4fa:	4013      	ands	r3, r2
+				pipe_callback_para.pipe_error_status =
+ 4fc:	704b      	strb	r3, [r1, #1]
+						[USB_HOST_PIPE_CALLBACK_ERROR])(_usb_instances, &pipe_callback_para);
+ 4fe:	0123      	lsls	r3, r4, #4
+ 500:	18c3      	adds	r3, r0, r3
+ 502:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+ 504:	4798      	blx	r3
+ 506:	e75c      	b.n	3c2 <USB_Handler+0x166>
+				pipe_callback_para.pipe_num = pipe_int;
+ 508:	4920      	ldr	r1, [pc, #128]	; (58c <USB_Handler+0x330>)
+ 50a:	700c      	strb	r4, [r1, #0]
+				pipe_callback_para.transfered_size = usb_descriptor_table.usb_pipe_table[pipe_int].HostDescBank[0].PCKSIZE.bit.MULTI_PACKET_SIZE;
+ 50c:	0162      	lsls	r2, r4, #5
+ 50e:	4b20      	ldr	r3, [pc, #128]	; (590 <USB_Handler+0x334>)
+ 510:	189b      	adds	r3, r3, r2
+ 512:	685b      	ldr	r3, [r3, #4]
+ 514:	011b      	lsls	r3, r3, #4
+ 516:	0c9b      	lsrs	r3, r3, #18
+ 518:	804b      	strh	r3, [r1, #2]
+						[USB_HOST_PIPE_CALLBACK_SETUP])(_usb_instances, NULL);
+ 51a:	0123      	lsls	r3, r4, #4
+ 51c:	18c3      	adds	r3, r0, r3
+ 51e:	6adb      	ldr	r3, [r3, #44]	; 0x2c
+ 520:	2100      	movs	r1, #0
+ 522:	4798      	blx	r3
+ 524:	e765      	b.n	3f2 <USB_Handler+0x196>
+		flags = _usb_instances->hw->HOST.INTFLAG.reg;
+ 526:	8bac      	ldrh	r4, [r5, #28]
+ 528:	b2a4      	uxth	r4, r4
+		if (flags & USB_HOST_INTFLAG_HSOF) {
+ 52a:	0763      	lsls	r3, r4, #29
+ 52c:	d538      	bpl.n	5a0 <USB_Handler+0x344>
+			_usb_instances->hw->HOST.INTFLAG.reg = USB_HOST_INTFLAG_HSOF;
+ 52e:	2304      	movs	r3, #4
+ 530:	83ab      	strh	r3, [r5, #28]
+				if (!(host_pipe_job_busy_status & (1 << pipe_int))) {
+ 532:	4b15      	ldr	r3, [pc, #84]	; (588 <USB_Handler+0x32c>)
+ 534:	681d      	ldr	r5, [r3, #0]
+			for (pipe_int = 1; pipe_int < USB_PIPE_NUM; pipe_int ++) {
+ 536:	2301      	movs	r3, #1
+				if (!(host_pipe_job_busy_status & (1 << pipe_int))) {
+ 538:	2001      	movs	r0, #1
+				_usb_instances->hw->HOST.HostPipe[pipe_int].PSTATUSCLR.reg = USB_HOST_PSTATUS_PFREEZE;
+ 53a:	2610      	movs	r6, #16
+ 53c:	e002      	b.n	544 <USB_Handler+0x2e8>
+			for (pipe_int = 1; pipe_int < USB_PIPE_NUM; pipe_int ++) {
+ 53e:	3301      	adds	r3, #1
+ 540:	2b08      	cmp	r3, #8
+ 542:	d029      	beq.n	598 <USB_Handler+0x33c>
+				if (!(host_pipe_job_busy_status & (1 << pipe_int))) {
+ 544:	0002      	movs	r2, r0
+ 546:	409a      	lsls	r2, r3
+ 548:	4215      	tst	r5, r2
+ 54a:	d0f8      	beq.n	53e <USB_Handler+0x2e2>
+				if (_usb_instances->hw->HOST.HostPipe[pipe_int].PCFG.bit.PTYPE != USB_HOST_PIPE_TYPE_BULK ||
+ 54c:	6839      	ldr	r1, [r7, #0]
+ 54e:	001a      	movs	r2, r3
+ 550:	3208      	adds	r2, #8
+ 552:	0152      	lsls	r2, r2, #5
+ 554:	5c52      	ldrb	r2, [r2, r1]
+ 556:	0692      	lsls	r2, r2, #26
+ 558:	0f52      	lsrs	r2, r2, #29
+ 55a:	2a03      	cmp	r2, #3
+ 55c:	d1ef      	bne.n	53e <USB_Handler+0x2e2>
+					_usb_instances->hw->HOST.HostPipe[pipe_int].PCFG.bit.PTOKEN != USB_HOST_PIPE_TOKEN_IN) {
+ 55e:	001a      	movs	r2, r3
+ 560:	3208      	adds	r2, #8
+ 562:	0152      	lsls	r2, r2, #5
+ 564:	5c52      	ldrb	r2, [r2, r1]
+ 566:	0792      	lsls	r2, r2, #30
+ 568:	0f92      	lsrs	r2, r2, #30
+				if (_usb_instances->hw->HOST.HostPipe[pipe_int].PCFG.bit.PTYPE != USB_HOST_PIPE_TYPE_BULK ||
+ 56a:	2a01      	cmp	r2, #1
+ 56c:	d1e7      	bne.n	53e <USB_Handler+0x2e2>
+				_usb_instances->hw->HOST.HostPipe[pipe_int].PSTATUSCLR.reg = USB_HOST_PSTATUS_PFREEZE;
+ 56e:	001a      	movs	r2, r3
+ 570:	3208      	adds	r2, #8
+ 572:	0152      	lsls	r2, r2, #5
+ 574:	1889      	adds	r1, r1, r2
+ 576:	710e      	strb	r6, [r1, #4]
+ 578:	e7e1      	b.n	53e <USB_Handler+0x2e2>
+ 57a:	46c0      	nop			; (mov r8, r8)
+ 57c:	20000024 	.word	0x20000024
+ 580:	00000f9c 	.word	0x00000f9c
+ 584:	00000f15 	.word	0x00000f15
+ 588:	20000034 	.word	0x20000034
+ 58c:	20000038 	.word	0x20000038
+ 590:	200000bc 	.word	0x200000bc
+ 594:	f0003fff 	.word	0xf0003fff
+			if(_usb_instances->host_enabled_callback_mask & (1 << USB_HOST_CALLBACK_SOF)) {
+ 598:	339d      	adds	r3, #157	; 0x9d
+ 59a:	5cfb      	ldrb	r3, [r7, r3]
+ 59c:	07db      	lsls	r3, r3, #31
+ 59e:	d462      	bmi.n	666 <USB_Handler+0x40a>
+		if (flags & USB_HOST_INTFLAG_RST) {
+ 5a0:	0723      	lsls	r3, r4, #28
+ 5a2:	d50b      	bpl.n	5bc <USB_Handler+0x360>
+			host_pipe_job_busy_status = 0;
+ 5a4:	2200      	movs	r2, #0
+ 5a6:	4baf      	ldr	r3, [pc, #700]	; (864 <USB_Handler+0x608>)
+ 5a8:	601a      	str	r2, [r3, #0]
+			_usb_instances->hw->HOST.INTFLAG.reg = USB_HOST_INTFLAG_RST;
+ 5aa:	4baf      	ldr	r3, [pc, #700]	; (868 <USB_Handler+0x60c>)
+ 5ac:	6818      	ldr	r0, [r3, #0]
+ 5ae:	2308      	movs	r3, #8
+ 5b0:	6802      	ldr	r2, [r0, #0]
+ 5b2:	8393      	strh	r3, [r2, #28]
+			if(_usb_instances->host_enabled_callback_mask & (1 << USB_HOST_CALLBACK_RESET)) {
+ 5b4:	339d      	adds	r3, #157	; 0x9d
+ 5b6:	5cc3      	ldrb	r3, [r0, r3]
+ 5b8:	079b      	lsls	r3, r3, #30
+ 5ba:	d458      	bmi.n	66e <USB_Handler+0x412>
+		if (flags & USB_HOST_INTFLAG_UPRSM) {
+ 5bc:	0663      	lsls	r3, r4, #25
+ 5be:	d508      	bpl.n	5d2 <USB_Handler+0x376>
+			_usb_instances->hw->HOST.INTFLAG.reg = USB_HOST_INTFLAG_UPRSM;
+ 5c0:	4ba9      	ldr	r3, [pc, #676]	; (868 <USB_Handler+0x60c>)
+ 5c2:	6818      	ldr	r0, [r3, #0]
+ 5c4:	2340      	movs	r3, #64	; 0x40
+ 5c6:	6802      	ldr	r2, [r0, #0]
+ 5c8:	8393      	strh	r3, [r2, #28]
+			if(_usb_instances->host_enabled_callback_mask & (1 << USB_HOST_CALLBACK_UPRSM)) {
+ 5ca:	3365      	adds	r3, #101	; 0x65
+ 5cc:	5cc3      	ldrb	r3, [r0, r3]
+ 5ce:	06db      	lsls	r3, r3, #27
+ 5d0:	d450      	bmi.n	674 <USB_Handler+0x418>
+		if (flags & USB_HOST_INTFLAG_DNRSM) {
+ 5d2:	06a3      	lsls	r3, r4, #26
+ 5d4:	d508      	bpl.n	5e8 <USB_Handler+0x38c>
+			_usb_instances->hw->HOST.INTFLAG.reg = USB_HOST_INTFLAG_DNRSM;
+ 5d6:	4ba4      	ldr	r3, [pc, #656]	; (868 <USB_Handler+0x60c>)
+ 5d8:	6818      	ldr	r0, [r3, #0]
+ 5da:	2320      	movs	r3, #32
+ 5dc:	6802      	ldr	r2, [r0, #0]
+ 5de:	8393      	strh	r3, [r2, #28]
+			if(_usb_instances->host_enabled_callback_mask & (1 << USB_HOST_CALLBACK_DNRSM)) {
+ 5e0:	3385      	adds	r3, #133	; 0x85
+ 5e2:	5cc3      	ldrb	r3, [r0, r3]
+ 5e4:	071b      	lsls	r3, r3, #28
+ 5e6:	d448      	bmi.n	67a <USB_Handler+0x41e>
+		if (flags & USB_HOST_INTFLAG_WAKEUP) {
+ 5e8:	06e3      	lsls	r3, r4, #27
+ 5ea:	d508      	bpl.n	5fe <USB_Handler+0x3a2>
+			_usb_instances->hw->HOST.INTFLAG.reg = USB_HOST_INTFLAG_WAKEUP;
+ 5ec:	4b9e      	ldr	r3, [pc, #632]	; (868 <USB_Handler+0x60c>)
+ 5ee:	6818      	ldr	r0, [r3, #0]
+ 5f0:	2310      	movs	r3, #16
+ 5f2:	6802      	ldr	r2, [r0, #0]
+ 5f4:	8393      	strh	r3, [r2, #28]
+			if(_usb_instances->host_enabled_callback_mask & (1 << USB_HOST_CALLBACK_WAKEUP)) {
+ 5f6:	3395      	adds	r3, #149	; 0x95
+ 5f8:	5cc3      	ldrb	r3, [r0, r3]
+ 5fa:	075b      	lsls	r3, r3, #29
+ 5fc:	d440      	bmi.n	680 <USB_Handler+0x424>
+		if (flags & USB_HOST_INTFLAG_RAMACER) {
+ 5fe:	0623      	lsls	r3, r4, #24
+ 600:	d50b      	bpl.n	61a <USB_Handler+0x3be>
+			host_pipe_job_busy_status = 0;
+ 602:	2200      	movs	r2, #0
+ 604:	4b97      	ldr	r3, [pc, #604]	; (864 <USB_Handler+0x608>)
+ 606:	601a      	str	r2, [r3, #0]
+			_usb_instances->hw->HOST.INTFLAG.reg = USB_HOST_INTFLAG_RAMACER;
+ 608:	4b97      	ldr	r3, [pc, #604]	; (868 <USB_Handler+0x60c>)
+ 60a:	6818      	ldr	r0, [r3, #0]
+ 60c:	2380      	movs	r3, #128	; 0x80
+ 60e:	6802      	ldr	r2, [r0, #0]
+ 610:	8393      	strh	r3, [r2, #28]
+			if(_usb_instances->host_enabled_callback_mask & (1 << USB_HOST_CALLBACK_RAMACER)) {
+ 612:	3325      	adds	r3, #37	; 0x25
+ 614:	5cc3      	ldrb	r3, [r0, r3]
+ 616:	069b      	lsls	r3, r3, #26
+ 618:	d435      	bmi.n	686 <USB_Handler+0x42a>
+		if (flags & USB_HOST_INTFLAG_DCONN) {
+ 61a:	05e3      	lsls	r3, r4, #23
+ 61c:	d50c      	bpl.n	638 <USB_Handler+0x3dc>
+			host_pipe_job_busy_status = 0;
+ 61e:	2200      	movs	r2, #0
+ 620:	4b90      	ldr	r3, [pc, #576]	; (864 <USB_Handler+0x608>)
+ 622:	601a      	str	r2, [r3, #0]
+			_usb_instances->hw->HOST.INTFLAG.reg = USB_HOST_INTFLAG_DCONN;
+ 624:	4b90      	ldr	r3, [pc, #576]	; (868 <USB_Handler+0x60c>)
+ 626:	6818      	ldr	r0, [r3, #0]
+ 628:	2380      	movs	r3, #128	; 0x80
+ 62a:	005b      	lsls	r3, r3, #1
+ 62c:	6802      	ldr	r2, [r0, #0]
+ 62e:	8393      	strh	r3, [r2, #28]
+			if(_usb_instances->host_enabled_callback_mask & (1 << USB_HOST_CALLBACK_CONNECT)) {
+ 630:	3b5b      	subs	r3, #91	; 0x5b
+ 632:	5cc3      	ldrb	r3, [r0, r3]
+ 634:	065b      	lsls	r3, r3, #25
+ 636:	d429      	bmi.n	68c <USB_Handler+0x430>
+		if (flags & USB_HOST_INTFLAG_DDISC) {
+ 638:	05a3      	lsls	r3, r4, #22
+ 63a:	d50d      	bpl.n	658 <USB_Handler+0x3fc>
+			host_pipe_job_busy_status = 0;
+ 63c:	2200      	movs	r2, #0
+ 63e:	4b89      	ldr	r3, [pc, #548]	; (864 <USB_Handler+0x608>)
+ 640:	601a      	str	r2, [r3, #0]
+			_usb_instances->hw->HOST.INTFLAG.reg = USB_HOST_INTFLAG_DDISC;
+ 642:	4b89      	ldr	r3, [pc, #548]	; (868 <USB_Handler+0x60c>)
+ 644:	6818      	ldr	r0, [r3, #0]
+ 646:	2380      	movs	r3, #128	; 0x80
+ 648:	009b      	lsls	r3, r3, #2
+ 64a:	6802      	ldr	r2, [r0, #0]
+ 64c:	8393      	strh	r3, [r2, #28]
+			if(_usb_instances->host_enabled_callback_mask & (1 << USB_HOST_CALLBACK_DISCONNECT)) {
+ 64e:	3b5c      	subs	r3, #92	; 0x5c
+ 650:	3bff      	subs	r3, #255	; 0xff
+ 652:	5cc3      	ldrb	r3, [r0, r3]
+ 654:	2b7f      	cmp	r3, #127	; 0x7f
+ 656:	d81c      	bhi.n	692 <USB_Handler+0x436>
+#endif
+	} else {
+		/*device mode ISR */
+		_usb_device_interrupt_handler();
+	}
+}
+ 658:	b003      	add	sp, #12
+ 65a:	bc3c      	pop	{r2, r3, r4, r5}
+ 65c:	4690      	mov	r8, r2
+ 65e:	4699      	mov	r9, r3
+ 660:	46a2      	mov	sl, r4
+ 662:	46ab      	mov	fp, r5
+ 664:	bdf0      	pop	{r4, r5, r6, r7, pc}
+				(_usb_instances->host_callback[USB_HOST_CALLBACK_SOF])(_usb_instances);
+ 666:	687b      	ldr	r3, [r7, #4]
+ 668:	0038      	movs	r0, r7
+ 66a:	4798      	blx	r3
+ 66c:	e798      	b.n	5a0 <USB_Handler+0x344>
+				(_usb_instances->host_callback[USB_HOST_CALLBACK_RESET])(_usb_instances);
+ 66e:	6883      	ldr	r3, [r0, #8]
+ 670:	4798      	blx	r3
+ 672:	e7a3      	b.n	5bc <USB_Handler+0x360>
+				(_usb_instances->host_callback[USB_HOST_CALLBACK_UPRSM])(_usb_instances);
+ 674:	6943      	ldr	r3, [r0, #20]
+ 676:	4798      	blx	r3
+ 678:	e7ab      	b.n	5d2 <USB_Handler+0x376>
+				(_usb_instances->host_callback[USB_HOST_CALLBACK_DNRSM])(_usb_instances);
+ 67a:	6903      	ldr	r3, [r0, #16]
+ 67c:	4798      	blx	r3
+ 67e:	e7b3      	b.n	5e8 <USB_Handler+0x38c>
+				(_usb_instances->host_callback[USB_HOST_CALLBACK_WAKEUP])(_usb_instances);
+ 680:	68c3      	ldr	r3, [r0, #12]
+ 682:	4798      	blx	r3
+ 684:	e7bb      	b.n	5fe <USB_Handler+0x3a2>
+				(_usb_instances->host_callback[USB_HOST_CALLBACK_RAMACER])(_usb_instances);
+ 686:	6983      	ldr	r3, [r0, #24]
+ 688:	4798      	blx	r3
+ 68a:	e7c6      	b.n	61a <USB_Handler+0x3be>
+				(_usb_instances->host_callback[USB_HOST_CALLBACK_CONNECT])(_usb_instances);
+ 68c:	69c3      	ldr	r3, [r0, #28]
+ 68e:	4798      	blx	r3
+ 690:	e7d2      	b.n	638 <USB_Handler+0x3dc>
+				(_usb_instances->host_callback[USB_HOST_CALLBACK_DISCONNECT])(_usb_instances);
+ 692:	6a03      	ldr	r3, [r0, #32]
+ 694:	4798      	blx	r3
+ 696:	e7df      	b.n	658 <USB_Handler+0x3fc>
+				(_usb_instances->device_callback[i])(_usb_instances, &device_callback_lpm_wakeup_enable);
+ 698:	0023      	movs	r3, r4
+ 69a:	332e      	adds	r3, #46	; 0x2e
+ 69c:	009b      	lsls	r3, r3, #2
+ 69e:	4642      	mov	r2, r8
+ 6a0:	6812      	ldr	r2, [r2, #0]
+ 6a2:	589b      	ldr	r3, [r3, r2]
+ 6a4:	4971      	ldr	r1, [pc, #452]	; (86c <USB_Handler+0x610>)
+ 6a6:	4642      	mov	r2, r8
+ 6a8:	6810      	ldr	r0, [r2, #0]
+ 6aa:	4798      	blx	r3
+		for (i = 0; i < USB_DEVICE_CALLBACK_N; i ++) {
+ 6ac:	3401      	adds	r4, #1
+ 6ae:	2c07      	cmp	r4, #7
+ 6b0:	d0d2      	beq.n	658 <USB_Handler+0x3fc>
+			if (flags & _usb_device_irq_bits[i]) {
+ 6b2:	0063      	lsls	r3, r4, #1
+ 6b4:	5bdb      	ldrh	r3, [r3, r7]
+ 6b6:	4233      	tst	r3, r6
+ 6b8:	d003      	beq.n	6c2 <USB_Handler+0x466>
+				_usb_instances->hw->DEVICE.INTFLAG.reg =
+ 6ba:	464a      	mov	r2, r9
+ 6bc:	6812      	ldr	r2, [r2, #0]
+ 6be:	6812      	ldr	r2, [r2, #0]
+ 6c0:	8393      	strh	r3, [r2, #28]
+			if (flags_run & _usb_device_irq_bits[i]) {
+ 6c2:	422b      	tst	r3, r5
+ 6c4:	d0f2      	beq.n	6ac <USB_Handler+0x450>
+				if (i == USB_DEVICE_CALLBACK_LPMSUSP) {
+ 6c6:	2c06      	cmp	r4, #6
+ 6c8:	d1e6      	bne.n	698 <USB_Handler+0x43c>
+							usb_descriptor_table.usb_endpoint_table[0].DeviceDescBank[0].EXTREG.bit.VARIABLE
+ 6ca:	4b69      	ldr	r3, [pc, #420]	; (870 <USB_Handler+0x614>)
+ 6cc:	891b      	ldrh	r3, [r3, #8]
+ 6ce:	091b      	lsrs	r3, r3, #4
+							& USB_LPM_ATTRIBUT_REMOTEWAKE_MASK;
+ 6d0:	2280      	movs	r2, #128	; 0x80
+ 6d2:	0052      	lsls	r2, r2, #1
+ 6d4:	4013      	ands	r3, r2
+ 6d6:	4a65      	ldr	r2, [pc, #404]	; (86c <USB_Handler+0x610>)
+ 6d8:	6013      	str	r3, [r2, #0]
+ 6da:	e7dd      	b.n	698 <USB_Handler+0x43c>
+ 6dc:	003c      	movs	r4, r7
+ 6de:	3459      	adds	r4, #89	; 0x59
+ 6e0:	34ff      	adds	r4, #255	; 0xff
+	if (0 == ep_inst) {
+ 6e2:	2300      	movs	r3, #0
+			if (ep_inst & (1 << i)) {
+ 6e4:	2201      	movs	r2, #1
+ 6e6:	4694      	mov	ip, r2
+				if (flags & USB_DEVICE_EPINTFLAG_STALL_Msk) {
+ 6e8:	325f      	adds	r2, #95	; 0x5f
+ 6ea:	4691      	mov	r9, r2
+				if (flags & USB_DEVICE_EPINTFLAG_RXSTP) {
+ 6ec:	3a50      	subs	r2, #80	; 0x50
+ 6ee:	4692      	mov	sl, r2
+				if (flags & USB_DEVICE_EPINTFLAG_TRCPT_Msk) {
+ 6f0:	3a0d      	subs	r2, #13
+ 6f2:	4693      	mov	fp, r2
+				if (flags & USB_DEVICE_EPINTFLAG_TRFAIL_Msk) {
+ 6f4:	46b8      	mov	r8, r7
+ 6f6:	002f      	movs	r7, r5
+ 6f8:	e0c3      	b.n	882 <USB_Handler+0x626>
+ 6fa:	002a      	movs	r2, r5
+ 6fc:	003d      	movs	r5, r7
+ 6fe:	4647      	mov	r7, r8
+ 700:	4690      	mov	r8, r2
+ 702:	015b      	lsls	r3, r3, #5
+ 704:	18ed      	adds	r5, r5, r3
+					if (_usb_instances->hw->DEVICE.DeviceEndpoint[i].EPINTFLAG.reg & USB_DEVICE_EPINTFLAG_STALL1) {
+ 706:	2308      	movs	r3, #8
+ 708:	33ff      	adds	r3, #255	; 0xff
+ 70a:	5ceb      	ldrb	r3, [r5, r3]
+ 70c:	065b      	lsls	r3, r3, #25
+ 70e:	d515      	bpl.n	73c <USB_Handler+0x4e0>
+						_usb_instances->hw->DEVICE.DeviceEndpoint[i].EPINTFLAG.reg = USB_DEVICE_EPINTFLAG_STALL1;
+ 710:	2240      	movs	r2, #64	; 0x40
+ 712:	2308      	movs	r3, #8
+ 714:	33ff      	adds	r3, #255	; 0xff
+ 716:	54ea      	strb	r2, [r5, r3]
+						ep_callback_para.endpoint_address = USB_EP_DIR_IN | i;
+ 718:	3b88      	subs	r3, #136	; 0x88
+ 71a:	3bff      	subs	r3, #255	; 0xff
+ 71c:	4642      	mov	r2, r8
+ 71e:	4313      	orrs	r3, r2
+ 720:	4a54      	ldr	r2, [pc, #336]	; (874 <USB_Handler+0x618>)
+ 722:	7193      	strb	r3, [r2, #6]
+					if (flags_run & USB_DEVICE_EPINTFLAG_STALL_Msk) {
+ 724:	2360      	movs	r3, #96	; 0x60
+ 726:	420b      	tst	r3, r1
+ 728:	d096      	beq.n	658 <USB_Handler+0x3fc>
+						(_usb_instances->device_endpoint_callback[i][USB_DEVICE_ENDPOINT_CALLBACK_STALL])(_usb_instances,&ep_callback_para);
+ 72a:	9b01      	ldr	r3, [sp, #4]
+ 72c:	011b      	lsls	r3, r3, #4
+ 72e:	18fb      	adds	r3, r7, r3
+ 730:	33e0      	adds	r3, #224	; 0xe0
+ 732:	681b      	ldr	r3, [r3, #0]
+ 734:	494f      	ldr	r1, [pc, #316]	; (874 <USB_Handler+0x618>)
+ 736:	0038      	movs	r0, r7
+ 738:	4798      	blx	r3
+ 73a:	e78d      	b.n	658 <USB_Handler+0x3fc>
+					} else if (_usb_instances->hw->DEVICE.DeviceEndpoint[i].EPINTFLAG.reg & USB_DEVICE_EPINTFLAG_STALL0) {
+ 73c:	2308      	movs	r3, #8
+ 73e:	33ff      	adds	r3, #255	; 0xff
+ 740:	5ceb      	ldrb	r3, [r5, r3]
+ 742:	069b      	lsls	r3, r3, #26
+ 744:	d5ee      	bpl.n	724 <USB_Handler+0x4c8>
+						_usb_instances->hw->DEVICE.DeviceEndpoint[i].EPINTFLAG.reg = USB_DEVICE_EPINTFLAG_STALL0;
+ 746:	2220      	movs	r2, #32
+ 748:	2308      	movs	r3, #8
+ 74a:	33ff      	adds	r3, #255	; 0xff
+ 74c:	54ea      	strb	r2, [r5, r3]
+						ep_callback_para.endpoint_address = USB_EP_DIR_OUT | i;
+ 74e:	4b49      	ldr	r3, [pc, #292]	; (874 <USB_Handler+0x618>)
+ 750:	4642      	mov	r2, r8
+ 752:	719a      	strb	r2, [r3, #6]
+ 754:	e7e6      	b.n	724 <USB_Handler+0x4c8>
+ 756:	003d      	movs	r5, r7
+ 758:	4647      	mov	r7, r8
+					_usb_instances->hw->DEVICE.DeviceEndpoint[i].EPINTFLAG.reg = USB_DEVICE_EPINTFLAG_RXSTP;
+ 75a:	9a01      	ldr	r2, [sp, #4]
+ 75c:	0013      	movs	r3, r2
+ 75e:	3308      	adds	r3, #8
+ 760:	015b      	lsls	r3, r3, #5
+ 762:	18ed      	adds	r5, r5, r3
+ 764:	2310      	movs	r3, #16
+ 766:	71eb      	strb	r3, [r5, #7]
+					if(_usb_instances->device_endpoint_enabled_callback_mask[i] & _usb_endpoint_irq_bits[USB_DEVICE_ENDPOINT_CALLBACK_RXSTP]) {
+ 768:	18bb      	adds	r3, r7, r2
+ 76a:	3361      	adds	r3, #97	; 0x61
+ 76c:	33ff      	adds	r3, #255	; 0xff
+ 76e:	781b      	ldrb	r3, [r3, #0]
+ 770:	06db      	lsls	r3, r3, #27
+ 772:	d400      	bmi.n	776 <USB_Handler+0x51a>
+ 774:	e770      	b.n	658 <USB_Handler+0x3fc>
+						ep_callback_para.received_bytes = (uint16_t)(usb_descriptor_table.usb_endpoint_table[i].DeviceDescBank[0].PCKSIZE.bit.BYTE_COUNT);
+ 776:	0010      	movs	r0, r2
+ 778:	0152      	lsls	r2, r2, #5
+ 77a:	4b3d      	ldr	r3, [pc, #244]	; (870 <USB_Handler+0x614>)
+ 77c:	189b      	adds	r3, r3, r2
+ 77e:	685b      	ldr	r3, [r3, #4]
+ 780:	049b      	lsls	r3, r3, #18
+ 782:	0c9b      	lsrs	r3, r3, #18
+ 784:	493b      	ldr	r1, [pc, #236]	; (874 <USB_Handler+0x618>)
+ 786:	800b      	strh	r3, [r1, #0]
+						(_usb_instances->device_endpoint_callback[i][USB_DEVICE_ENDPOINT_CALLBACK_RXSTP])(_usb_instances,&ep_callback_para);
+ 788:	0103      	lsls	r3, r0, #4
+ 78a:	18fb      	adds	r3, r7, r3
+ 78c:	33dc      	adds	r3, #220	; 0xdc
+ 78e:	681b      	ldr	r3, [r3, #0]
+ 790:	4640      	mov	r0, r8
+ 792:	4798      	blx	r3
+ 794:	e760      	b.n	658 <USB_Handler+0x3fc>
+ 796:	002a      	movs	r2, r5
+ 798:	003d      	movs	r5, r7
+ 79a:	4647      	mov	r7, r8
+ 79c:	4690      	mov	r8, r2
+ 79e:	015b      	lsls	r3, r3, #5
+ 7a0:	18ed      	adds	r5, r5, r3
+					if (_usb_instances->hw->DEVICE.DeviceEndpoint[i].EPINTFLAG.reg & USB_DEVICE_EPINTFLAG_TRCPT1) {
+ 7a2:	2308      	movs	r3, #8
+ 7a4:	33ff      	adds	r3, #255	; 0xff
+ 7a6:	5ceb      	ldrb	r3, [r5, r3]
+ 7a8:	079b      	lsls	r3, r3, #30
+ 7aa:	d51e      	bpl.n	7ea <USB_Handler+0x58e>
+						_usb_instances->hw->DEVICE.DeviceEndpoint[i].EPINTFLAG.reg = USB_DEVICE_EPINTFLAG_TRCPT1;
+ 7ac:	2202      	movs	r2, #2
+ 7ae:	2308      	movs	r3, #8
+ 7b0:	33ff      	adds	r3, #255	; 0xff
+ 7b2:	54ea      	strb	r2, [r5, r3]
+						ep_callback_para.endpoint_address = USB_EP_DIR_IN | i;
+ 7b4:	482f      	ldr	r0, [pc, #188]	; (874 <USB_Handler+0x618>)
+ 7b6:	3b88      	subs	r3, #136	; 0x88
+ 7b8:	3bff      	subs	r3, #255	; 0xff
+ 7ba:	4642      	mov	r2, r8
+ 7bc:	4313      	orrs	r3, r2
+ 7be:	7183      	strb	r3, [r0, #6]
+						ep_callback_para.sent_bytes = (uint16_t)(usb_descriptor_table.usb_endpoint_table[i].DeviceDescBank[1].PCKSIZE.bit.BYTE_COUNT);
+ 7c0:	9b01      	ldr	r3, [sp, #4]
+ 7c2:	015a      	lsls	r2, r3, #5
+ 7c4:	4b2a      	ldr	r3, [pc, #168]	; (870 <USB_Handler+0x614>)
+ 7c6:	189b      	adds	r3, r3, r2
+ 7c8:	3310      	adds	r3, #16
+ 7ca:	685b      	ldr	r3, [r3, #4]
+ 7cc:	049b      	lsls	r3, r3, #18
+ 7ce:	0c9b      	lsrs	r3, r3, #18
+ 7d0:	8043      	strh	r3, [r0, #2]
+					if(flags_run & USB_DEVICE_EPINTFLAG_TRCPT_Msk) {
+ 7d2:	078b      	lsls	r3, r1, #30
+ 7d4:	d100      	bne.n	7d8 <USB_Handler+0x57c>
+ 7d6:	e73f      	b.n	658 <USB_Handler+0x3fc>
+						(_usb_instances->device_endpoint_callback[i][USB_DEVICE_ENDPOINT_CALLBACK_TRCPT])(_usb_instances,&ep_callback_para);
+ 7d8:	9b01      	ldr	r3, [sp, #4]
+ 7da:	330d      	adds	r3, #13
+ 7dc:	011b      	lsls	r3, r3, #4
+ 7de:	18fb      	adds	r3, r7, r3
+ 7e0:	685b      	ldr	r3, [r3, #4]
+ 7e2:	4924      	ldr	r1, [pc, #144]	; (874 <USB_Handler+0x618>)
+ 7e4:	0038      	movs	r0, r7
+ 7e6:	4798      	blx	r3
+ 7e8:	e736      	b.n	658 <USB_Handler+0x3fc>
+					} else if (_usb_instances->hw->DEVICE.DeviceEndpoint[i].EPINTFLAG.reg & USB_DEVICE_EPINTFLAG_TRCPT0) {
+ 7ea:	2308      	movs	r3, #8
+ 7ec:	33ff      	adds	r3, #255	; 0xff
+ 7ee:	5ceb      	ldrb	r3, [r5, r3]
+ 7f0:	07db      	lsls	r3, r3, #31
+ 7f2:	d5ee      	bpl.n	7d2 <USB_Handler+0x576>
+						_usb_instances->hw->DEVICE.DeviceEndpoint[i].EPINTFLAG.reg = USB_DEVICE_EPINTFLAG_TRCPT0;
+ 7f4:	2201      	movs	r2, #1
+ 7f6:	2308      	movs	r3, #8
+ 7f8:	33ff      	adds	r3, #255	; 0xff
+ 7fa:	54ea      	strb	r2, [r5, r3]
+						ep_callback_para.endpoint_address = USB_EP_DIR_OUT | i;
+ 7fc:	481d      	ldr	r0, [pc, #116]	; (874 <USB_Handler+0x618>)
+ 7fe:	4643      	mov	r3, r8
+ 800:	7183      	strb	r3, [r0, #6]
+						ep_callback_para.received_bytes = (uint16_t)(usb_descriptor_table.usb_endpoint_table[i].DeviceDescBank[0].PCKSIZE.bit.BYTE_COUNT);
+ 802:	9b01      	ldr	r3, [sp, #4]
+ 804:	015b      	lsls	r3, r3, #5
+ 806:	4a1a      	ldr	r2, [pc, #104]	; (870 <USB_Handler+0x614>)
+ 808:	18d2      	adds	r2, r2, r3
+ 80a:	6853      	ldr	r3, [r2, #4]
+ 80c:	049b      	lsls	r3, r3, #18
+ 80e:	0c9b      	lsrs	r3, r3, #18
+ 810:	8003      	strh	r3, [r0, #0]
+						ep_callback_para.out_buffer_size = (uint16_t)(usb_descriptor_table.usb_endpoint_table[i].DeviceDescBank[0].PCKSIZE.bit.MULTI_PACKET_SIZE);
+ 812:	6853      	ldr	r3, [r2, #4]
+ 814:	011b      	lsls	r3, r3, #4
+ 816:	0c9b      	lsrs	r3, r3, #18
+ 818:	8083      	strh	r3, [r0, #4]
+ 81a:	e7da      	b.n	7d2 <USB_Handler+0x576>
+					} else if(_usb_instances->hw->DEVICE.DeviceEndpoint[i].EPINTFLAG.reg & USB_DEVICE_EPINTFLAG_TRFAIL0) {
+ 81c:	2208      	movs	r2, #8
+ 81e:	32ff      	adds	r2, #255	; 0xff
+ 820:	5c9a      	ldrb	r2, [r3, r2]
+ 822:	0752      	lsls	r2, r2, #29
+ 824:	d579      	bpl.n	91a <USB_Handler+0x6be>
+						_usb_instances->hw->DEVICE.DeviceEndpoint[i].EPINTFLAG.reg = USB_DEVICE_EPINTFLAG_TRFAIL0;
+ 826:	2004      	movs	r0, #4
+ 828:	2208      	movs	r2, #8
+ 82a:	32ff      	adds	r2, #255	; 0xff
+ 82c:	5498      	strb	r0, [r3, r2]
+						if (usb_descriptor_table.usb_endpoint_table[i].DeviceDescBank[0].STATUS_BK.reg & USB_DEVICE_STATUS_BK_ERRORFLOW) {
+ 82e:	9801      	ldr	r0, [sp, #4]
+ 830:	0142      	lsls	r2, r0, #5
+ 832:	4b0f      	ldr	r3, [pc, #60]	; (870 <USB_Handler+0x614>)
+ 834:	189b      	adds	r3, r3, r2
+ 836:	7a9b      	ldrb	r3, [r3, #10]
+ 838:	079b      	lsls	r3, r3, #30
+ 83a:	d505      	bpl.n	848 <USB_Handler+0x5ec>
+							usb_descriptor_table.usb_endpoint_table[i].DeviceDescBank[0].STATUS_BK.reg &= ~USB_DEVICE_STATUS_BK_ERRORFLOW;
+ 83c:	4b0c      	ldr	r3, [pc, #48]	; (870 <USB_Handler+0x614>)
+ 83e:	189b      	adds	r3, r3, r2
+ 840:	7a9a      	ldrb	r2, [r3, #10]
+ 842:	2002      	movs	r0, #2
+ 844:	4382      	bics	r2, r0
+ 846:	729a      	strb	r2, [r3, #10]
+						ep_callback_para.endpoint_address = USB_EP_DIR_OUT | i;
+ 848:	4b0a      	ldr	r3, [pc, #40]	; (874 <USB_Handler+0x618>)
+ 84a:	4642      	mov	r2, r8
+ 84c:	719a      	strb	r2, [r3, #6]
+						if (_usb_instances->hw->DEVICE.DeviceEndpoint[i].EPINTFLAG.reg & USB_DEVICE_EPINTFLAG_TRCPT0) {
+ 84e:	9b01      	ldr	r3, [sp, #4]
+ 850:	3308      	adds	r3, #8
+ 852:	015b      	lsls	r3, r3, #5
+ 854:	683a      	ldr	r2, [r7, #0]
+ 856:	4694      	mov	ip, r2
+ 858:	4463      	add	r3, ip
+ 85a:	79db      	ldrb	r3, [r3, #7]
+ 85c:	07db      	lsls	r3, r3, #31
+ 85e:	d55c      	bpl.n	91a <USB_Handler+0x6be>
+ 860:	e6fa      	b.n	658 <USB_Handler+0x3fc>
+ 862:	46c0      	nop			; (mov r8, r8)
+ 864:	20000034 	.word	0x20000034
+ 868:	20000024 	.word	0x20000024
+ 86c:	20000028 	.word	0x20000028
+ 870:	200000bc 	.word	0x200000bc
+ 874:	2000002c 	.word	0x2000002c
+ 878:	3301      	adds	r3, #1
+ 87a:	3401      	adds	r4, #1
+		for (uint8_t i = 0; i < USB_EPT_NUM; i++) {
+ 87c:	2b08      	cmp	r3, #8
+ 87e:	d100      	bne.n	882 <USB_Handler+0x626>
+ 880:	e6ea      	b.n	658 <USB_Handler+0x3fc>
+ 882:	b2dd      	uxtb	r5, r3
+			if (ep_inst & (1 << i)) {
+ 884:	9301      	str	r3, [sp, #4]
+ 886:	0032      	movs	r2, r6
+ 888:	411a      	asrs	r2, r3
+ 88a:	4661      	mov	r1, ip
+ 88c:	4211      	tst	r1, r2
+ 88e:	d0f3      	beq.n	878 <USB_Handler+0x61c>
+				flags = _usb_instances->hw->DEVICE.DeviceEndpoint[i].EPINTFLAG.reg;
+ 890:	001a      	movs	r2, r3
+ 892:	3208      	adds	r2, #8
+ 894:	0152      	lsls	r2, r2, #5
+ 896:	18ba      	adds	r2, r7, r2
+ 898:	79d2      	ldrb	r2, [r2, #7]
+ 89a:	b2d2      	uxtb	r2, r2
+ 89c:	7a21      	ldrb	r1, [r4, #8]
+ 89e:	4011      	ands	r1, r2
+ 8a0:	7820      	ldrb	r0, [r4, #0]
+ 8a2:	4001      	ands	r1, r0
+				if (flags & USB_DEVICE_EPINTFLAG_STALL_Msk) {
+ 8a4:	4648      	mov	r0, r9
+ 8a6:	4210      	tst	r0, r2
+ 8a8:	d000      	beq.n	8ac <USB_Handler+0x650>
+ 8aa:	e726      	b.n	6fa <USB_Handler+0x49e>
+				if (flags & USB_DEVICE_EPINTFLAG_RXSTP) {
+ 8ac:	4650      	mov	r0, sl
+ 8ae:	4210      	tst	r0, r2
+ 8b0:	d000      	beq.n	8b4 <USB_Handler+0x658>
+ 8b2:	e750      	b.n	756 <USB_Handler+0x4fa>
+				if (flags & USB_DEVICE_EPINTFLAG_TRCPT_Msk) {
+ 8b4:	4658      	mov	r0, fp
+ 8b6:	4210      	tst	r0, r2
+ 8b8:	d000      	beq.n	8bc <USB_Handler+0x660>
+ 8ba:	e76c      	b.n	796 <USB_Handler+0x53a>
+				if (flags & USB_DEVICE_EPINTFLAG_TRFAIL_Msk) {
+ 8bc:	200c      	movs	r0, #12
+ 8be:	4210      	tst	r0, r2
+ 8c0:	d0da      	beq.n	878 <USB_Handler+0x61c>
+ 8c2:	002a      	movs	r2, r5
+ 8c4:	003d      	movs	r5, r7
+ 8c6:	4647      	mov	r7, r8
+ 8c8:	4690      	mov	r8, r2
+ 8ca:	015b      	lsls	r3, r3, #5
+ 8cc:	18eb      	adds	r3, r5, r3
+					if (_usb_instances->hw->DEVICE.DeviceEndpoint[i].EPINTFLAG.reg & USB_DEVICE_EPINTFLAG_TRFAIL1) {
+ 8ce:	2208      	movs	r2, #8
+ 8d0:	32ff      	adds	r2, #255	; 0xff
+ 8d2:	5c9a      	ldrb	r2, [r3, r2]
+ 8d4:	0712      	lsls	r2, r2, #28
+ 8d6:	d5a1      	bpl.n	81c <USB_Handler+0x5c0>
+						_usb_instances->hw->DEVICE.DeviceEndpoint[i].EPINTFLAG.reg = USB_DEVICE_EPINTFLAG_TRFAIL1;
+ 8d8:	3804      	subs	r0, #4
+ 8da:	2208      	movs	r2, #8
+ 8dc:	32ff      	adds	r2, #255	; 0xff
+ 8de:	5498      	strb	r0, [r3, r2]
+						if (usb_descriptor_table.usb_endpoint_table[i].DeviceDescBank[1].STATUS_BK.reg & USB_DEVICE_STATUS_BK_ERRORFLOW) {
+ 8e0:	9801      	ldr	r0, [sp, #4]
+ 8e2:	0142      	lsls	r2, r0, #5
+ 8e4:	4b13      	ldr	r3, [pc, #76]	; (934 <USB_Handler+0x6d8>)
+ 8e6:	189b      	adds	r3, r3, r2
+ 8e8:	7e9b      	ldrb	r3, [r3, #26]
+ 8ea:	079b      	lsls	r3, r3, #30
+ 8ec:	d505      	bpl.n	8fa <USB_Handler+0x69e>
+							usb_descriptor_table.usb_endpoint_table[i].DeviceDescBank[1].STATUS_BK.reg &= ~USB_DEVICE_STATUS_BK_ERRORFLOW;
+ 8ee:	4b11      	ldr	r3, [pc, #68]	; (934 <USB_Handler+0x6d8>)
+ 8f0:	189b      	adds	r3, r3, r2
+ 8f2:	7e9a      	ldrb	r2, [r3, #26]
+ 8f4:	2002      	movs	r0, #2
+ 8f6:	4382      	bics	r2, r0
+ 8f8:	769a      	strb	r2, [r3, #26]
+						ep_callback_para.endpoint_address = USB_EP_DIR_IN | i;
+ 8fa:	2380      	movs	r3, #128	; 0x80
+ 8fc:	425b      	negs	r3, r3
+ 8fe:	4642      	mov	r2, r8
+ 900:	4313      	orrs	r3, r2
+ 902:	4a0d      	ldr	r2, [pc, #52]	; (938 <USB_Handler+0x6dc>)
+ 904:	7193      	strb	r3, [r2, #6]
+						if (_usb_instances->hw->DEVICE.DeviceEndpoint[i].EPINTFLAG.reg & USB_DEVICE_EPINTFLAG_TRCPT1) {
+ 906:	9b01      	ldr	r3, [sp, #4]
+ 908:	3308      	adds	r3, #8
+ 90a:	015b      	lsls	r3, r3, #5
+ 90c:	683a      	ldr	r2, [r7, #0]
+ 90e:	4694      	mov	ip, r2
+ 910:	4463      	add	r3, ip
+ 912:	79db      	ldrb	r3, [r3, #7]
+ 914:	079b      	lsls	r3, r3, #30
+ 916:	d500      	bpl.n	91a <USB_Handler+0x6be>
+ 918:	e69e      	b.n	658 <USB_Handler+0x3fc>
+					if(flags_run & USB_DEVICE_EPINTFLAG_TRFAIL_Msk) {
+ 91a:	230c      	movs	r3, #12
+ 91c:	420b      	tst	r3, r1
+ 91e:	d100      	bne.n	922 <USB_Handler+0x6c6>
+ 920:	e69a      	b.n	658 <USB_Handler+0x3fc>
+						(_usb_instances->device_endpoint_callback[i][USB_DEVICE_ENDPOINT_CALLBACK_TRFAIL])(_usb_instances,&ep_callback_para);
+ 922:	9b01      	ldr	r3, [sp, #4]
+ 924:	011b      	lsls	r3, r3, #4
+ 926:	18fb      	adds	r3, r7, r3
+ 928:	33d8      	adds	r3, #216	; 0xd8
+ 92a:	681b      	ldr	r3, [r3, #0]
+ 92c:	4902      	ldr	r1, [pc, #8]	; (938 <USB_Handler+0x6dc>)
+ 92e:	0038      	movs	r0, r7
+ 930:	4798      	blx	r3
+ 932:	e691      	b.n	658 <USB_Handler+0x3fc>
+ 934:	200000bc 	.word	0x200000bc
+ 938:	2000002c 	.word	0x2000002c
+
+0000093c <SERCOM0_Handler>:
+	/* Get the vector number from the lookup table for the requested SERCOM */
+	return (enum system_interrupt_vector)sercom_int_vectors[instance_index];
+}
+
+/** Auto-generate a set of interrupt handlers for each SERCOM in the device */
+MREPEAT(SERCOM_INST_NUM, _SERCOM_INTERRUPT_HANDLER, ~)
+ 93c:	b510      	push	{r4, lr}
+ 93e:	4b02      	ldr	r3, [pc, #8]	; (948 <SERCOM0_Handler+0xc>)
+ 940:	681b      	ldr	r3, [r3, #0]
+ 942:	2000      	movs	r0, #0
+ 944:	4798      	blx	r3
+ 946:	bd10      	pop	{r4, pc}
+ 948:	20000040 	.word	0x20000040
+
+0000094c <SERCOM1_Handler>:
+ 94c:	b510      	push	{r4, lr}
+ 94e:	4b02      	ldr	r3, [pc, #8]	; (958 <SERCOM1_Handler+0xc>)
+ 950:	685b      	ldr	r3, [r3, #4]
+ 952:	2001      	movs	r0, #1
+ 954:	4798      	blx	r3
+ 956:	bd10      	pop	{r4, pc}
+ 958:	20000040 	.word	0x20000040
+
+0000095c <SERCOM2_Handler>:
+ 95c:	b510      	push	{r4, lr}
+ 95e:	4b02      	ldr	r3, [pc, #8]	; (968 <SERCOM2_Handler+0xc>)
+ 960:	689b      	ldr	r3, [r3, #8]
+ 962:	2002      	movs	r0, #2
+ 964:	4798      	blx	r3
+ 966:	bd10      	pop	{r4, pc}
+ 968:	20000040 	.word	0x20000040
+
+0000096c <SERCOM3_Handler>:
+ 96c:	b510      	push	{r4, lr}
+ 96e:	4b02      	ldr	r3, [pc, #8]	; (978 <SERCOM3_Handler+0xc>)
+ 970:	68db      	ldr	r3, [r3, #12]
+ 972:	2003      	movs	r0, #3
+ 974:	4798      	blx	r3
+ 976:	bd10      	pop	{r4, pc}
+ 978:	20000040 	.word	0x20000040
+
+0000097c <SERCOM4_Handler>:
+ 97c:	b510      	push	{r4, lr}
+ 97e:	4b02      	ldr	r3, [pc, #8]	; (988 <SERCOM4_Handler+0xc>)
+ 980:	691b      	ldr	r3, [r3, #16]
+ 982:	2004      	movs	r0, #4
+ 984:	4798      	blx	r3
+ 986:	bd10      	pop	{r4, pc}
+ 988:	20000040 	.word	0x20000040
+
+0000098c <SERCOM5_Handler>:
+ 98c:	b510      	push	{r4, lr}
+ 98e:	4b02      	ldr	r3, [pc, #8]	; (998 <SERCOM5_Handler+0xc>)
+ 990:	695b      	ldr	r3, [r3, #20]
+ 992:	2005      	movs	r0, #5
+ 994:	4798      	blx	r3
+ 996:	bd10      	pop	{r4, pc}
+ 998:	20000040 	.word	0x20000040
+
+0000099c <EIC_Handler>:
+	return _current_channel;
+}
+
+/** Handler for the EXTINT hardware module interrupt. */
+void EIC_Handler(void)
+{
+ 99c:	b570      	push	{r4, r5, r6, lr}
+	/* Find any triggered channels, run associated callback handlers */
+	for (_current_channel = 0; _current_channel < EIC_NUMBER_OF_INTERRUPTS ; _current_channel++) {
+ 99e:	2200      	movs	r2, #0
+ 9a0:	4b10      	ldr	r3, [pc, #64]	; (9e4 <EIC_Handler+0x48>)
+ 9a2:	701a      	strb	r2, [r3, #0]
+ 9a4:	2300      	movs	r3, #0
+
+	if (eic_index < EIC_INST_NUM) {
+		/* Array of available EICs */
+		Eic *const eics[EIC_INST_NUM] = EIC_INSTS;
+
+		return eics[eic_index];
+ 9a6:	4910      	ldr	r1, [pc, #64]	; (9e8 <EIC_Handler+0x4c>)
+ */
+static inline bool extint_chan_is_detected(
+		const uint8_t channel)
+{
+	Eic *const eic_module = _extint_get_eic_from_channel(channel);
+	uint32_t eic_mask   = (1UL << (channel % 32));
+ 9a8:	251f      	movs	r5, #31
+		if (extint_chan_is_detected(_current_channel)) {
+			/* Clear flag */
+			extint_chan_clear_detected(_current_channel);
+			/* Find any associated callback entries in the callback table */
+			if (_extint_dev.callbacks[_current_channel] != NULL) {
+ 9aa:	4e10      	ldr	r6, [pc, #64]	; (9ec <EIC_Handler+0x50>)
+	for (_current_channel = 0; _current_channel < EIC_NUMBER_OF_INTERRUPTS ; _current_channel++) {
+ 9ac:	4c0d      	ldr	r4, [pc, #52]	; (9e4 <EIC_Handler+0x48>)
+ 9ae:	e00a      	b.n	9c6 <EIC_Handler+0x2a>
+		return eics[eic_index];
+ 9b0:	490d      	ldr	r1, [pc, #52]	; (9e8 <EIC_Handler+0x4c>)
+ 9b2:	e008      	b.n	9c6 <EIC_Handler+0x2a>
+ 9b4:	7823      	ldrb	r3, [r4, #0]
+ 9b6:	3301      	adds	r3, #1
+ 9b8:	b2db      	uxtb	r3, r3
+ 9ba:	7023      	strb	r3, [r4, #0]
+ 9bc:	2b0f      	cmp	r3, #15
+ 9be:	d810      	bhi.n	9e2 <EIC_Handler+0x46>
+		return NULL;
+ 9c0:	2100      	movs	r1, #0
+	if (eic_index < EIC_INST_NUM) {
+ 9c2:	2b1f      	cmp	r3, #31
+ 9c4:	d9f4      	bls.n	9b0 <EIC_Handler+0x14>
+	uint32_t eic_mask   = (1UL << (channel % 32));
+ 9c6:	0028      	movs	r0, r5
+ 9c8:	4018      	ands	r0, r3
+ 9ca:	2201      	movs	r2, #1
+ 9cc:	4082      	lsls	r2, r0
+
+	return (eic_module->INTFLAG.reg & eic_mask);
+ 9ce:	6908      	ldr	r0, [r1, #16]
+		if (extint_chan_is_detected(_current_channel)) {
+ 9d0:	4210      	tst	r0, r2
+ 9d2:	d0ef      	beq.n	9b4 <EIC_Handler+0x18>
+		const uint8_t channel)
+{
+	Eic *const eic_module = _extint_get_eic_from_channel(channel);
+	uint32_t eic_mask   = (1UL << (channel % 32));
+
+	eic_module->INTFLAG.reg = eic_mask;
+ 9d4:	610a      	str	r2, [r1, #16]
+			if (_extint_dev.callbacks[_current_channel] != NULL) {
+ 9d6:	009b      	lsls	r3, r3, #2
+ 9d8:	599b      	ldr	r3, [r3, r6]
+ 9da:	2b00      	cmp	r3, #0
+ 9dc:	d0ea      	beq.n	9b4 <EIC_Handler+0x18>
+				/* Run the registered callback */
+				_extint_dev.callbacks[_current_channel]();
+ 9de:	4798      	blx	r3
+ 9e0:	e7e8      	b.n	9b4 <EIC_Handler+0x18>
+			}
+		}
+	}
+}
+ 9e2:	bd70      	pop	{r4, r5, r6, pc}
+ 9e4:	200001bc 	.word	0x200001bc
+ 9e8:	40001800 	.word	0x40001800
+ 9ec:	2000007c 	.word	0x2000007c
+
+000009f0 <delay_cycles_ms>:
+ *
+ * \param n  Number of milliseconds to wait
+ */
+void delay_cycles_ms(
+		uint32_t n)
+{
+ 9f0:	b530      	push	{r4, r5, lr}
+	while (n--) {
+		/* Devide up to blocks of 1ms */
+		delay_cycles(cycles_per_ms);
+ 9f2:	4b08      	ldr	r3, [pc, #32]	; (a14 <delay_cycles_ms+0x24>)
+ 9f4:	681c      	ldr	r4, [r3, #0]
+ */
+static inline void delay_cycles(
+		const uint32_t n)
+{
+	if (n > 0) {
+		SysTick->LOAD = n;
+ 9f6:	4a08      	ldr	r2, [pc, #32]	; (a18 <delay_cycles_ms+0x28>)
+		SysTick->VAL = 0;
+ 9f8:	2500      	movs	r5, #0
+
+		while (!(SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk)) {
+ 9fa:	2180      	movs	r1, #128	; 0x80
+ 9fc:	0249      	lsls	r1, r1, #9
+	while (n--) {
+ 9fe:	3801      	subs	r0, #1
+ a00:	d307      	bcc.n	a12 <delay_cycles_ms+0x22>
+	if (n > 0) {
+ a02:	2c00      	cmp	r4, #0
+ a04:	d0fb      	beq.n	9fe <delay_cycles_ms+0xe>
+		SysTick->LOAD = n;
+ a06:	6054      	str	r4, [r2, #4]
+		SysTick->VAL = 0;
+ a08:	6095      	str	r5, [r2, #8]
+		while (!(SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk)) {
+ a0a:	6813      	ldr	r3, [r2, #0]
+ a0c:	420b      	tst	r3, r1
+ a0e:	d0fc      	beq.n	a0a <delay_cycles_ms+0x1a>
+ a10:	e7f5      	b.n	9fe <delay_cycles_ms+0xe>
+	}
+}
+ a12:	bd30      	pop	{r4, r5, pc}
+ a14:	20000000 	.word	0x20000000
+ a18:	e000e010 	.word	0xe000e010
+
+00000a1c <system_board_init>:
+{
+	/* This function is meant to contain board-specific initialization code
+	 * for, e.g., the I/O pins. The initialization can rely on application-
+	 * specific board configuration, found in conf_board.h.
+	 */
+ a1c:	4770      	bx	lr
+	...
+
+00000a20 <cpu_irq_enter_critical>:
+volatile bool g_interrupt_enabled = true;
+#endif
+
+void cpu_irq_enter_critical(void)
+{
+	if (cpu_irq_critical_section_counter == 0) {
+ a20:	4b0c      	ldr	r3, [pc, #48]	; (a54 <cpu_irq_enter_critical+0x34>)
+ a22:	681b      	ldr	r3, [r3, #0]
+ a24:	2b00      	cmp	r3, #0
+ a26:	d106      	bne.n	a36 <cpu_irq_enter_critical+0x16>
+ */
+__STATIC_FORCEINLINE uint32_t __get_PRIMASK(void)
+{
+  uint32_t result;
+
+  __ASM volatile ("MRS %0, primask" : "=r" (result) :: "memory");
+ a28:	f3ef 8310 	mrs	r3, PRIMASK
+		if (cpu_irq_is_enabled()) {
+ a2c:	2b00      	cmp	r3, #0
+ a2e:	d007      	beq.n	a40 <cpu_irq_enter_critical+0x20>
+			cpu_irq_disable();
+			cpu_irq_prev_interrupt_state = true;
+		} else {
+			/* Make sure the to save the prev state as false */
+			cpu_irq_prev_interrupt_state = false;
+ a30:	2200      	movs	r2, #0
+ a32:	4b09      	ldr	r3, [pc, #36]	; (a58 <cpu_irq_enter_critical+0x38>)
+ a34:	701a      	strb	r2, [r3, #0]
+		}
+
+	}
+
+	cpu_irq_critical_section_counter++;
+ a36:	4a07      	ldr	r2, [pc, #28]	; (a54 <cpu_irq_enter_critical+0x34>)
+ a38:	6813      	ldr	r3, [r2, #0]
+ a3a:	3301      	adds	r3, #1
+ a3c:	6013      	str	r3, [r2, #0]
+}
+ a3e:	4770      	bx	lr
+  __ASM volatile ("cpsid i" : : : "memory");
+ a40:	b672      	cpsid	i
+  \details Ensures the apparent order of the explicit memory operations before
+           and after the instruction, without ensuring their completion.
+ */
+__STATIC_FORCEINLINE void __DMB(void)
+{
+  __ASM volatile ("dmb 0xF":::"memory");
+ a42:	f3bf 8f5f 	dmb	sy
+			cpu_irq_disable();
+ a46:	2200      	movs	r2, #0
+ a48:	4b04      	ldr	r3, [pc, #16]	; (a5c <cpu_irq_enter_critical+0x3c>)
+ a4a:	701a      	strb	r2, [r3, #0]
+			cpu_irq_prev_interrupt_state = true;
+ a4c:	3201      	adds	r2, #1
+ a4e:	4b02      	ldr	r3, [pc, #8]	; (a58 <cpu_irq_enter_critical+0x38>)
+ a50:	701a      	strb	r2, [r3, #0]
+ a52:	e7f0      	b.n	a36 <cpu_irq_enter_critical+0x16>
+ a54:	20000058 	.word	0x20000058
+ a58:	2000005c 	.word	0x2000005c
+ a5c:	20000004 	.word	0x20000004
+
+00000a60 <cpu_irq_leave_critical>:
+void cpu_irq_leave_critical(void)
+{
+	/* Check if the user is trying to leave a critical section when not in a critical section */
+	Assert(cpu_irq_critical_section_counter > 0);
+
+	cpu_irq_critical_section_counter--;
+ a60:	4b08      	ldr	r3, [pc, #32]	; (a84 <cpu_irq_leave_critical+0x24>)
+ a62:	681a      	ldr	r2, [r3, #0]
+ a64:	3a01      	subs	r2, #1
+ a66:	601a      	str	r2, [r3, #0]
+
+	/* Only enable global interrupts when the counter reaches 0 and the state of the global interrupt flag
+	   was enabled when entering critical state */
+	if ((cpu_irq_critical_section_counter == 0) && (cpu_irq_prev_interrupt_state)) {
+ a68:	681b      	ldr	r3, [r3, #0]
+ a6a:	2b00      	cmp	r3, #0
+ a6c:	d109      	bne.n	a82 <cpu_irq_leave_critical+0x22>
+ a6e:	4b06      	ldr	r3, [pc, #24]	; (a88 <cpu_irq_leave_critical+0x28>)
+ a70:	781b      	ldrb	r3, [r3, #0]
+ a72:	2b00      	cmp	r3, #0
+ a74:	d005      	beq.n	a82 <cpu_irq_leave_critical+0x22>
+		cpu_irq_enable();
+ a76:	2201      	movs	r2, #1
+ a78:	4b04      	ldr	r3, [pc, #16]	; (a8c <cpu_irq_leave_critical+0x2c>)
+ a7a:	701a      	strb	r2, [r3, #0]
+ a7c:	f3bf 8f5f 	dmb	sy
+  __ASM volatile ("cpsie i" : : : "memory");
+ a80:	b662      	cpsie	i
+	}
+}
+ a82:	4770      	bx	lr
+ a84:	20000058 	.word	0x20000058
+ a88:	2000005c 	.word	0x2000005c
+ a8c:	20000004 	.word	0x20000004
+
+00000a90 <system_clock_source_osc8m_set_config>:
+ *
+ * \param[in] config  OSC8M configuration structure containing the new config
+ */
+void system_clock_source_osc8m_set_config(
+		struct system_clock_source_osc8m_config *const config)
+{
+ a90:	b570      	push	{r4, r5, r6, lr}
+	SYSCTRL_OSC8M_Type temp = SYSCTRL->OSC8M;
+ a92:	490c      	ldr	r1, [pc, #48]	; (ac4 <system_clock_source_osc8m_set_config+0x34>)
+ a94:	6a0b      	ldr	r3, [r1, #32]
+
+	/* Use temporary struct to reduce register access */
+	temp.bit.PRESC    = config->prescaler;
+ a96:	7804      	ldrb	r4, [r0, #0]
+	temp.bit.ONDEMAND = config->on_demand;
+ a98:	7885      	ldrb	r5, [r0, #2]
+	temp.bit.RUNSTDBY = config->run_in_standby;
+
+	SYSCTRL->OSC8M = temp;
+ a9a:	7840      	ldrb	r0, [r0, #1]
+ a9c:	2201      	movs	r2, #1
+ a9e:	4010      	ands	r0, r2
+ aa0:	0180      	lsls	r0, r0, #6
+ aa2:	2640      	movs	r6, #64	; 0x40
+ aa4:	43b3      	bics	r3, r6
+ aa6:	4303      	orrs	r3, r0
+ aa8:	402a      	ands	r2, r5
+ aaa:	01d2      	lsls	r2, r2, #7
+ aac:	2080      	movs	r0, #128	; 0x80
+ aae:	4383      	bics	r3, r0
+ ab0:	4313      	orrs	r3, r2
+ ab2:	2203      	movs	r2, #3
+ ab4:	4022      	ands	r2, r4
+ ab6:	0212      	lsls	r2, r2, #8
+ ab8:	4803      	ldr	r0, [pc, #12]	; (ac8 <system_clock_source_osc8m_set_config+0x38>)
+ aba:	4003      	ands	r3, r0
+ abc:	4313      	orrs	r3, r2
+ abe:	620b      	str	r3, [r1, #32]
+}
+ ac0:	bd70      	pop	{r4, r5, r6, pc}
+ ac2:	46c0      	nop			; (mov r8, r8)
+ ac4:	40000800 	.word	0x40000800
+ ac8:	fffffcff 	.word	0xfffffcff
+
+00000acc <system_clock_source_enable>:
+ *                                 device
+ */
+enum status_code system_clock_source_enable(
+		const enum system_clock_source clock_source)
+{
+	switch (clock_source) {
+ acc:	2808      	cmp	r0, #8
+ ace:	d803      	bhi.n	ad8 <system_clock_source_enable+0xc>
+ ad0:	0080      	lsls	r0, r0, #2
+ ad2:	4b25      	ldr	r3, [pc, #148]	; (b68 <system_clock_source_enable+0x9c>)
+ ad4:	581b      	ldr	r3, [r3, r0]
+ ad6:	469f      	mov	pc, r3
+		/* Always enabled */
+		return STATUS_OK;
+
+	default:
+		Assert(false);
+		return STATUS_ERR_INVALID_ARG;
+ ad8:	2017      	movs	r0, #23
+ ada:	e044      	b.n	b66 <system_clock_source_enable+0x9a>
+		SYSCTRL->OSC8M.reg |= SYSCTRL_OSC8M_ENABLE;
+ adc:	4a23      	ldr	r2, [pc, #140]	; (b6c <system_clock_source_enable+0xa0>)
+ ade:	6a13      	ldr	r3, [r2, #32]
+ ae0:	2102      	movs	r1, #2
+ ae2:	430b      	orrs	r3, r1
+ ae4:	6213      	str	r3, [r2, #32]
+		return STATUS_OK;
+ ae6:	2000      	movs	r0, #0
+ ae8:	e03d      	b.n	b66 <system_clock_source_enable+0x9a>
+		SYSCTRL->OSC32K.reg |= SYSCTRL_OSC32K_ENABLE;
+ aea:	4a20      	ldr	r2, [pc, #128]	; (b6c <system_clock_source_enable+0xa0>)
+ aec:	6993      	ldr	r3, [r2, #24]
+ aee:	2102      	movs	r1, #2
+ af0:	430b      	orrs	r3, r1
+ af2:	6193      	str	r3, [r2, #24]
+	}
+
+	return STATUS_OK;
+ af4:	2000      	movs	r0, #0
+		break;
+ af6:	e036      	b.n	b66 <system_clock_source_enable+0x9a>
+		SYSCTRL->XOSC.reg |= SYSCTRL_XOSC_ENABLE;
+ af8:	4a1c      	ldr	r2, [pc, #112]	; (b6c <system_clock_source_enable+0xa0>)
+ afa:	8a13      	ldrh	r3, [r2, #16]
+ afc:	2102      	movs	r1, #2
+ afe:	430b      	orrs	r3, r1
+ b00:	8213      	strh	r3, [r2, #16]
+	return STATUS_OK;
+ b02:	2000      	movs	r0, #0
+		break;
+ b04:	e02f      	b.n	b66 <system_clock_source_enable+0x9a>
+		SYSCTRL->XOSC32K.reg |= SYSCTRL_XOSC32K_ENABLE;
+ b06:	4a19      	ldr	r2, [pc, #100]	; (b6c <system_clock_source_enable+0xa0>)
+ b08:	8a93      	ldrh	r3, [r2, #20]
+ b0a:	2102      	movs	r1, #2
+ b0c:	430b      	orrs	r3, r1
+ b0e:	8293      	strh	r3, [r2, #20]
+	return STATUS_OK;
+ b10:	2000      	movs	r0, #0
+		break;
+ b12:	e028      	b.n	b66 <system_clock_source_enable+0x9a>
+		_system_clock_inst.dfll.control |= SYSCTRL_DFLLCTRL_ENABLE;
+ b14:	4916      	ldr	r1, [pc, #88]	; (b70 <system_clock_source_enable+0xa4>)
+ b16:	680b      	ldr	r3, [r1, #0]
+ b18:	2202      	movs	r2, #2
+ b1a:	4313      	orrs	r3, r2
+ b1c:	600b      	str	r3, [r1, #0]
+	SYSCTRL->DFLLCTRL.reg = SYSCTRL_DFLLCTRL_ENABLE;
+ b1e:	4b13      	ldr	r3, [pc, #76]	; (b6c <system_clock_source_enable+0xa0>)
+ b20:	849a      	strh	r2, [r3, #36]	; 0x24
+	while (!(SYSCTRL->PCLKSR.reg & SYSCTRL_PCLKSR_DFLLRDY)) {
+ b22:	0019      	movs	r1, r3
+ b24:	320e      	adds	r2, #14
+ b26:	68cb      	ldr	r3, [r1, #12]
+ b28:	421a      	tst	r2, r3
+ b2a:	d0fc      	beq.n	b26 <system_clock_source_enable+0x5a>
+	SYSCTRL->DFLLMUL.reg = _system_clock_inst.dfll.mul;
+ b2c:	4a10      	ldr	r2, [pc, #64]	; (b70 <system_clock_source_enable+0xa4>)
+ b2e:	6891      	ldr	r1, [r2, #8]
+ b30:	4b0e      	ldr	r3, [pc, #56]	; (b6c <system_clock_source_enable+0xa0>)
+ b32:	62d9      	str	r1, [r3, #44]	; 0x2c
+	SYSCTRL->DFLLVAL.reg = _system_clock_inst.dfll.val;
+ b34:	6852      	ldr	r2, [r2, #4]
+ b36:	629a      	str	r2, [r3, #40]	; 0x28
+	SYSCTRL->DFLLCTRL.reg = 0;
+ b38:	2200      	movs	r2, #0
+ b3a:	849a      	strh	r2, [r3, #36]	; 0x24
+	while (!(SYSCTRL->PCLKSR.reg & SYSCTRL_PCLKSR_DFLLRDY)) {
+ b3c:	0019      	movs	r1, r3
+ b3e:	3210      	adds	r2, #16
+ b40:	68cb      	ldr	r3, [r1, #12]
+ b42:	421a      	tst	r2, r3
+ b44:	d0fc      	beq.n	b40 <system_clock_source_enable+0x74>
+	SYSCTRL->DFLLCTRL.reg = _system_clock_inst.dfll.control;
+ b46:	4b0a      	ldr	r3, [pc, #40]	; (b70 <system_clock_source_enable+0xa4>)
+ b48:	681b      	ldr	r3, [r3, #0]
+ b4a:	b29b      	uxth	r3, r3
+ b4c:	4a07      	ldr	r2, [pc, #28]	; (b6c <system_clock_source_enable+0xa0>)
+ b4e:	8493      	strh	r3, [r2, #36]	; 0x24
+	return STATUS_OK;
+ b50:	2000      	movs	r0, #0
+ b52:	e008      	b.n	b66 <system_clock_source_enable+0x9a>
+		SYSCTRL->DPLLCTRLA.reg |= SYSCTRL_DPLLCTRLA_ENABLE;
+ b54:	4905      	ldr	r1, [pc, #20]	; (b6c <system_clock_source_enable+0xa0>)
+ b56:	2244      	movs	r2, #68	; 0x44
+ b58:	5c8b      	ldrb	r3, [r1, r2]
+ b5a:	2002      	movs	r0, #2
+ b5c:	4303      	orrs	r3, r0
+ b5e:	548b      	strb	r3, [r1, r2]
+	return STATUS_OK;
+ b60:	2000      	movs	r0, #0
+		break;
+ b62:	e000      	b.n	b66 <system_clock_source_enable+0x9a>
+		return STATUS_OK;
+ b64:	2000      	movs	r0, #0
+}
+ b66:	4770      	bx	lr
+ b68:	00000fac 	.word	0x00000fac
+ b6c:	40000800 	.word	0x40000800
+ b70:	20000060 	.word	0x20000060
+
+00000b74 <system_clock_init>:
+ * \note OSC8M is always enabled and if user selects other clocks for GCLK generators,
+ * the OSC8M default enable can be disabled after system_clock_init. Make sure the
+ * clock switch successfully before disabling OSC8M.
+ */
+void system_clock_init(void)
+{
+ b74:	b530      	push	{r4, r5, lr}
+ b76:	b085      	sub	sp, #20
+	/* Various bits in the INTFLAG register can be set to one at startup.
+	   This will ensure that these bits are cleared */
+	SYSCTRL->INTFLAG.reg = SYSCTRL_INTFLAG_BOD33RDY | SYSCTRL_INTFLAG_BOD33DET |
+ b78:	22c2      	movs	r2, #194	; 0xc2
+ b7a:	00d2      	lsls	r2, r2, #3
+ b7c:	4b1a      	ldr	r3, [pc, #104]	; (be8 <system_clock_init+0x74>)
+ b7e:	609a      	str	r2, [r3, #8]
+static inline void system_flash_set_waitstates(uint8_t wait_states)
+{
+	Assert(NVMCTRL_CTRLB_RWS((uint32_t)wait_states) ==
+			((uint32_t)wait_states << NVMCTRL_CTRLB_RWS_Pos));
+
+	NVMCTRL->CTRLB.bit.RWS = wait_states;
+ b80:	4a1a      	ldr	r2, [pc, #104]	; (bec <system_clock_init+0x78>)
+ b82:	6853      	ldr	r3, [r2, #4]
+ b84:	211e      	movs	r1, #30
+ b86:	438b      	bics	r3, r1
+ b88:	6053      	str	r3, [r2, #4]
+	gclk_conf.source_generator = GCLK_GENERATOR_1;
+ b8a:	2301      	movs	r3, #1
+ b8c:	466a      	mov	r2, sp
+ b8e:	7013      	strb	r3, [r2, #0]
+	for (gclk_id = 0; gclk_id < GCLK_NUM; gclk_id++) {
+ b90:	2400      	movs	r4, #0
+		system_gclk_chan_set_config(gclk_id, &gclk_conf);
+ b92:	4d17      	ldr	r5, [pc, #92]	; (bf0 <system_clock_init+0x7c>)
+ b94:	b2e0      	uxtb	r0, r4
+ b96:	4669      	mov	r1, sp
+ b98:	47a8      	blx	r5
+	for (gclk_id = 0; gclk_id < GCLK_NUM; gclk_id++) {
+ b9a:	3401      	adds	r4, #1
+ b9c:	2c25      	cmp	r4, #37	; 0x25
+ b9e:	d1f9      	bne.n	b94 <system_clock_init+0x20>
+	config->run_in_standby  = false;
+ ba0:	a803      	add	r0, sp, #12
+ ba2:	2400      	movs	r4, #0
+ ba4:	7044      	strb	r4, [r0, #1]
+	config->on_demand       = true;
+ ba6:	2501      	movs	r5, #1
+ ba8:	7085      	strb	r5, [r0, #2]
+
+	/* OSC8M */
+	struct system_clock_source_osc8m_config osc8m_conf;
+	system_clock_source_osc8m_get_config_defaults(&osc8m_conf);
+
+	osc8m_conf.prescaler       = CONF_CLOCK_OSC8M_PRESCALER;
+ baa:	7004      	strb	r4, [r0, #0]
+	osc8m_conf.on_demand       = CONF_CLOCK_OSC8M_ON_DEMAND;
+	osc8m_conf.run_in_standby  = CONF_CLOCK_OSC8M_RUN_IN_STANDBY;
+
+	system_clock_source_osc8m_set_config(&osc8m_conf);
+ bac:	4b11      	ldr	r3, [pc, #68]	; (bf4 <system_clock_init+0x80>)
+ bae:	4798      	blx	r3
+	system_clock_source_enable(SYSTEM_CLOCK_SOURCE_OSC8M);
+ bb0:	2006      	movs	r0, #6
+ bb2:	4b11      	ldr	r3, [pc, #68]	; (bf8 <system_clock_init+0x84>)
+ bb4:	4798      	blx	r3
+
+
+	/* GCLK */
+#if CONF_CLOCK_CONFIGURE_GCLK == true
+	system_gclk_init();
+ bb6:	4b11      	ldr	r3, [pc, #68]	; (bfc <system_clock_init+0x88>)
+ bb8:	4798      	blx	r3
+	PM->CPUSEL.reg = (uint32_t)divider;
+ bba:	4b11      	ldr	r3, [pc, #68]	; (c00 <system_clock_init+0x8c>)
+ bbc:	721c      	strb	r4, [r3, #8]
+			PM->APBASEL.reg = (uint32_t)divider;
+ bbe:	725c      	strb	r4, [r3, #9]
+			PM->APBBSEL.reg = (uint32_t)divider;
+ bc0:	729c      	strb	r4, [r3, #10]
+			PM->APBCSEL.reg = (uint32_t)divider;
+ bc2:	72dc      	strb	r4, [r3, #11]
+	config->division_factor    = 1;
+ bc4:	9501      	str	r5, [sp, #4]
+	config->high_when_disabled = false;
+ bc6:	466b      	mov	r3, sp
+ bc8:	705c      	strb	r4, [r3, #1]
+	config->source_clock       = GCLK_SOURCE_OSC8M;
+ bca:	2306      	movs	r3, #6
+ bcc:	466a      	mov	r2, sp
+ bce:	7013      	strb	r3, [r2, #0]
+	config->run_in_standby     = false;
+ bd0:	7214      	strb	r4, [r2, #8]
+	config->output_enable      = false;
+ bd2:	7254      	strb	r4, [r2, #9]
+	system_apb_clock_set_divider(SYSTEM_CLOCK_APB_APBC, CONF_CLOCK_APBC_DIVIDER);
+
+	/* GCLK 0 */
+#if CONF_CLOCK_CONFIGURE_GCLK == true
+	/* Configure the main GCLK last as it might depend on other generators */
+	_CONF_CLOCK_GCLK_CONFIG(0, ~);
+ bd4:	4669      	mov	r1, sp
+ bd6:	2000      	movs	r0, #0
+ bd8:	4b0a      	ldr	r3, [pc, #40]	; (c04 <system_clock_init+0x90>)
+ bda:	4798      	blx	r3
+ bdc:	2000      	movs	r0, #0
+ bde:	4b0a      	ldr	r3, [pc, #40]	; (c08 <system_clock_init+0x94>)
+ be0:	4798      	blx	r3
+#endif
+}
+ be2:	b005      	add	sp, #20
+ be4:	bd30      	pop	{r4, r5, pc}
+ be6:	46c0      	nop			; (mov r8, r8)
+ be8:	40000800 	.word	0x40000800
+ bec:	41004000 	.word	0x41004000
+ bf0:	00000db9 	.word	0x00000db9
+ bf4:	00000a91 	.word	0x00000a91
+ bf8:	00000acd 	.word	0x00000acd
+ bfc:	00000c0d 	.word	0x00000c0d
+ c00:	40000400 	.word	0x40000400
+ c04:	00000c31 	.word	0x00000c31
+ c08:	00000ce9 	.word	0x00000ce9
+
+00000c0c <system_gclk_init>:
+			PM->APBAMASK.reg |= mask;
+ c0c:	4a06      	ldr	r2, [pc, #24]	; (c28 <system_gclk_init+0x1c>)
+ c0e:	6993      	ldr	r3, [r2, #24]
+ c10:	2108      	movs	r1, #8
+ c12:	430b      	orrs	r3, r1
+ c14:	6193      	str	r3, [r2, #24]
+{
+	/* Turn on the digital interface clock */
+	system_apb_clock_set_mask(SYSTEM_CLOCK_APB_APBA, PM_APBAMASK_GCLK);
+
+	/* Software reset the module to ensure it is re-initialized correctly */
+	GCLK->CTRL.reg = GCLK_CTRL_SWRST;
+ c16:	2201      	movs	r2, #1
+ c18:	4b04      	ldr	r3, [pc, #16]	; (c2c <system_gclk_init+0x20>)
+ c1a:	701a      	strb	r2, [r3, #0]
+	while (GCLK->CTRL.reg & GCLK_CTRL_SWRST) {
+ c1c:	0019      	movs	r1, r3
+ c1e:	780b      	ldrb	r3, [r1, #0]
+ c20:	4213      	tst	r3, r2
+ c22:	d1fc      	bne.n	c1e <system_gclk_init+0x12>
+		/* Wait for reset to complete */
+	}
+}
+ c24:	4770      	bx	lr
+ c26:	46c0      	nop			; (mov r8, r8)
+ c28:	40000400 	.word	0x40000400
+ c2c:	40000c00 	.word	0x40000c00
+
+00000c30 <system_gclk_gen_set_config>:
+ * \param[in] config     Configuration settings for the generator
+ */
+void system_gclk_gen_set_config(
+		const uint8_t generator,
+		struct system_gclk_gen_config *const config)
+{
+ c30:	b570      	push	{r4, r5, r6, lr}
+ c32:	0006      	movs	r6, r0
+	/* Sanity check arguments */
+	Assert(config);
+
+	/* Cache new register configurations to minimize sync requirements. */
+	uint32_t new_genctrl_config = (generator << GCLK_GENCTRL_ID_Pos);
+ c34:	0004      	movs	r4, r0
+	uint32_t new_gendiv_config  = (generator << GCLK_GENDIV_ID_Pos);
+
+	/* Select the requested source clock for the generator */
+	new_genctrl_config |= config->source_clock << GCLK_GENCTRL_SRC_Pos;
+ c36:	780d      	ldrb	r5, [r1, #0]
+ c38:	022d      	lsls	r5, r5, #8
+ c3a:	4305      	orrs	r5, r0
+
+	/* Configure the clock to be either high or low when disabled */
+	if (config->high_when_disabled) {
+ c3c:	784b      	ldrb	r3, [r1, #1]
+ c3e:	2b00      	cmp	r3, #0
+ c40:	d002      	beq.n	c48 <system_gclk_gen_set_config+0x18>
+		new_genctrl_config |= GCLK_GENCTRL_OOV;
+ c42:	2380      	movs	r3, #128	; 0x80
+ c44:	02db      	lsls	r3, r3, #11
+ c46:	431d      	orrs	r5, r3
+	}
+
+	/* Configure if the clock output to I/O pin should be enabled. */
+	if (config->output_enable) {
+ c48:	7a4b      	ldrb	r3, [r1, #9]
+ c4a:	2b00      	cmp	r3, #0
+ c4c:	d002      	beq.n	c54 <system_gclk_gen_set_config+0x24>
+		new_genctrl_config |= GCLK_GENCTRL_OE;
+ c4e:	2380      	movs	r3, #128	; 0x80
+ c50:	031b      	lsls	r3, r3, #12
+ c52:	431d      	orrs	r5, r3
+	}
+
+	/* Set division factor */
+	if (config->division_factor > 1) {
+ c54:	6848      	ldr	r0, [r1, #4]
+ c56:	2801      	cmp	r0, #1
+ c58:	d910      	bls.n	c7c <system_gclk_gen_set_config+0x4c>
+		/* Check if division is a power of two */
+		if (((config->division_factor & (config->division_factor - 1)) == 0)) {
+ c5a:	1e43      	subs	r3, r0, #1
+ c5c:	4218      	tst	r0, r3
+ c5e:	d134      	bne.n	cca <system_gclk_gen_set_config+0x9a>
+			 * register */
+
+			uint32_t div2_count = 0;
+
+			uint32_t mask;
+			for (mask = (1UL << 1); mask < config->division_factor;
+ c60:	2802      	cmp	r0, #2
+ c62:	d930      	bls.n	cc6 <system_gclk_gen_set_config+0x96>
+ c64:	2302      	movs	r3, #2
+ c66:	2200      	movs	r2, #0
+						mask <<= 1) {
+				div2_count++;
+ c68:	3201      	adds	r2, #1
+						mask <<= 1) {
+ c6a:	005b      	lsls	r3, r3, #1
+			for (mask = (1UL << 1); mask < config->division_factor;
+ c6c:	4298      	cmp	r0, r3
+ c6e:	d8fb      	bhi.n	c68 <system_gclk_gen_set_config+0x38>
+			}
+
+			/* Set binary divider power of 2 division factor */
+			new_gendiv_config  |= div2_count << GCLK_GENDIV_DIV_Pos;
+ c70:	0212      	lsls	r2, r2, #8
+ c72:	4332      	orrs	r2, r6
+ c74:	0014      	movs	r4, r2
+			new_genctrl_config |= GCLK_GENCTRL_DIVSEL;
+ c76:	2380      	movs	r3, #128	; 0x80
+ c78:	035b      	lsls	r3, r3, #13
+ c7a:	431d      	orrs	r5, r3
+		}
+
+	}
+
+	/* Enable or disable the clock in standby mode */
+	if (config->run_in_standby) {
+ c7c:	7a0b      	ldrb	r3, [r1, #8]
+ c7e:	2b00      	cmp	r3, #0
+ c80:	d002      	beq.n	c88 <system_gclk_gen_set_config+0x58>
+		new_genctrl_config |= GCLK_GENCTRL_RUNSTDBY;
+ c82:	2380      	movs	r3, #128	; 0x80
+ c84:	039b      	lsls	r3, r3, #14
+ c86:	431d      	orrs	r5, r3
+	if (GCLK->STATUS.reg & GCLK_STATUS_SYNCBUSY){
+ c88:	4a13      	ldr	r2, [pc, #76]	; (cd8 <system_gclk_gen_set_config+0xa8>)
+ c8a:	7853      	ldrb	r3, [r2, #1]
+	}
+
+	while (system_gclk_is_syncing()) {
+ c8c:	b25b      	sxtb	r3, r3
+ c8e:	2b00      	cmp	r3, #0
+ c90:	dbfb      	blt.n	c8a <system_gclk_gen_set_config+0x5a>
+	cpu_irq_enter_critical();
+ c92:	4b12      	ldr	r3, [pc, #72]	; (cdc <system_gclk_gen_set_config+0xac>)
+ c94:	4798      	blx	r3
+	};
+
+	system_interrupt_enter_critical_section();
+
+	/* Select the correct generator */
+	*((uint8_t*)&GCLK->GENDIV.reg) = generator;
+ c96:	4b12      	ldr	r3, [pc, #72]	; (ce0 <system_gclk_gen_set_config+0xb0>)
+ c98:	701e      	strb	r6, [r3, #0]
+	if (GCLK->STATUS.reg & GCLK_STATUS_SYNCBUSY){
+ c9a:	4a0f      	ldr	r2, [pc, #60]	; (cd8 <system_gclk_gen_set_config+0xa8>)
+ c9c:	7853      	ldrb	r3, [r2, #1]
+
+	/* Write the new generator configuration */
+	while (system_gclk_is_syncing()) {
+ c9e:	b25b      	sxtb	r3, r3
+ ca0:	2b00      	cmp	r3, #0
+ ca2:	dbfb      	blt.n	c9c <system_gclk_gen_set_config+0x6c>
+		/* Wait for synchronization */
+	};
+	GCLK->GENDIV.reg  = new_gendiv_config;
+ ca4:	4b0c      	ldr	r3, [pc, #48]	; (cd8 <system_gclk_gen_set_config+0xa8>)
+ ca6:	609c      	str	r4, [r3, #8]
+	if (GCLK->STATUS.reg & GCLK_STATUS_SYNCBUSY){
+ ca8:	001a      	movs	r2, r3
+ caa:	7853      	ldrb	r3, [r2, #1]
+
+	while (system_gclk_is_syncing()) {
+ cac:	b25b      	sxtb	r3, r3
+ cae:	2b00      	cmp	r3, #0
+ cb0:	dbfb      	blt.n	caa <system_gclk_gen_set_config+0x7a>
+		/* Wait for synchronization */
+	};
+	GCLK->GENCTRL.reg = new_genctrl_config | (GCLK->GENCTRL.reg & GCLK_GENCTRL_GENEN);
+ cb2:	4a09      	ldr	r2, [pc, #36]	; (cd8 <system_gclk_gen_set_config+0xa8>)
+ cb4:	6853      	ldr	r3, [r2, #4]
+ cb6:	2180      	movs	r1, #128	; 0x80
+ cb8:	0249      	lsls	r1, r1, #9
+ cba:	400b      	ands	r3, r1
+ cbc:	431d      	orrs	r5, r3
+ cbe:	6055      	str	r5, [r2, #4]
+	cpu_irq_leave_critical();
+ cc0:	4b08      	ldr	r3, [pc, #32]	; (ce4 <system_gclk_gen_set_config+0xb4>)
+ cc2:	4798      	blx	r3
+
+	system_interrupt_leave_critical_section();
+}
+ cc4:	bd70      	pop	{r4, r5, r6, pc}
+			for (mask = (1UL << 1); mask < config->division_factor;
+ cc6:	2200      	movs	r2, #0
+ cc8:	e7d2      	b.n	c70 <system_gclk_gen_set_config+0x40>
+					(config->division_factor) << GCLK_GENDIV_DIV_Pos;
+ cca:	0204      	lsls	r4, r0, #8
+			new_gendiv_config  |=
+ ccc:	4334      	orrs	r4, r6
+			new_genctrl_config |= GCLK_GENCTRL_IDC;
+ cce:	2380      	movs	r3, #128	; 0x80
+ cd0:	029b      	lsls	r3, r3, #10
+ cd2:	431d      	orrs	r5, r3
+ cd4:	e7d2      	b.n	c7c <system_gclk_gen_set_config+0x4c>
+ cd6:	46c0      	nop			; (mov r8, r8)
+ cd8:	40000c00 	.word	0x40000c00
+ cdc:	00000a21 	.word	0x00000a21
+ ce0:	40000c08 	.word	0x40000c08
+ ce4:	00000a61 	.word	0x00000a61
+
+00000ce8 <system_gclk_gen_enable>:
+ *
+ * \param[in] generator  Generic Clock Generator index to enable
+ */
+void system_gclk_gen_enable(
+		const uint8_t generator)
+{
+ ce8:	b510      	push	{r4, lr}
+ cea:	0004      	movs	r4, r0
+	if (GCLK->STATUS.reg & GCLK_STATUS_SYNCBUSY){
+ cec:	4a0b      	ldr	r2, [pc, #44]	; (d1c <system_gclk_gen_enable+0x34>)
+ cee:	7853      	ldrb	r3, [r2, #1]
+	while (system_gclk_is_syncing()) {
+ cf0:	b25b      	sxtb	r3, r3
+ cf2:	2b00      	cmp	r3, #0
+ cf4:	dbfb      	blt.n	cee <system_gclk_gen_enable+0x6>
+	cpu_irq_enter_critical();
+ cf6:	4b0a      	ldr	r3, [pc, #40]	; (d20 <system_gclk_gen_enable+0x38>)
+ cf8:	4798      	blx	r3
+	};
+
+	system_interrupt_enter_critical_section();
+
+	/* Select the requested generator */
+	*((uint8_t*)&GCLK->GENCTRL.reg) = generator;
+ cfa:	4b0a      	ldr	r3, [pc, #40]	; (d24 <system_gclk_gen_enable+0x3c>)
+ cfc:	701c      	strb	r4, [r3, #0]
+	if (GCLK->STATUS.reg & GCLK_STATUS_SYNCBUSY){
+ cfe:	4a07      	ldr	r2, [pc, #28]	; (d1c <system_gclk_gen_enable+0x34>)
+ d00:	7853      	ldrb	r3, [r2, #1]
+	while (system_gclk_is_syncing()) {
+ d02:	b25b      	sxtb	r3, r3
+ d04:	2b00      	cmp	r3, #0
+ d06:	dbfb      	blt.n	d00 <system_gclk_gen_enable+0x18>
+		/* Wait for synchronization */
+	};
+
+	/* Enable generator */
+	GCLK->GENCTRL.reg |= GCLK_GENCTRL_GENEN;
+ d08:	4a04      	ldr	r2, [pc, #16]	; (d1c <system_gclk_gen_enable+0x34>)
+ d0a:	6851      	ldr	r1, [r2, #4]
+ d0c:	2380      	movs	r3, #128	; 0x80
+ d0e:	025b      	lsls	r3, r3, #9
+ d10:	430b      	orrs	r3, r1
+ d12:	6053      	str	r3, [r2, #4]
+	cpu_irq_leave_critical();
+ d14:	4b04      	ldr	r3, [pc, #16]	; (d28 <system_gclk_gen_enable+0x40>)
+ d16:	4798      	blx	r3
+
+	system_interrupt_leave_critical_section();
+}
+ d18:	bd10      	pop	{r4, pc}
+ d1a:	46c0      	nop			; (mov r8, r8)
+ d1c:	40000c00 	.word	0x40000c00
+ d20:	00000a21 	.word	0x00000a21
+ d24:	40000c04 	.word	0x40000c04
+ d28:	00000a61 	.word	0x00000a61
+
+00000d2c <system_gclk_chan_enable>:
+ *
+ * \param[in] channel   Generic Clock channel to enable
+ */
+void system_gclk_chan_enable(
+		const uint8_t channel)
+{
+ d2c:	b510      	push	{r4, lr}
+ d2e:	0004      	movs	r4, r0
+	cpu_irq_enter_critical();
+ d30:	4b06      	ldr	r3, [pc, #24]	; (d4c <system_gclk_chan_enable+0x20>)
+ d32:	4798      	blx	r3
+	system_interrupt_enter_critical_section();
+
+	/* Select the requested generator channel */
+	*((uint8_t*)&GCLK->CLKCTRL.reg) = channel;
+ d34:	4b06      	ldr	r3, [pc, #24]	; (d50 <system_gclk_chan_enable+0x24>)
+ d36:	701c      	strb	r4, [r3, #0]
+
+	/* Enable the generic clock */
+	GCLK->CLKCTRL.reg |= GCLK_CLKCTRL_CLKEN;
+ d38:	4a06      	ldr	r2, [pc, #24]	; (d54 <system_gclk_chan_enable+0x28>)
+ d3a:	8853      	ldrh	r3, [r2, #2]
+ d3c:	2180      	movs	r1, #128	; 0x80
+ d3e:	01c9      	lsls	r1, r1, #7
+ d40:	430b      	orrs	r3, r1
+ d42:	8053      	strh	r3, [r2, #2]
+	cpu_irq_leave_critical();
+ d44:	4b04      	ldr	r3, [pc, #16]	; (d58 <system_gclk_chan_enable+0x2c>)
+ d46:	4798      	blx	r3
+
+	system_interrupt_leave_critical_section();
+}
+ d48:	bd10      	pop	{r4, pc}
+ d4a:	46c0      	nop			; (mov r8, r8)
+ d4c:	00000a21 	.word	0x00000a21
+ d50:	40000c02 	.word	0x40000c02
+ d54:	40000c00 	.word	0x40000c00
+ d58:	00000a61 	.word	0x00000a61
+
+00000d5c <system_gclk_chan_disable>:
+ *
+ * \param[in] channel  Generic Clock channel to disable
+ */
+void system_gclk_chan_disable(
+		const uint8_t channel)
+{
+ d5c:	b510      	push	{r4, lr}
+ d5e:	0004      	movs	r4, r0
+	cpu_irq_enter_critical();
+ d60:	4b0f      	ldr	r3, [pc, #60]	; (da0 <system_gclk_chan_disable+0x44>)
+ d62:	4798      	blx	r3
+	system_interrupt_enter_critical_section();
+
+	/* Select the requested generator channel */
+	*((uint8_t*)&GCLK->CLKCTRL.reg) = channel;
+ d64:	4b0f      	ldr	r3, [pc, #60]	; (da4 <system_gclk_chan_disable+0x48>)
+ d66:	701c      	strb	r4, [r3, #0]
+
+	/* Sanity check WRTLOCK */
+	Assert(!GCLK->CLKCTRL.bit.WRTLOCK);
+
+	/* Switch to known-working source so that the channel can be disabled */
+	uint32_t prev_gen_id = GCLK->CLKCTRL.bit.GEN;
+ d68:	4a0f      	ldr	r2, [pc, #60]	; (da8 <system_gclk_chan_disable+0x4c>)
+ d6a:	8853      	ldrh	r3, [r2, #2]
+ d6c:	051b      	lsls	r3, r3, #20
+ d6e:	0f18      	lsrs	r0, r3, #28
+	GCLK->CLKCTRL.bit.GEN = 0;
+ d70:	8853      	ldrh	r3, [r2, #2]
+ d72:	490e      	ldr	r1, [pc, #56]	; (dac <system_gclk_chan_disable+0x50>)
+ d74:	400b      	ands	r3, r1
+ d76:	8053      	strh	r3, [r2, #2]
+
+	/* Disable the generic clock */
+	GCLK->CLKCTRL.reg &= ~GCLK_CLKCTRL_CLKEN;
+ d78:	8853      	ldrh	r3, [r2, #2]
+ d7a:	490d      	ldr	r1, [pc, #52]	; (db0 <system_gclk_chan_disable+0x54>)
+ d7c:	400b      	ands	r3, r1
+ d7e:	8053      	strh	r3, [r2, #2]
+	while (GCLK->CLKCTRL.reg & GCLK_CLKCTRL_CLKEN) {
+ d80:	0011      	movs	r1, r2
+ d82:	2280      	movs	r2, #128	; 0x80
+ d84:	01d2      	lsls	r2, r2, #7
+ d86:	884b      	ldrh	r3, [r1, #2]
+ d88:	4213      	tst	r3, r2
+ d8a:	d1fc      	bne.n	d86 <system_gclk_chan_disable+0x2a>
+		/* Wait for clock to become disabled */
+	}
+
+	/* Restore previous configured clock generator */
+	GCLK->CLKCTRL.bit.GEN = prev_gen_id;
+ d8c:	4906      	ldr	r1, [pc, #24]	; (da8 <system_gclk_chan_disable+0x4c>)
+ d8e:	884a      	ldrh	r2, [r1, #2]
+ d90:	0203      	lsls	r3, r0, #8
+ d92:	4806      	ldr	r0, [pc, #24]	; (dac <system_gclk_chan_disable+0x50>)
+ d94:	4002      	ands	r2, r0
+ d96:	4313      	orrs	r3, r2
+ d98:	804b      	strh	r3, [r1, #2]
+	cpu_irq_leave_critical();
+ d9a:	4b06      	ldr	r3, [pc, #24]	; (db4 <system_gclk_chan_disable+0x58>)
+ d9c:	4798      	blx	r3
+
+	system_interrupt_leave_critical_section();
+}
+ d9e:	bd10      	pop	{r4, pc}
+ da0:	00000a21 	.word	0x00000a21
+ da4:	40000c02 	.word	0x40000c02
+ da8:	40000c00 	.word	0x40000c00
+ dac:	fffff0ff 	.word	0xfffff0ff
+ db0:	ffffbfff 	.word	0xffffbfff
+ db4:	00000a61 	.word	0x00000a61
+
+00000db8 <system_gclk_chan_set_config>:
+{
+ db8:	b510      	push	{r4, lr}
+	new_clkctrl_config |= config->source_generator << GCLK_CLKCTRL_GEN_Pos;
+ dba:	780c      	ldrb	r4, [r1, #0]
+ dbc:	0224      	lsls	r4, r4, #8
+ dbe:	4304      	orrs	r4, r0
+	system_gclk_chan_disable(channel);
+ dc0:	4b02      	ldr	r3, [pc, #8]	; (dcc <system_gclk_chan_set_config+0x14>)
+ dc2:	4798      	blx	r3
+	GCLK->CLKCTRL.reg = new_clkctrl_config;
+ dc4:	b2a4      	uxth	r4, r4
+ dc6:	4b02      	ldr	r3, [pc, #8]	; (dd0 <system_gclk_chan_set_config+0x18>)
+ dc8:	805c      	strh	r4, [r3, #2]
+}
+ dca:	bd10      	pop	{r4, pc}
+ dcc:	00000d5d 	.word	0x00000d5d
+ dd0:	40000c00 	.word	0x40000c00
+
+00000dd4 <_system_dummy_init>:
+ */
+void _system_dummy_init(void);
+void _system_dummy_init(void)
+{
+	return;
+}
+ dd4:	4770      	bx	lr
+	...
+
+00000dd8 <system_init>:
+ *  - Board hardware initialization (via the Board module)
+ *  - Event system driver initialization (via the EVSYS module)
+ *  - External Interrupt driver initialization (via the EXTINT module)
+ */
+void system_init(void)
+{
+ dd8:	b510      	push	{r4, lr}
+	/* Configure GCLK and clock sources according to conf_clocks.h */
+	system_clock_init();
+ dda:	4b05      	ldr	r3, [pc, #20]	; (df0 <system_init+0x18>)
+ ddc:	4798      	blx	r3
+
+	/* Initialize board hardware */
+	system_board_init();
+ dde:	4b05      	ldr	r3, [pc, #20]	; (df4 <system_init+0x1c>)
+ de0:	4798      	blx	r3
+
+	/* Initialize EVSYS hardware */
+	_system_events_init();
+ de2:	4b05      	ldr	r3, [pc, #20]	; (df8 <system_init+0x20>)
+ de4:	4798      	blx	r3
+
+	/* Initialize External hardware */
+	_system_extint_init();
+ de6:	4b05      	ldr	r3, [pc, #20]	; (dfc <system_init+0x24>)
+ de8:	4798      	blx	r3
+	
+	/* Initialize DIVAS hardware */
+	_system_divas_init();
+ dea:	4b05      	ldr	r3, [pc, #20]	; (e00 <system_init+0x28>)
+ dec:	4798      	blx	r3
+}
+ dee:	bd10      	pop	{r4, pc}
+ df0:	00000b75 	.word	0x00000b75
+ df4:	00000a1d 	.word	0x00000a1d
+ df8:	00000dd5 	.word	0x00000dd5
+ dfc:	000001f1 	.word	0x000001f1
+ e00:	00000dd5 	.word	0x00000dd5
+
+00000e04 <Dummy_Handler>:
+
+/**
+ * \brief Default interrupt handler for unused IRQs.
+ */
+void Dummy_Handler(void)
+{
+ e04:	e7fe      	b.n	e04 <Dummy_Handler>
+	...
+
+00000e08 <Reset_Handler>:
+{
+ e08:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+        if (pSrc != pDest) {
+ e0a:	4a2a      	ldr	r2, [pc, #168]	; (eb4 <Reset_Handler+0xac>)
+ e0c:	4b2a      	ldr	r3, [pc, #168]	; (eb8 <Reset_Handler+0xb0>)
+ e0e:	429a      	cmp	r2, r3
+ e10:	d011      	beq.n	e36 <Reset_Handler+0x2e>
+                for (; pDest < &_erelocate;) {
+ e12:	001a      	movs	r2, r3
+ e14:	4b29      	ldr	r3, [pc, #164]	; (ebc <Reset_Handler+0xb4>)
+ e16:	429a      	cmp	r2, r3
+ e18:	d20d      	bcs.n	e36 <Reset_Handler+0x2e>
+ e1a:	4a29      	ldr	r2, [pc, #164]	; (ec0 <Reset_Handler+0xb8>)
+ e1c:	3303      	adds	r3, #3
+ e1e:	1a9b      	subs	r3, r3, r2
+ e20:	089b      	lsrs	r3, r3, #2
+ e22:	3301      	adds	r3, #1
+ e24:	009b      	lsls	r3, r3, #2
+ e26:	2200      	movs	r2, #0
+                        *pDest++ = *pSrc++;
+ e28:	4823      	ldr	r0, [pc, #140]	; (eb8 <Reset_Handler+0xb0>)
+ e2a:	4922      	ldr	r1, [pc, #136]	; (eb4 <Reset_Handler+0xac>)
+ e2c:	588c      	ldr	r4, [r1, r2]
+ e2e:	5084      	str	r4, [r0, r2]
+ e30:	3204      	adds	r2, #4
+                for (; pDest < &_erelocate;) {
+ e32:	429a      	cmp	r2, r3
+ e34:	d1fa      	bne.n	e2c <Reset_Handler+0x24>
+        for (pDest = &_szero; pDest < &_ezero;) {
+ e36:	4a23      	ldr	r2, [pc, #140]	; (ec4 <Reset_Handler+0xbc>)
+ e38:	4b23      	ldr	r3, [pc, #140]	; (ec8 <Reset_Handler+0xc0>)
+ e3a:	429a      	cmp	r2, r3
+ e3c:	d20a      	bcs.n	e54 <Reset_Handler+0x4c>
+ e3e:	43d3      	mvns	r3, r2
+ e40:	4921      	ldr	r1, [pc, #132]	; (ec8 <Reset_Handler+0xc0>)
+ e42:	185b      	adds	r3, r3, r1
+ e44:	2103      	movs	r1, #3
+ e46:	438b      	bics	r3, r1
+ e48:	3304      	adds	r3, #4
+ e4a:	189b      	adds	r3, r3, r2
+                *pDest++ = 0;
+ e4c:	2100      	movs	r1, #0
+ e4e:	c202      	stmia	r2!, {r1}
+        for (pDest = &_szero; pDest < &_ezero;) {
+ e50:	4293      	cmp	r3, r2
+ e52:	d1fc      	bne.n	e4e <Reset_Handler+0x46>
+        SCB->VTOR = ((uint32_t) pSrc & SCB_VTOR_TBLOFF_Msk);
+ e54:	4a1d      	ldr	r2, [pc, #116]	; (ecc <Reset_Handler+0xc4>)
+ e56:	21ff      	movs	r1, #255	; 0xff
+ e58:	4b1d      	ldr	r3, [pc, #116]	; (ed0 <Reset_Handler+0xc8>)
+ e5a:	438b      	bics	r3, r1
+ e5c:	6093      	str	r3, [r2, #8]
+        SBMATRIX->SFR[SBMATRIX_SLAVE_HMCRAMC0].reg = 2;
+ e5e:	39fd      	subs	r1, #253	; 0xfd
+ e60:	2390      	movs	r3, #144	; 0x90
+ e62:	005b      	lsls	r3, r3, #1
+ e64:	4a1b      	ldr	r2, [pc, #108]	; (ed4 <Reset_Handler+0xcc>)
+ e66:	50d1      	str	r1, [r2, r3]
+        USB->DEVICE.QOSCTRL.bit.CQOS = 2;
+ e68:	4a1b      	ldr	r2, [pc, #108]	; (ed8 <Reset_Handler+0xd0>)
+ e6a:	78d3      	ldrb	r3, [r2, #3]
+ e6c:	2503      	movs	r5, #3
+ e6e:	43ab      	bics	r3, r5
+ e70:	2402      	movs	r4, #2
+ e72:	4323      	orrs	r3, r4
+ e74:	70d3      	strb	r3, [r2, #3]
+        USB->DEVICE.QOSCTRL.bit.DQOS = 2;
+ e76:	78d3      	ldrb	r3, [r2, #3]
+ e78:	270c      	movs	r7, #12
+ e7a:	43bb      	bics	r3, r7
+ e7c:	2608      	movs	r6, #8
+ e7e:	4333      	orrs	r3, r6
+ e80:	70d3      	strb	r3, [r2, #3]
+        DMAC->QOSCTRL.bit.DQOS = 2;
+ e82:	4b16      	ldr	r3, [pc, #88]	; (edc <Reset_Handler+0xd4>)
+ e84:	7b98      	ldrb	r0, [r3, #14]
+ e86:	2230      	movs	r2, #48	; 0x30
+ e88:	4390      	bics	r0, r2
+ e8a:	2220      	movs	r2, #32
+ e8c:	4310      	orrs	r0, r2
+ e8e:	7398      	strb	r0, [r3, #14]
+        DMAC->QOSCTRL.bit.FQOS = 2;
+ e90:	7b99      	ldrb	r1, [r3, #14]
+ e92:	43b9      	bics	r1, r7
+ e94:	4331      	orrs	r1, r6
+ e96:	7399      	strb	r1, [r3, #14]
+        DMAC->QOSCTRL.bit.WRBQOS = 2;
+ e98:	7b9a      	ldrb	r2, [r3, #14]
+ e9a:	43aa      	bics	r2, r5
+ e9c:	4322      	orrs	r2, r4
+ e9e:	739a      	strb	r2, [r3, #14]
+        NVMCTRL->CTRLB.bit.MANW = 1;
+ ea0:	4a0f      	ldr	r2, [pc, #60]	; (ee0 <Reset_Handler+0xd8>)
+ ea2:	6853      	ldr	r3, [r2, #4]
+ ea4:	2180      	movs	r1, #128	; 0x80
+ ea6:	430b      	orrs	r3, r1
+ ea8:	6053      	str	r3, [r2, #4]
+        __libc_init_array();
+ eaa:	4b0e      	ldr	r3, [pc, #56]	; (ee4 <Reset_Handler+0xdc>)
+ eac:	4798      	blx	r3
+        main();
+ eae:	4b0e      	ldr	r3, [pc, #56]	; (ee8 <Reset_Handler+0xe0>)
+ eb0:	4798      	blx	r3
+ eb2:	e7fe      	b.n	eb2 <Reset_Handler+0xaa>
+ eb4:	00000ff0 	.word	0x00000ff0
+ eb8:	20000000 	.word	0x20000000
+ ebc:	20000008 	.word	0x20000008
+ ec0:	20000004 	.word	0x20000004
+ ec4:	20000008 	.word	0x20000008
+ ec8:	200001c0 	.word	0x200001c0
+ ecc:	e000ed00 	.word	0xe000ed00
+ ed0:	00000000 	.word	0x00000000
+ ed4:	41007000 	.word	0x41007000
+ ed8:	41005000 	.word	0x41005000
+ edc:	41004800 	.word	0x41004800
+ ee0:	41004000 	.word	0x41004000
+ ee4:	00000f55 	.word	0x00000f55
+ ee8:	00000eed 	.word	0x00000eed
+
+00000eec <main>:
+#include <asf.h>
+
+#define LED0    IOPORT_CREATE_PIN(IOPORT_PORTA, 17)
+
+int main (void)
+{
+ eec:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+	system_init();
+ eee:	4b06      	ldr	r3, [pc, #24]	; (f08 <main+0x1c>)
+ ef0:	4798      	blx	r3
+	return arch_ioport_port_to_base(port)->IN.reg & mask;
+}
+
+inline static void arch_ioport_toggle_pin_level(ioport_pin_t pin)
+{
+	arch_ioport_pin_to_base(pin)->OUTTGL.reg = arch_ioport_pin_to_mask(pin);
+ ef2:	4f06      	ldr	r7, [pc, #24]	; (f0c <main+0x20>)
+ ef4:	2680      	movs	r6, #128	; 0x80
+ ef6:	02b6      	lsls	r6, r6, #10
+	while (1)
+	{
+		ioport_toggle_pin_level(LED0);
+		delay_ms(1000);
+ ef8:	25fa      	movs	r5, #250	; 0xfa
+ efa:	00ad      	lsls	r5, r5, #2
+ efc:	4c04      	ldr	r4, [pc, #16]	; (f10 <main+0x24>)
+ efe:	61fe      	str	r6, [r7, #28]
+ f00:	0028      	movs	r0, r5
+ f02:	47a0      	blx	r4
+ f04:	e7fb      	b.n	efe <main+0x12>
+ f06:	46c0      	nop			; (mov r8, r8)
+ f08:	00000dd9 	.word	0x00000dd9
+ f0c:	41004400 	.word	0x41004400
+ f10:	000009f1 	.word	0x000009f1
+
+00000f14 <__ctzsi2>:
+ f14:	4241      	negs	r1, r0
+ f16:	4008      	ands	r0, r1
+ f18:	211c      	movs	r1, #28
+ f1a:	2301      	movs	r3, #1
+ f1c:	041b      	lsls	r3, r3, #16
+ f1e:	4298      	cmp	r0, r3
+ f20:	d301      	bcc.n	f26 <__ctzsi2+0x12>
+ f22:	0c00      	lsrs	r0, r0, #16
+ f24:	3910      	subs	r1, #16
+ f26:	0a1b      	lsrs	r3, r3, #8
+ f28:	4298      	cmp	r0, r3
+ f2a:	d301      	bcc.n	f30 <__ctzsi2+0x1c>
+ f2c:	0a00      	lsrs	r0, r0, #8
+ f2e:	3908      	subs	r1, #8
+ f30:	091b      	lsrs	r3, r3, #4
+ f32:	4298      	cmp	r0, r3
+ f34:	d301      	bcc.n	f3a <__ctzsi2+0x26>
+ f36:	0900      	lsrs	r0, r0, #4
+ f38:	3904      	subs	r1, #4
+ f3a:	a202      	add	r2, pc, #8	; (adr r2, f44 <__ctzsi2+0x30>)
+ f3c:	5c10      	ldrb	r0, [r2, r0]
+ f3e:	1a40      	subs	r0, r0, r1
+ f40:	4770      	bx	lr
+ f42:	46c0      	nop			; (mov r8, r8)
+ f44:	1d1d1c1b 	.word	0x1d1d1c1b
+ f48:	1e1e1e1e 	.word	0x1e1e1e1e
+ f4c:	1f1f1f1f 	.word	0x1f1f1f1f
+ f50:	1f1f1f1f 	.word	0x1f1f1f1f
+
+00000f54 <__libc_init_array>:
+ f54:	b570      	push	{r4, r5, r6, lr}
+ f56:	2600      	movs	r6, #0
+ f58:	4d0c      	ldr	r5, [pc, #48]	; (f8c <__libc_init_array+0x38>)
+ f5a:	4c0d      	ldr	r4, [pc, #52]	; (f90 <__libc_init_array+0x3c>)
+ f5c:	1b64      	subs	r4, r4, r5
+ f5e:	10a4      	asrs	r4, r4, #2
+ f60:	42a6      	cmp	r6, r4
+ f62:	d109      	bne.n	f78 <__libc_init_array+0x24>
+ f64:	2600      	movs	r6, #0
+ f66:	f000 f833 	bl	fd0 <_init>
+ f6a:	4d0a      	ldr	r5, [pc, #40]	; (f94 <__libc_init_array+0x40>)
+ f6c:	4c0a      	ldr	r4, [pc, #40]	; (f98 <__libc_init_array+0x44>)
+ f6e:	1b64      	subs	r4, r4, r5
+ f70:	10a4      	asrs	r4, r4, #2
+ f72:	42a6      	cmp	r6, r4
+ f74:	d105      	bne.n	f82 <__libc_init_array+0x2e>
+ f76:	bd70      	pop	{r4, r5, r6, pc}
+ f78:	00b3      	lsls	r3, r6, #2
+ f7a:	58eb      	ldr	r3, [r5, r3]
+ f7c:	4798      	blx	r3
+ f7e:	3601      	adds	r6, #1
+ f80:	e7ee      	b.n	f60 <__libc_init_array+0xc>
+ f82:	00b3      	lsls	r3, r6, #2
+ f84:	58eb      	ldr	r3, [r5, r3]
+ f86:	4798      	blx	r3
+ f88:	3601      	adds	r6, #1
+ f8a:	e7f2      	b.n	f72 <__libc_init_array+0x1e>
+ f8c:	00000fdc 	.word	0x00000fdc
+ f90:	00000fdc 	.word	0x00000fdc
+ f94:	00000fdc 	.word	0x00000fdc
+ f98:	00000fe0 	.word	0x00000fe0
+
+00000f9c <_usb_device_irq_bits>:
+ f9c:	00080004 00800070 01000001 00000200     ....p...........
+ fac:	00000af8 00000ad8 00000ad8 00000b64     ............d...
+ fbc:	00000aea 00000b06 00000adc 00000b14     ................
+ fcc:	00000b54                                T...
+
+00000fd0 <_init>:
+ fd0:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ fd2:	46c0      	nop			; (mov r8, r8)
+ fd4:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ fd6:	bc08      	pop	{r3}
+ fd8:	469e      	mov	lr, r3
+ fda:	4770      	bx	lr
+
+00000fdc <__init_array_start>:
+ fdc:	000000dd 	.word	0x000000dd
+
+00000fe0 <_fini>:
+ fe0:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ fe2:	46c0      	nop			; (mov r8, r8)
+ fe4:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ fe6:	bc08      	pop	{r3}
+ fe8:	469e      	mov	lr, r3
+ fea:	4770      	bx	lr
+
+00000fec <__fini_array_start>:
+ fec:	000000b5 	.word	0x000000b5
