@@ -15,14 +15,8 @@
 #include "SHARP_MIP.h"
 #include <math.h>
 
-
-#define WIDTH 400
-#define HEIGHT 240
-
 #define DISP_HOR_RES 400
 #define DISP_VER_RES 240
-
-
 
 static lv_disp_draw_buf_t draw_buf;
 static lv_color_t buf1[DISP_HOR_RES * DISP_VER_RES];
@@ -33,75 +27,15 @@ bool lvgl_ticker(repeating_timer_t *rt){
   return true;
 }
 
+static lv_style_t selected_style;
+static lv_style_t unselected_style;
+lv_obj_t *adcButtons[4];
 
-static void btn_event_cb(lv_event_t * e)
-{
-    lv_event_code_t code = lv_event_get_code(e);
-    lv_obj_t * btn = lv_event_get_target(e);
-    if(code == LV_EVENT_CLICKED) {
-        static uint8_t cnt = 0;
-        cnt++;
-        printf("btn clicked\n");
-        /*Get the first child of the button which is the label and change its text*/
-        lv_obj_t * label = lv_obj_get_child(btn, 0);
-        lv_label_set_text_fmt(label, "Button: %d", cnt);
-    }
-}
+uint8_t selectCounter = 0;
+// just any non real value to trigger an update on first run
+uint8_t currentSelection = 255;
 
-/**
- * Create a button with a label and react on click event.
- */
-void lv_example_get_started_1(void)
-{
-    lv_obj_t * btn = lv_btn_create(lv_scr_act());     /*Add a button the current screen*/
-    lv_obj_set_pos(btn, 10, 10);                            /*Set its position*/
-    lv_obj_set_size(btn, 120, 50);                          /*Set its size*/
-    lv_obj_add_event_cb(btn, btn_event_cb, LV_EVENT_ALL, NULL);           /*Assign a callback to the button*/
-
-    lv_obj_t * label = lv_label_create(btn);          /*Add a label to the button*/
-    lv_label_set_text(label, "Button");                     /*Set the labels text*/
-    lv_obj_center(label);
-}
-
-void lv_example_obj_1(void)
-{
-    lv_obj_t * obj1;
-    obj1 = lv_obj_create(lv_scr_act());
-    lv_obj_set_size(obj1, 100, 50);
-    lv_obj_align(obj1, LV_ALIGN_CENTER, -60, -30);
-
-    static lv_style_t style_shadow;
-    lv_style_init(&style_shadow);
-    lv_style_set_shadow_width(&style_shadow, 10);
-    lv_style_set_shadow_spread(&style_shadow, 5);
-    lv_style_set_shadow_color(&style_shadow, lv_palette_main(LV_PALETTE_BLUE));
-
-    lv_obj_t * obj2;
-    obj2 = lv_obj_create(lv_scr_act());
-    lv_obj_add_style(obj2, &style_shadow, 0);
-    lv_obj_align(obj2, LV_ALIGN_CENTER, 60, 30);
-}
-
-lv_obj_t* createCheckmark(uint8_t lineWidth)
-{
-    static lv_style_t style;
-    lv_style_init(&style);
-
-    lv_style_set_line_color(&style, lv_color_black());
-    lv_style_set_line_width(&style, lineWidth);
-    lv_style_set_line_rounded(&style, true);
-
-    /*Create an object with the new style*/
-    lv_obj_t * obj = lv_line_create(lv_scr_act());
-    lv_obj_add_style(obj, &style, 0);
-
-    static lv_point_t p[] = {{10, 30}, {30, 50}, {100, 0}};
-    lv_line_set_points(obj, p, 3);
-
-    return obj;
-}
-
-lv_obj_t* lv_example_label_1(void)
+lv_obj_t* createVoltageLabel(void)
 {
     static lv_style_t label_style;
     lv_style_init(&label_style);
@@ -115,10 +49,98 @@ lv_obj_t* lv_example_label_1(void)
     lv_label_set_text(label1, "0.00V");
     lv_obj_set_width(label1, 150);  /*Set smaller width to make the lines wrap*/
     lv_obj_set_style_text_align(label1, LV_TEXT_ALIGN_CENTER, 0);
-    lv_obj_align(label1, LV_ALIGN_CENTER, 0, 0);
+    lv_obj_align(label1, LV_ALIGN_CENTER, 0, 10);
     return label1;
 }
 
+void initStyles(){
+    lv_style_init(&selected_style);
+    lv_style_set_text_color(&selected_style, lv_color_white());
+    lv_style_set_text_font(&selected_style, &lv_font_montserrat_14);
+    lv_style_set_bg_color(&selected_style, lv_color_black());
+
+    lv_style_init(&unselected_style);
+    lv_style_set_text_color(&unselected_style, lv_color_black());
+    lv_style_set_text_font(&unselected_style, &lv_font_montserrat_14);
+    lv_style_set_bg_color(&unselected_style, lv_color_white());
+    lv_style_set_border_width(&unselected_style, 2);
+    lv_style_set_border_color(&unselected_style, lv_color_black());
+}
+
+lv_obj_t* createSelectionBtn(lv_obj_t* src_actor, char* labelText)
+{
+    lv_obj_t * label;
+    lv_obj_t * btn1 = lv_btn_create(src_actor);
+    lv_obj_add_style(btn1, &unselected_style, 0);
+    lv_obj_add_style(btn1, &selected_style, LV_STATE_PRESSED);
+    // lv_obj_add_event_cb(btn1, event_handler, LV_EVENT_ALL, NULL);
+    
+    // lv_obj_align(btn1, LV_ALIGN_DEFAULT, posX, posY);
+    lv_obj_center(btn1);
+    lv_obj_add_flag(btn1, LV_OBJ_FLAG_CHECKABLE);
+    lv_obj_set_size(btn1, 80, LV_PCT(80));
+
+    label = lv_label_create(btn1);
+    lv_label_set_text(label, labelText);
+    lv_obj_center(label);
+    
+    return btn1;
+}
+
+void initMenu(){
+
+    initStyles();
+    // create flexbox container for buttons
+    lv_obj_t * cont_row = lv_obj_create(lv_scr_act());
+    lv_obj_set_size(cont_row, 400, 100);
+    lv_obj_align(cont_row, LV_ALIGN_TOP_MID, 0, 5);
+    lv_obj_set_flex_flow(cont_row, LV_FLEX_FLOW_ROW);
+
+    // populate flexbox with buttons
+    for (size_t i = 0; i < 4; i++){
+      char labelText[8];
+      sprintf(labelText, "ADC %d", i);
+      adcButtons[i] = createSelectionBtn(cont_row, labelText);
+    }
+}
+
+void selectADC(uint8_t adcNum){
+    if(adcNum > 3){return;}
+    uint8_t selectMsg[3] = {127, adcNum, 255};
+    uart_write_blocking(uart0, selectMsg, 3);
+
+    for(size_t i = 0; i < 4; i++){
+        if(i == adcNum){
+            lv_obj_add_style(adcButtons[i], &selected_style, 0);
+        } else {
+            lv_obj_add_style(adcButtons[i], &unselected_style, 0);
+        }
+    }
+}
+
+void updateSelection(){
+  if(currentSelection != selectCounter){
+    selectADC(selectCounter);
+    currentSelection = selectCounter;
+  }
+}
+
+void btn_cb(uint gpio, uint32_t events) {
+    if(gpio == 26){
+      if(selectCounter < 3){
+        selectCounter++;
+      } else {
+        selectCounter = 0;
+      }
+    }else if(gpio == 27){
+      if(selectCounter > 0){
+        selectCounter--;
+      } else {
+        selectCounter = 3;
+      }
+    }
+    // printf("GPIO %d %d\n", gpio, selectCounter);
+}
 
 
 int main() {
@@ -149,28 +171,41 @@ int main() {
     lv_init();
     struct repeating_timer lvgl_ticker_timer;
     add_repeating_timer_ms(1, lvgl_ticker, NULL, &lvgl_ticker_timer);
-    lv_disp_draw_buf_init(&draw_buf, buf1, NULL, DISP_HOR_RES * DISP_VER_RES);  /*Initialize the display buffer.*/
-    lv_disp_drv_init(&disp_drv);          /*Basic initialization*/
-    disp_drv.flush_cb = sharp_mip_flush;    /*Set your driver function*/
+    lv_disp_draw_buf_init(&draw_buf, buf1, NULL, DISP_HOR_RES * DISP_VER_RES);
+    lv_disp_drv_init(&disp_drv);
+    disp_drv.flush_cb = sharp_mip_flush;
     disp_drv.rounder_cb = sharp_mip_rounder;
     disp_drv.set_px_cb = sharp_mip_set_px;
     // disp_drv.full_refresh = true;
-    disp_drv.draw_buf = &draw_buf;        /*Assign the buffer to the display*/
-    disp_drv.hor_res = DISP_HOR_RES;   /*Set the horizontal resolution of the display*/
-    disp_drv.ver_res = DISP_VER_RES;   /*Set the vertical resolution of the display*/
-    lv_disp_drv_register(&disp_drv);      /*Finally register the driver*/
-    printf("lv_disp_drv setup\n");
+    disp_drv.draw_buf = &draw_buf; 
+    disp_drv.hor_res = DISP_HOR_RES;
+    disp_drv.ver_res = DISP_VER_RES;
+    lv_disp_drv_register(&disp_drv);
+
+    gpio_init(26);
+    gpio_set_function(26, GPIO_FUNC_SIO);
+    gpio_set_dir(26, GPIO_IN);
+    gpio_pull_up(26);
+    gpio_set_irq_enabled_with_callback(26, GPIO_IRQ_EDGE_FALL, true, &btn_cb);
+
+    gpio_init(27);
+    gpio_set_function(27, GPIO_FUNC_SIO);
+    gpio_set_dir(27, GPIO_IN);
+    gpio_pull_up(27);
+    gpio_set_irq_enabled_with_callback(27, GPIO_IRQ_EDGE_FALL, true, &btn_cb);
 
     // lv_obj_t* obj = createCheckmark(10);
-    lv_obj_t* label = lv_example_label_1();
-    
+    lv_obj_t* voltageLabel = createVoltageLabel();
+    initMenu();
+    // selectADC(2);
     while(1){
-
+      lv_timer_handler();
+      updateSelection();
       uint16_t adcResult;
       if(uart_is_readable(uart0)){
         uint8_t c = uart_getc(uart0);
         if(c == 127){
-          printf("start byte\n");
+          //printf("start byte\n");
           // we received a start character
           uint8_t byte1 = uart_getc(uart0);
           uint8_t byte2 = uart_getc(uart0);
@@ -181,8 +216,8 @@ int main() {
           //message is valid and can be shown to GUI
           
           char str[12];
-          sprintf(str, "%5.2fV",(3.33/1024)*adcResult);
-          lv_label_set_text(label, str);
+          sprintf(str, "%5.2fV",(3.333/4096)*adcResult);
+          lv_label_set_text(voltageLabel, str);
         }else{
           printf("invalid message\n");
           //message is invalid, skip and wait for next message
@@ -192,7 +227,7 @@ int main() {
       }
       // for (size_t i = 4; i < 30; i++){
       //   lv_obj_set_pos(obj, sin(time_us_32()/130) * 50, sin(time_us_32()/100) * 80);
-        lv_timer_handler();
+        
         // sleep_ms(1);
       // }
       
