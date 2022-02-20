@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Raspberry Pi (Trading) Ltd.
+ * Copyright (c) 2022 Timon Skerutsch.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -21,19 +21,21 @@
 static lv_disp_draw_buf_t draw_buf;
 static lv_color_t buf1[DISP_HOR_RES * DISP_VER_RES];
 static lv_disp_drv_t disp_drv;
+struct repeating_timer lvgl_ticker_timer;
+
+static lv_style_t selected_style;
+static lv_style_t unselected_style;
+lv_obj_t *adcButtons[4];
+lv_obj_t* voltageLabel;
+
+uint8_t selectCounter = 0;
+// just any non real value to trigger an update on first run
+uint8_t currentSelection = 255;
 
 bool lvgl_ticker(repeating_timer_t *rt){
   lv_tick_inc(1);
   return true;
 }
-
-static lv_style_t selected_style;
-static lv_style_t unselected_style;
-lv_obj_t *adcButtons[4];
-
-uint8_t selectCounter = 0;
-// just any non real value to trigger an update on first run
-uint8_t currentSelection = 255;
 
 lv_obj_t* createVoltageLabel(void)
 {
@@ -44,10 +46,7 @@ lv_obj_t* createVoltageLabel(void)
 
     lv_obj_t * label1 = lv_label_create(lv_scr_act());
     lv_obj_add_style(label1, &label_style, 0);
-    lv_label_set_long_mode(label1, LV_LABEL_LONG_CLIP);     /*Break the long lines*/
-    lv_label_set_recolor(label1, true);                      /*Enable re-coloring by commands in the text*/
     lv_label_set_text(label1, "0.00V");
-    lv_obj_set_width(label1, 150);  /*Set smaller width to make the lines wrap*/
     lv_obj_set_style_text_align(label1, LV_TEXT_ALIGN_CENTER, 0);
     lv_obj_align(label1, LV_ALIGN_CENTER, 0, 10);
     return label1;
@@ -73,9 +72,7 @@ lv_obj_t* createSelectionBtn(lv_obj_t* src_actor, char* labelText)
     lv_obj_t * btn1 = lv_btn_create(src_actor);
     lv_obj_add_style(btn1, &unselected_style, 0);
     lv_obj_add_style(btn1, &selected_style, LV_STATE_PRESSED);
-    // lv_obj_add_event_cb(btn1, event_handler, LV_EVENT_ALL, NULL);
-    
-    // lv_obj_align(btn1, LV_ALIGN_DEFAULT, posX, posY);
+
     lv_obj_center(btn1);
     lv_obj_add_flag(btn1, LV_OBJ_FLAG_CHECKABLE);
     lv_obj_set_size(btn1, 80, LV_PCT(80));
@@ -102,20 +99,25 @@ void initMenu(){
       sprintf(labelText, "ADC %d", i);
       adcButtons[i] = createSelectionBtn(cont_row, labelText);
     }
+
+    voltageLabel = createVoltageLabel();
 }
 
 void selectADC(uint8_t adcNum){
-    if(adcNum > 3){return;}
-    uint8_t selectMsg[3] = {127, adcNum, 255};
-    uart_write_blocking(uart0, selectMsg, 3);
+  printf("Selected ADC %d\n", adcNum);
+  if(adcNum > 3){return;}
+  // tell SAMD21 which ADC channel to read
+  uint8_t selectMsg[3] = {127, adcNum, 255};
+  uart_write_blocking(uart0, selectMsg, 3);
 
-    for(size_t i = 0; i < 4; i++){
-        if(i == adcNum){
-            lv_obj_add_style(adcButtons[i], &selected_style, 0);
-        } else {
-            lv_obj_add_style(adcButtons[i], &unselected_style, 0);
-        }
-    }
+  // update UI button styling to reflect selection
+  for(size_t i = 0; i < 4; i++){
+      if(i == adcNum){
+          lv_obj_add_style(adcButtons[i], &selected_style, 0);
+      } else {
+          lv_obj_add_style(adcButtons[i], &unselected_style, 0);
+      }
+  }
 }
 
 void updateSelection(){
@@ -142,14 +144,7 @@ void btn_cb(uint gpio, uint32_t events) {
     // printf("GPIO %d %d\n", gpio, selectCounter);
 }
 
-
-int main() {
-    stdio_init_all();
-    set_sys_clock_khz(200000, true);
-		// sleep_ms(3000);
-    printf("Hello, Sharp Memory Display test!\n");
-    printf("Initializing SPI...\n");
-
+void ioInit(){
     spi_init(DISP_SPI_PORT, 2000 * 1000);
     gpio_set_function(DISP_SCK, GPIO_FUNC_SPI);
     gpio_set_function(DISP_MOSI, GPIO_FUNC_SPI);
@@ -168,20 +163,6 @@ int main() {
     gpio_set_function(0, GPIO_FUNC_UART);
     gpio_set_function(1, GPIO_FUNC_UART);
 
-    lv_init();
-    struct repeating_timer lvgl_ticker_timer;
-    add_repeating_timer_ms(1, lvgl_ticker, NULL, &lvgl_ticker_timer);
-    lv_disp_draw_buf_init(&draw_buf, buf1, NULL, DISP_HOR_RES * DISP_VER_RES);
-    lv_disp_drv_init(&disp_drv);
-    disp_drv.flush_cb = sharp_mip_flush;
-    disp_drv.rounder_cb = sharp_mip_rounder;
-    disp_drv.set_px_cb = sharp_mip_set_px;
-    // disp_drv.full_refresh = true;
-    disp_drv.draw_buf = &draw_buf; 
-    disp_drv.hor_res = DISP_HOR_RES;
-    disp_drv.ver_res = DISP_VER_RES;
-    lv_disp_drv_register(&disp_drv);
-
     gpio_init(26);
     gpio_set_function(26, GPIO_FUNC_SIO);
     gpio_set_dir(26, GPIO_IN);
@@ -193,44 +174,72 @@ int main() {
     gpio_set_dir(27, GPIO_IN);
     gpio_pull_up(27);
     gpio_set_irq_enabled_with_callback(27, GPIO_IRQ_EDGE_FALL, true, &btn_cb);
+}
 
-    // lv_obj_t* obj = createCheckmark(10);
-    lv_obj_t* voltageLabel = createVoltageLabel();
-    initMenu();
-    // selectADC(2);
-    while(1){
-      lv_timer_handler();
-      updateSelection();
+void lvglSetup(){
+    lv_init();
+    add_repeating_timer_ms(1, lvgl_ticker, NULL, &lvgl_ticker_timer);
+    lv_disp_draw_buf_init(&draw_buf, buf1, NULL, DISP_HOR_RES * DISP_VER_RES);
+    lv_disp_drv_init(&disp_drv);
+    disp_drv.flush_cb = sharp_mip_flush;
+    disp_drv.rounder_cb = sharp_mip_rounder;
+    disp_drv.set_px_cb = sharp_mip_set_px;
+    // disp_drv.full_refresh = true;
+    disp_drv.draw_buf = &draw_buf; 
+    disp_drv.hor_res = DISP_HOR_RES;
+    disp_drv.ver_res = DISP_VER_RES;
+    lv_disp_drv_register(&disp_drv);
+}
+
+void readADCMessage(){
+    // messages are packed into a naive protocol that uses '127' as
+    // the start byte, followed by the ADC result, followed by '255' as the end byte
+    if(uart_is_readable(uart0)){
       uint16_t adcResult;
-      if(uart_is_readable(uart0)){
-        uint8_t c = uart_getc(uart0);
-        if(c == 127){
-          //printf("start byte\n");
-          // we received a start character
-          uint8_t byte1 = uart_getc(uart0);
-          uint8_t byte2 = uart_getc(uart0);
-          adcResult = byte1 | byte2 << 8;
-          printf("ADC result: %d\n", adcResult);
-        }
-        if(uart_getc(uart0) == 255){
-          //message is valid and can be shown to GUI
-          
-          char str[12];
-          sprintf(str, "%5.2fV",(3.333/4096)*adcResult);
-          lv_label_set_text(voltageLabel, str);
-        }else{
-          printf("invalid message\n");
-          //message is invalid, skip and wait for next message
-        }
-        // printf("%c", c);
-        
+      uint8_t c = uart_getc(uart0);
+      // printf("got first byte: %d\n",c);
+      if(c == 127){
+        // printf("start byte\n");
+        // we received a start character
+        uint8_t byte1 = uart_getc(uart0);
+        uint8_t byte2 = uart_getc(uart0);
+        adcResult = byte1 | byte2 << 8;
+        printf("ADC result: %d\n", adcResult);
+      }else{
+        printf("not a start byte, trying again next time\n");
+        return;
       }
-      // for (size_t i = 4; i < 30; i++){
-      //   lv_obj_set_pos(obj, sin(time_us_32()/130) * 50, sin(time_us_32()/100) * 80);
-        
-        // sleep_ms(1);
-      // }
-      
+      c = uart_getc(uart0);
+      if(c == 255){
+        //message is valid and can be shown to GUI
+        char str[12];
+        sprintf(str, "%5.2fV",(3.333/4096)*adcResult);
+        lv_label_set_text(voltageLabel, str);
+      }else{
+        printf("invalid message, got byte: %d\n",c);
+        //message is invalid, skip and wait for next message
+      }
+    }
+}
+
+int main() {
+    // overclock the MCU a bit for faster rendering, RP2040 has a large margin here.
+    // needs to be the first thing we do as other peripherals base their clock calculation off of the main clock
+    set_sys_clock_khz(200000, true);
+    stdio_init_all();
+
+    ioInit();
+    lvglSetup();
+    initMenu();
+    // select a default
+    selectADC(0);
+
+    while(1){
+      // lv_timer_handler is not as critical as the tick but should be called every few ms as it kicks of rendering
+      lv_timer_handler();
+      // check if the buttons had fired an interrupt and we need to update the ADC selection
+      updateSelection();
+      readADCMessage();
     }
 
     return 0;

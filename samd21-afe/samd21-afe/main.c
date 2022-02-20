@@ -21,7 +21,6 @@ int main(void)
 
 
 	// following Adafruit Metro M0 pinout/labels
-	uint8_t selectADC[] = {0,2,3,4};
 	uint8_t muxposADC[] = {ADC_INPUTCTRL_MUXPOS_PIN0,ADC_INPUTCTRL_MUXPOS_PIN2,ADC_INPUTCTRL_MUXPOS_PIN3,ADC_INPUTCTRL_MUXPOS_PIN4};
 	//default channel
 	uint8_t currentADC = selectADC[0];
@@ -49,8 +48,6 @@ int main(void)
 				if (buf[1] == 255){
 					sprintf(strDbg, "Selecting ADC chan %d\n\r", selectADC[buf[0]]);
 					cdcdf_acm_write(strDbg, 100);
-					// unsure if passing channels to ADC HAL functions actually does anything but left it for no
-					currentADC = selectADC[buf[0]];
 					ADC->INPUTCTRL.reg = ADC_INPUTCTRL_GAIN_DIV2 |
 										ADC_INPUTCTRL_MUXNEG_GND |
 										muxposADC[buf[0]];
@@ -59,6 +56,7 @@ int main(void)
 		}
 		uint8_t adcResult[2] = {0};
 		adc_sync_read_channel(&ADC_0, currentADC, adcResult, 2);
+		// lets look at the returned bytes separately to spot issues more easily
 		sprintf(strDbg, "ADC result %d,%d\n\r", adcResult[0], adcResult[1]);
 		cdcdf_acm_write(strDbg, 100);
 		adc_result_message[1] = adcResult[0];
