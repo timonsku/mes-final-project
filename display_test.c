@@ -227,10 +227,13 @@ int main() {
     // needs to be the first thing we do as other peripherals base their clock calculation off of the main clock
     set_sys_clock_khz(200000, true);
     stdio_init_all();
+    printf("Setting up peripherals and UI\n");
 
     ioInit();
     lvglSetup();
     initMenu();
+    printf("Set up finished\n");
+    
     // select a default
     selectADC(0);
 

@@ -6,7 +6,7 @@ int main(void)
 	//set flash wait state. 1 is needed for 48Mhz @ 3.3V operation.
 	//See Datasheet Table 37-42 page 891
 	NVMCTRL->CTRLB.bit.RWS = 1;
-	/* Initializes MCU, drivers and middleware */
+	// Initializes MCU, drivers and middleware
 	atmel_start_init();
 
 	struct io_descriptor *io;
